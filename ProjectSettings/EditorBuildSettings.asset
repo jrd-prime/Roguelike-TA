@@ -4,5 +4,12 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
-  m_configObjects: {}
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/Bootstrap.unity
+    guid: 5030ae5fe08264a4a92087637cb1a44b
+  m_configObjects:
+    com.unity.adaptiveperformance.simulator.provider_settings: {fileID: 11400000,
+      guid: 1d9b2d3b40c2af149ac5bcfe4cd1c74e, type: 2}
+    com.unity.addressableassets: {fileID: 11400000, guid: 9e022ccb59829874b983befd772e3836,
+      type: 2}
