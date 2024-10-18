@@ -16,6 +16,8 @@ namespace Game.Scripts.UI
             Assert.IsNotNull(uiDocument.visualTreeAsset, "VisualTreeAsset is not set to " + name + " prefab!");
 
             RootVisualElement = uiDocument.rootVisualElement;
+
+            gameObject.SetActive(false);
         }
     }
 }

@@ -1,11 +1,13 @@
 ﻿using Game.Scripts.UI;
 using R3;
+using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.UIElements;
 using VContainer;
 
 namespace Game.Scripts.Framework.Bootstrap
 {
-    public class LoadingScreenView : UIView
+    public class LoadingScreenView : MonoBehaviour
     {
         private LoadingScreenViewModel _viewModel;
 
@@ -15,9 +17,13 @@ namespace Game.Scripts.Framework.Bootstrap
             _viewModel = viewModel;
         }
 
-        private void Start()
+        private void Awake()
         {
-            var header = RootVisualElement.Q<Label>("header-label");
+            var uiDocument = gameObject.GetComponent<UIDocument>();
+
+            Assert.IsNotNull(uiDocument.visualTreeAsset, "VisualTreeAsset is not set to " + name + " prefab!");
+
+            var header = uiDocument.rootVisualElement.Q<Label>("header-label");
 
             _viewModel.HeaderView.Subscribe(x => header.text = x);
         }
