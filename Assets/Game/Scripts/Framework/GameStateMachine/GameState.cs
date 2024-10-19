@@ -5,9 +5,12 @@ namespace Game.Scripts.Framework.GameStateMachine
 {
     public class GameState
     {
-        // [Inject]
-        // private void Construct(UIManager)
-        // {
-        // }
+        protected UIManager UIManager;
+
+        [Inject]
+        private void Construct(UIManager uiManager)
+        {
+            UIManager = uiManager;
+        }
     }
 }

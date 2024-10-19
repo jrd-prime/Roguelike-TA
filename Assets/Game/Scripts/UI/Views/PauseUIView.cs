@@ -1,6 +1,6 @@
 ﻿namespace Game.Scripts.UI.State
 {
-    public class GameUI : UIView
+    public class PauseUIView : UIView
     {
     }
 }

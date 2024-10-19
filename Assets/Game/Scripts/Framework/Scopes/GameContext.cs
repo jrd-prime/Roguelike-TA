@@ -13,13 +13,14 @@ namespace Game.Scripts.Framework.Scopes
 
         protected override void Configure(IContainerBuilder builder)
         {
-            builder.RegisterComponent(uiManager).AsSelf();
+            builder.RegisterComponent(uiManager).AsSelf().AsImplementedInterfaces();
 
             builder.Register<StateMachine>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
+            builder.Register<GameState>(Lifetime.Singleton).AsSelf();
 
             // UI States
 
-            builder.Register<MainMenuState>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
+            builder.Register<MenuState>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
         }
     }
 }

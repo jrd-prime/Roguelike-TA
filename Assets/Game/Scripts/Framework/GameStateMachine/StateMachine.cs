@@ -13,15 +13,15 @@ namespace Game.Scripts.Framework.GameStateMachine
         private UIManager _uiManager;
 
         [Inject]
-        private void Construct(MainMenuState mainMenuState, UIManager uiManager)
+        private void Construct(MenuState menuState, UIManager uiManager)
         {
-            _mainMenuState = mainMenuState;
+            _mainMenuState = menuState;
             _uiManager = uiManager;
         }
 
         public void Initialize()
         {
-            Debug.Log("State machine");
+            Debug.LogWarning("State machine");
             if (_currentState != null) return;
 
             ChangeState(_mainMenuState);
