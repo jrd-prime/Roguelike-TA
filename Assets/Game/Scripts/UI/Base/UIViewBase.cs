@@ -1,11 +1,12 @@
 ﻿using System;
+using Game.Scripts.UI.Interfaces;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace Game.Scripts.UI
+namespace Game.Scripts.UI.Base
 {
     [RequireComponent(typeof(UIDocument))]
-    public abstract class UIView : MonoBehaviour, IUIView
+    public class UIViewBase : MonoBehaviour, IUIView
     {
         protected VisualElement RootVisualElement;
 
@@ -29,11 +30,5 @@ namespace Game.Scripts.UI
             Debug.LogWarning($"hide {name}");
             gameObject.SetActive(false);
         }
-    }
-
-    public interface IUIView
-    {
-        public void Show();
-        public void Hide();
     }
 }

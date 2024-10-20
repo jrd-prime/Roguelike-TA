@@ -1,6 +1,9 @@
-﻿namespace Game.Scripts.UI.State
+﻿using Game.Scripts.UI.Base;
+using Game.Scripts.UI.ViewModels;
+
+namespace Game.Scripts.UI.Views
 {
-    public class SettingsUIView : UIView
+    public class SettingsUIView : UIViewCustom<SettingsUIViewModel>
     {
     }
 }

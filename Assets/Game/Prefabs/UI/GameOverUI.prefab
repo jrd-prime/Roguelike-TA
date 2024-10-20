@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 929035469090725243}
   - component: {fileID: 7866912233324899459}
-  - component: {fileID: 8253828378283125186}
+  - component: {fileID: 5278364445283569291}
   m_Layer: 0
   m_Name: GameOverUI
   m_TagString: Untagged
@@ -50,7 +50,7 @@ MonoBehaviour:
   sourceAsset: {fileID: 9197481963319205126, guid: 7bcacd5930db007498e6487ba0ecfdd8,
     type: 3}
   m_SortingOrder: 100
---- !u!114 &8253828378283125186
+--- !u!114 &5278364445283569291
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -59,6 +59,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 7099418739029082577}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 46bc94d1290a46d3894659cb060c1c73, type: 3}
+  m_Script: {fileID: 11500000, guid: b456c4f51a4e46358a01260f0e71544e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

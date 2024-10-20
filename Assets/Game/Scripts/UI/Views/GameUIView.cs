@@ -1,6 +1,9 @@
-﻿namespace Game.Scripts.UI.Views
+﻿using Game.Scripts.UI.Base;
+using Game.Scripts.UI.ViewModels;
+
+namespace Game.Scripts.UI.Views
 {
-    public class GameUIView : UIView
+    public class GameUIView : UIViewCustom<GameUIViewModel>
     {
     }
 }

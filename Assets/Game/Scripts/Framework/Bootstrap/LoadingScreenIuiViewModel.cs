@@ -5,7 +5,7 @@ using VContainer.Unity;
 
 namespace Game.Scripts.Framework.Bootstrap
 {
-    public class LoadingScreenViewModel : IViewModel
+    public class LoadingScreenIuiViewModel : IInitializable
     {
         [Inject] private ILoadingScreenModel _model;
 
@@ -17,9 +17,5 @@ namespace Game.Scripts.Framework.Bootstrap
 
             _model.LoadingText.Subscribe(x => HeaderView.Value = x);
         }
-    }
-
-    public interface IViewModel : IInitializable
-    {
     }
 }

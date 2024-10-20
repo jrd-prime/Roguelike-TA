@@ -21,6 +21,7 @@ namespace Game.Scripts.Framework.Scopes
             // UI States
 
             builder.Register<MenuState>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
+            builder.Register<GamePlayState>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
         }
     }
 }

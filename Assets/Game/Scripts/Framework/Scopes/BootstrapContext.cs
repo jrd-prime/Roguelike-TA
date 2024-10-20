@@ -13,7 +13,7 @@ namespace Game.Scripts.Framework.Scopes
         {
             builder.Register<Loader>(Lifetime.Singleton).AsImplementedInterfaces();
 
-            builder.Register<LoadingScreenViewModel>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
+            builder.Register<LoadingScreenIuiViewModel>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
 
             // Entry point
             builder.RegisterEntryPoint<AppStarter>();
