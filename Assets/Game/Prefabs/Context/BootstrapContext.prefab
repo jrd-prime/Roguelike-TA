@@ -47,6 +47,5 @@ MonoBehaviour:
   parentReference:
     TypeName: 
   autoRun: 1
-  autoInjectGameObjects:
-  - {fileID: 0}
+  autoInjectGameObjects: []
   loadingScreenView: {fileID: 0}

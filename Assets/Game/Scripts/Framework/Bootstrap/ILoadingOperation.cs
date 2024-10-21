@@ -3,6 +3,6 @@
     public interface ILoadingOperation
     {
         string Description { get; }
-        public void ServiceInitialization();
+        public void LoaderServiceInitialization();
     }
 }

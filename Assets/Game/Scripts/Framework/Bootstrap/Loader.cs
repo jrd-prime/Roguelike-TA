@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using R3;
+using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace Game.Scripts.Framework.Bootstrap
@@ -24,8 +25,9 @@ namespace Game.Scripts.Framework.Bootstrap
             {
                 try
                 {
+                    Debug.LogWarning($"Initialize {service.GetType().Name}...");
                     LoadingText.Value = $"Loading: {service.Description}..";
-                    service.ServiceInitialization();
+                    service.LoaderServiceInitialization();
 
                     // fake delay per service
                     await UniTask.Delay(1000);

@@ -44,7 +44,7 @@ namespace BackwoodsLife.Scripts.Framework.Manager.Input
         {
             _gameInputActions = new JInputActions();
             _gameInputActions.Enable();
-
+   
             // _gameInputActions.UI.TouchPosition.performed += OnTouchData;
             // _gameInputActions.UI.Click.performed += OnTouchData;
         }

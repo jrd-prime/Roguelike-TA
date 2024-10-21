@@ -42,9 +42,12 @@ namespace Game.Scripts.Framework.Sort.Player
 
         public void Initialize()
         {
+            Debug.LogWarning("Player VM Init");
+
             Assert.IsNotNull(_followSystem, $"{_followSystem.GetType()} is null.");
             _followSystem.SetTarget(this);
 
+            Assert.IsNotNull(_configManager, $"{_configManager.GetType()} is null.");
             var characterConfiguration = _configManager.GetConfig<SCharacterConfig>();
             Assert.IsNotNull(characterConfiguration, "Character configuration not found!");
 
@@ -58,7 +61,11 @@ namespace Game.Scripts.Framework.Sort.Player
         {
             //TODO on drop joystick slow speed down
             _joystick.MoveDirection
-                .Subscribe(joystickDirection => { _model.SetMoveDirection(joystickDirection); })
+                .Subscribe(joystickDirection =>
+                {
+                    _model.SetMoveDirection(joystickDirection);
+                    Debug.LogWarning($"joystic dir : {joystickDirection}. Im here: {this}");
+                })
                 .AddTo(_disposables);
         }
 

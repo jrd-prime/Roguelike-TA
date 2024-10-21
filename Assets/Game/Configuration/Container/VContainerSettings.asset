@@ -16,4 +16,4 @@ MonoBehaviour:
     type: 3}
   EnableDiagnostics: 1
   DisableScriptModifier: 0
-  RemoveClonePostfix: 0
+  RemoveClonePostfix: 1

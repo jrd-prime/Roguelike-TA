@@ -11,9 +11,11 @@ namespace Game.Scripts.Framework.Scopes
 
         protected override void Configure(IContainerBuilder builder)
         {
-            builder.Register<Loader>(Lifetime.Singleton).AsImplementedInterfaces();
-
+            Debug.LogWarning("<color=cyan>BOOSTRAP CONTEXT</color>");
             builder.Register<LoadingScreenUIViewModel>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
+
+            builder.RegisterComponent(loadingScreenView);
+            builder.Register<Loader>(Lifetime.Singleton).AsImplementedInterfaces();
 
             builder.RegisterEntryPoint<AppStarter>();
         }

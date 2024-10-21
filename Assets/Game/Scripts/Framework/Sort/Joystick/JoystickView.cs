@@ -40,10 +40,29 @@ namespace Game.Scripts.Framework.Sort.Joystick
             _root.RegisterCallback<PointerOutEvent>(OnPointerCancel);
         }
 
-        private void OnPointerCancel(PointerOutEvent evt) => _viewModel.OnOutEvent(evt);
-        private void OnPointerDown(PointerDownEvent evt) => _viewModel.OnDownEvent(evt);
-        private void OnPointerMove(PointerMoveEvent evt) => _viewModel.OnMoveEvent(evt);
-        private void OnPointerUp(PointerUpEvent evt) => _viewModel.OnUpEvent(evt);
+        private void OnPointerCancel(PointerOutEvent evt)
+        {
+            Debug.Log($"Pointer cancel on: {evt.target}");
+            _viewModel.OnOutEvent(evt);
+        }
+
+        private void OnPointerDown(PointerDownEvent evt)
+        {
+            Debug.Log($"Pointer down on: {evt.target}");
+            _viewModel.OnDownEvent(evt);
+        }
+
+        private void OnPointerMove(PointerMoveEvent evt)
+        {
+            Debug.Log($"Pointer move on: {evt.target}");
+            _viewModel.OnMoveEvent(evt);
+        }
+
+        private void OnPointerUp(PointerUpEvent evt)
+        {
+            Debug.Log($"Pointer up on: {evt.target}");
+            _viewModel.OnUpEvent(evt);
+        }
 
         private void OnDestroy()
         {

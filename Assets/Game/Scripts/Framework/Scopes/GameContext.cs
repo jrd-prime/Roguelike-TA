@@ -1,5 +1,7 @@
 ﻿using Game.Scripts.Framework.GameStateMachine;
 using Game.Scripts.Framework.GameStateMachine.State;
+using Game.Scripts.Framework.Sort.Joystick;
+using Game.Scripts.Framework.Sort.Player;
 using Game.Scripts.UI;
 using UnityEngine;
 using VContainer;
@@ -14,6 +16,15 @@ namespace Game.Scripts.Framework.Scopes
         protected override void Configure(IContainerBuilder builder)
         {
             Debug.LogWarning("<color=cyan>GAME CONTEXT</color>");
+
+
+            builder.Register<PlayerViewModel>(Lifetime.Singleton).AsImplementedInterfaces();
+            builder.Register<JoystickViewModel>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
+
+            // Model
+            builder.Register<PlayerModel>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
+            builder.Register<JoystickModel>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
+
 
             builder.RegisterComponent(uiManager).AsSelf().AsImplementedInterfaces();
             builder.Register<StateMachine>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();

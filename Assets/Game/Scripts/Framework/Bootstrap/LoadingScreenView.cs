@@ -25,6 +25,7 @@ namespace Game.Scripts.Framework.Bootstrap
 
             var header = uiDocument.rootVisualElement.Q<Label>("header-label");
 
+            Assert.IsNotNull(_uiViewModel, "ViewModel is null");
             _uiViewModel.HeaderView.Subscribe(x => header.text = x);
         }
     }

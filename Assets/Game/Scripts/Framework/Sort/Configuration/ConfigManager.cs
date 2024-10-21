@@ -17,10 +17,6 @@ namespace Game.Scripts.Framework.Sort.Configuration
             throw new NotImplementedException();
         }
 
-        public T GetConfig<T>() where T : ScriptableObject
-        {
-            throw new NotImplementedException();
-        }
         // public Dictionary<string, ItemSettings> ItemsConfigCache { get; } = new();
         // public Dictionary<string, RecipeSettings> RecipesConfigCache { get; } = new();
 
@@ -30,11 +26,13 @@ namespace Game.Scripts.Framework.Sort.Configuration
         private void Construct(SMainConfig mainConfig) =>
             _mainConfig = mainConfig;
 
-        public void ServiceInitialization()
+        public void LoaderServiceInitialization()
         {
             ConfigsCache = new Dictionary<Type, object>();
 
-            // AddToCache(_mainConfig.characterConfig);
+            AddToCache(_mainConfig.characterConfig);
+
+            Debug.Log("ConfigManager LoaderServiceInitialization");
 
             {
                 // TODO refactor
@@ -73,20 +71,21 @@ namespace Game.Scripts.Framework.Sort.Configuration
         //     foreach (var item in items) ItemsConfigCache.Add(item.config.itemName, item.config);
         // }
         //
-        // private void AddToCache(object config)
-        // {
-        //     if (ConfigsCache.TryAdd(config.GetType(), config)) Debug.Log($"Add to cache {config.GetType()}");
-        // }
+        private void AddToCache(object config)
+        {
+            if (ConfigsCache.TryAdd(config.GetType(), config)) Debug.Log($"Add to cache {config.GetType()}");
+        }
+
         //
         // public AssetReferenceTexture2D GetIconReference(string elementTypeName)
         // {
         //     return GetItemConfig<ItemSettings>(elementTypeName).iconReference;
         // }
         //
-        // public T GetConfig<T>() where T : ScriptableObject
-        // {
-        //     return ConfigsCache[typeof(T)] as T;
-        // }
+        public T GetConfig<T>() where T : ScriptableObject
+        {
+            return ConfigsCache[typeof(T)] as T;
+        }
         //
         // public RecipeItemsList GetRecipeItemsList() => _mainConfig.recipeItemsList;
         //

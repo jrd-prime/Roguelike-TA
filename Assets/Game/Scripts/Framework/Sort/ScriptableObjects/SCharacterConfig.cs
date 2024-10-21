@@ -1,10 +1,16 @@
-﻿using UnityEngine;
+﻿using BackwoodsLife.Scripts.Data.Const;
+using UnityEngine;
 
 namespace Game.Scripts.Framework.Sort.ScriptableObjects
 {
+    [CreateAssetMenu(
+        fileName = "CharacterConfiguration",
+        menuName = SOPathConst.ConfigPath + "Character Configuration",
+        order = 100)]
     public class SCharacterConfig : ScriptableObject
     {
-        public float moveSpeed { get; set; }
-        public float rotationSpeed { get; set; }
+        [Range(0.1f, 100f)] public float moveSpeed = 5f;
+
+        [Range(45f, 270f)] public float rotationSpeed = 180f;
     }
 }

@@ -15,7 +15,7 @@ namespace Game.Scripts.Framework.Providers.AssetProvider
         public Dictionary<string, Sprite> IconCache { get; } = new();
         public Dictionary<AssetReferenceTexture2D, Sprite> IconCache2 { get; } = new();
 
-        public void ServiceInitialization()
+        public void LoaderServiceInitialization()
         {
             Addressables.InitializeAsync();
         }
