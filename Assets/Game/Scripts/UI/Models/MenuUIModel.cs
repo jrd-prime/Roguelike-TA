@@ -35,7 +35,7 @@ namespace Game.Scripts.UI.Models
             else
                 _lastClickTime = currentTime;
 
-            UIManager.ShowPopUpAsync("Click 2 times to exit.", (int)(DoubleClickDelay * 1000));
+            UIManager.ShowPopUpAsync("Click 2 times to exit.", (int)(DoubleClickDelay * 2000));
         }
 
         private static void ExitGame()

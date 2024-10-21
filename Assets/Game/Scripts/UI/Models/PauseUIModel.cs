@@ -18,8 +18,7 @@ namespace Game.Scripts.UI.Models
 
         public void ToMainMenuButtonClicked()
         {
-            // StateMachine.ChangeStateTo(UIType.Menu);
-            UIManager.ShowPopUpAsync("Low priority. Will be implemented later.");
+            StateMachine.ChangeStateTo(UIType.Menu);
         }
     }
 

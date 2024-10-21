@@ -15,7 +15,6 @@ namespace Game.Scripts.UI.Base
 
         public void Awake()
         {
-            Debug.LogWarning($"AWAKE {name}");
             var document = gameObject.GetComponent<UIDocument>();
 
             RootVisualElement = document.visualTreeAsset != null

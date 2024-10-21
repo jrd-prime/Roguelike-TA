@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using Cysharp.Threading.Tasks;
 using Game.Scripts.UI.Base;
 using UnityEngine;
@@ -17,6 +18,7 @@ namespace Game.Scripts.UI
         [SerializeField] private PopUpView popUp;
 
         private readonly Dictionary<UIType, UIViewBase> _views = new();
+        private CancellationTokenSource _cts;
 
         private void Awake()
         {
@@ -39,11 +41,28 @@ namespace Game.Scripts.UI
             _views.Add(type, uiView);
         }
 
-        public async void ShowPopUpAsync(string text, int duration = 600)
+        public async void ShowPopUpAsync(string text, int duration = 3000)
         {
+            if (_cts != null)
+            {
+                _cts.Cancel();
+                popUp.Hide();
+            }
+
+            _cts = new CancellationTokenSource();
             popUp.Show(text);
-            await UniTask.Delay(duration);
+
+            try
+            {
+                await UniTask.Delay(duration, cancellationToken: _cts.Token);
+            }
+            catch (OperationCanceledException)
+            {
+                return;
+            }
+
             popUp.Hide();
+            _cts = null;
         }
     }
 }
