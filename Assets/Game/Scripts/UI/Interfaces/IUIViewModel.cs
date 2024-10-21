@@ -1,4 +1,5 @@
-﻿using VContainer.Unity;
+﻿using System;
+using VContainer.Unity;
 
 namespace Game.Scripts.UI.Interfaces
 {

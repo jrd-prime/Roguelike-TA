@@ -1,9 +1,6 @@
-﻿using System;
-using Game.Scripts.Framework.GameStateMachine;
-using Game.Scripts.Framework.GameStateMachine.State;
+﻿using Game.Scripts.UI.Base;
 using Game.Scripts.UI.Interfaces;
 using UnityEngine;
-using VContainer;
 
 namespace Game.Scripts.UI.Models
 {
@@ -14,33 +11,40 @@ namespace Game.Scripts.UI.Models
         public void ExitButtonClicked();
     }
 
-    public class MenuUIModel : IMenuUIModel
+    public class MenuUIModel : UIModelBase, IMenuUIModel
     {
-        private StateMachine _stateMachine;
-        private GamePlayState _gamePlayState;
-
-        [Inject]
-        private void Construct(StateMachine stateMachine, GamePlayState gamePlayState)
-        {
-            _stateMachine = stateMachine;
-            _gamePlayState = gamePlayState;
-        }
+        private const float DoubleClickDelay = 0.5f;
+        private float _lastClickTime;
 
         public void StartButtonClicked()
         {
-            Debug.LogWarning("Start button clicked model receive");
-            _stateMachine.ChangeState(_gamePlayState);
-            throw new NotImplementedException();
+            StateMachine.ChangeStateTo(UIType.Game);
         }
 
         public void SettingsButtonClicked()
         {
-            throw new NotImplementedException();
+            StateMachine.ChangeStateTo(UIType.Settings);
         }
 
         public void ExitButtonClicked()
         {
-            throw new NotImplementedException();
+            var currentTime = Time.time;
+
+            if (currentTime - _lastClickTime < DoubleClickDelay)
+                ExitGame();
+            else
+                _lastClickTime = currentTime;
+
+            UIManager.ShowPopUpAsync("Click 2 times to exit.", (int)(DoubleClickDelay * 1000));
+        }
+
+        private static void ExitGame()
+        {
+#if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
+#endif
         }
     }
 }

@@ -1,14 +1,16 @@
 ﻿using Game.Scripts.UI.Base;
-using Game.Scripts.UI.Interfaces;
 using Game.Scripts.UI.Models;
+using R3;
 
 namespace Game.Scripts.UI.ViewModels
 {
-    public class GameUIViewModel : UIViewModelCustom<GameUIModel>
+    public class GameUIViewModel : UIViewModelCustom<IGameUIModel>
     {
-        public void Initialize()
+        public Subject<Unit> MenuButtonClicked { get; } = new();
+
+        public override void Initialize()
         {
-            throw new System.NotImplementedException();
+           MenuButtonClicked.Subscribe(_ => Model.MenuButtonClicked()).AddTo(Disposables);
         }
     }
 }

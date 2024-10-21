@@ -1,8 +1,9 @@
-﻿using Game.Scripts.UI.Interfaces;
+﻿using Game.Scripts.UI.Base;
+using Game.Scripts.UI.Interfaces;
 
 namespace Game.Scripts.UI.Models
 {
-    public class GameOverUIModel  : IUIModel
+    public class GameOverUIModel  :UIModelBase, IUIModel
     {
     }
 }

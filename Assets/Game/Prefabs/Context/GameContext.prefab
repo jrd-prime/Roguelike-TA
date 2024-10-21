@@ -48,3 +48,5 @@ MonoBehaviour:
     TypeName: Game.Scripts.Framework.Scopes.RootContext
   autoRun: 1
   autoInjectGameObjects: []
+  uiManager: {fileID: 7070687434955276528, guid: 0179ecfa7f3be934989ce33f11542170,
+    type: 3}

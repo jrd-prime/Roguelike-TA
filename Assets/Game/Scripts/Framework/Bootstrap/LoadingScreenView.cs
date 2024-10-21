@@ -9,12 +9,12 @@ namespace Game.Scripts.Framework.Bootstrap
 {
     public class LoadingScreenView : MonoBehaviour
     {
-        private LoadingScreenIuiViewModel _iuiViewModel;
+        private LoadingScreenUIViewModel _uiViewModel;
 
         [Inject]
-        private void Construct(LoadingScreenIuiViewModel iuiViewModel)
+        private void Construct(LoadingScreenUIViewModel uiViewModel)
         {
-            _iuiViewModel = iuiViewModel;
+            _uiViewModel = uiViewModel;
         }
 
         private void Awake()
@@ -25,7 +25,7 @@ namespace Game.Scripts.Framework.Bootstrap
 
             var header = uiDocument.rootVisualElement.Q<Label>("header-label");
 
-            _iuiViewModel.HeaderView.Subscribe(x => header.text = x);
+            _uiViewModel.HeaderView.Subscribe(x => header.text = x);
         }
     }
 }

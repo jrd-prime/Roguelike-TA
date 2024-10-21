@@ -1,14 +1,20 @@
 ﻿using Game.Scripts.UI.Base;
-using Game.Scripts.UI.Interfaces;
 using Game.Scripts.UI.Models;
+using R3;
 
 namespace Game.Scripts.UI.ViewModels
 {
-    public class PauseUIViewModel : UIViewModelCustom<PauseUIModel>
+    public class PauseUIViewModel : UIViewModelCustom<IPauseUIModel>
     {
-        public void Initialize()
+        public Subject<Unit> ContinueButtonClicked { get; } = new();
+        public Subject<Unit> SettingsButtonClicked { get; } = new();
+        public Subject<Unit> ToMainMenuButtonClicked { get; } = new();
+
+        public override void Initialize()
         {
-            throw new System.NotImplementedException();
+            ContinueButtonClicked.Subscribe(_ => Model.ContinueButtonClicked()).AddTo(Disposables);
+            SettingsButtonClicked.Subscribe(_ => Model.SettingsButtonClicked()).AddTo(Disposables);
+            ToMainMenuButtonClicked.Subscribe(_ => Model.ToMainMenuButtonClicked()).AddTo(Disposables);
         }
     }
 }

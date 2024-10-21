@@ -6,6 +6,7 @@
         Game,
         Pause,
         GameOver,
-        Settings
+        Settings,
+        PopUp
     }
 }

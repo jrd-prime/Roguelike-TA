@@ -29,3 +29,22 @@
     padding-right: 0;
     padding-left: 0;
 }
+
+.ui-header {
+    align-items: center;
+    justify-content: center;
+    align-self: center;
+    position: absolute;
+    top: 20px;
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
+    color: rgb(255, 255, 255);
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+}

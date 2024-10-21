@@ -6,5 +6,9 @@ namespace Game.Scripts.UI.ViewModels
 {
     public class GameOverUIViewModel : UIViewModelCustom<GameOverUIModel>
     {
+        public override void Initialize()
+        {
+            // throw new System.NotImplementedException();
+        }
     }
 }

@@ -1,26 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using Game.Scripts.UI.Base;
 using UnityEngine;
-using UnityEngine.Serialization;
-using VContainer.Unity;
 
 namespace Game.Scripts.UI
 {
-    public class UIManager : MonoBehaviour, IInitializable
+    // TODO : consider safe areas for the user interface
+    public class UIManager : MonoBehaviour //, IInitializable
     {
-        // add views prefabs and add to autoinject to ui context container
-        [FormerlySerializedAs("menuUI")] [SerializeField] private UIViewBase menu;
-        [FormerlySerializedAs("gameUI")] [SerializeField] private UIViewBase game;
-        [FormerlySerializedAs("pauseUI")] [SerializeField] private UIViewBase pause;
-        [FormerlySerializedAs("gameOverUI")] [SerializeField] private UIViewBase gameOver;
-        [FormerlySerializedAs("settingsUI")] [SerializeField] private UIViewBase settings;
+        [SerializeField] private UIViewBase menu;
+        [SerializeField] private UIViewBase game;
+        [SerializeField] private UIViewBase pause;
+        [SerializeField] private UIViewBase gameOver;
+        [SerializeField] private UIViewBase settings;
+        [SerializeField] private PopUpView popUp;
 
         private readonly Dictionary<UIType, UIViewBase> _views = new();
 
-        public void Initialize()
+        private void Awake()
         {
-            Debug.LogWarning("UIManager init");
             InitializeView(UIType.Menu, menu);
             InitializeView(UIType.Game, game);
             InitializeView(UIType.Pause, pause);
@@ -29,7 +28,9 @@ namespace Game.Scripts.UI
         }
 
         public void ShowView(UIType mainMenu) => _views[mainMenu].Show();
+
         public void HideView(UIType mainMenu) => _views[mainMenu].Hide();
+
 
         private void InitializeView(UIType type, UIViewBase uiView)
         {
@@ -38,6 +39,11 @@ namespace Game.Scripts.UI
             _views.Add(type, uiView);
         }
 
-        public List<UIViewBase> GetAllViews() => new(_views.Values);
+        public async void ShowPopUpAsync(string text, int duration = 600)
+        {
+            popUp.Show(text);
+            await UniTask.Delay(duration);
+            popUp.Hide();
+        }
     }
 }
