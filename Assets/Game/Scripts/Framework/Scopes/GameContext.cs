@@ -17,7 +17,7 @@ namespace Game.Scripts.Framework.Scopes
 
             builder.RegisterComponent(uiManager).AsSelf().AsImplementedInterfaces();
             builder.Register<StateMachine>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
-            builder.Register<GameState>(Lifetime.Singleton).AsSelf();
+            builder.Register<GameStateBase>(Lifetime.Singleton).AsSelf();
 
             // States
             builder.Register<MenuState>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();

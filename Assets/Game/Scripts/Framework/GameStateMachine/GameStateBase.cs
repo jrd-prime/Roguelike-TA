@@ -3,7 +3,7 @@ using VContainer;
 
 namespace Game.Scripts.Framework.GameStateMachine
 {
-    public class GameState
+    public class GameStateBase
     {
         protected UIManager UIManager;
 

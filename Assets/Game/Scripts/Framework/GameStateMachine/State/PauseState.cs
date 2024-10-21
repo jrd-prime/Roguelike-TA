@@ -3,17 +3,12 @@ using UnityEngine;
 
 namespace Game.Scripts.Framework.GameStateMachine.State
 {
-    public class PauseState : GameState, IGameState
+    public class PauseState : GameStateBase, IGameState
     {
         public void Enter()
         {
             Debug.LogWarning("pause state enter");
             UIManager.ShowView(UIType.Pause);
-        }
-
-        public void Update()
-        {
-            Debug.LogWarning("pause state update");
         }
 
         public void Exit()

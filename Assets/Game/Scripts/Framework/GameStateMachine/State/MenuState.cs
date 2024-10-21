@@ -3,17 +3,12 @@ using UnityEngine;
 
 namespace Game.Scripts.Framework.GameStateMachine.State
 {
-    public class MenuState : GameState, IGameState
+    public class MenuState : GameStateBase, IGameState
     {
         public void Enter()
         {
             Debug.LogWarning("main menu state enter");
             UIManager.ShowView(UIType.Menu);
-        }
-
-        public void Update()
-        {
-            Debug.LogWarning("main menu state update");
         }
 
         public void Exit()
