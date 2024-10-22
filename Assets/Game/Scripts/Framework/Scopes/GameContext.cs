@@ -1,4 +1,5 @@
-﻿using Game.Scripts.Framework.GameStateMachine;
+﻿using Game.Scripts.Enemy;
+using Game.Scripts.Framework.GameStateMachine;
 using Game.Scripts.Framework.GameStateMachine.State;
 using Game.Scripts.Player;
 using Game.Scripts.UI;
@@ -12,6 +13,7 @@ namespace Game.Scripts.Framework.Scopes
     public class GameContext : LifetimeScope
     {
         [SerializeField] private UIManager uiManager;
+        [SerializeField] private SpawnPointsManager spawnPointsManager;
 
         protected override void Configure(IContainerBuilder builder)
         {
@@ -27,6 +29,7 @@ namespace Game.Scripts.Framework.Scopes
 
 
             builder.RegisterComponent(uiManager).AsSelf().AsImplementedInterfaces();
+            builder.RegisterComponent(spawnPointsManager).AsSelf().AsImplementedInterfaces();
             builder.Register<StateMachine>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
             builder.Register<GameStateBase>(Lifetime.Singleton).AsSelf();
 

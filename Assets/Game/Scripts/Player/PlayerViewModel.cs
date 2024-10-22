@@ -1,7 +1,7 @@
 ﻿using Game.Scripts.Animation;
-using Game.Scripts.Framework.Sort.Camera;
-using Game.Scripts.Framework.Sort.Configuration;
-using Game.Scripts.Framework.Sort.ScriptableObjects;
+using Game.Scripts.Framework.Configuration;
+using Game.Scripts.Framework.ScriptableObjects;
+using Game.Scripts.Framework.Systems.Follow;
 using Game.Scripts.UI.Joystick;
 using R3;
 using UnityEngine;
@@ -44,7 +44,7 @@ namespace Game.Scripts.Player
             _followSystem.SetTarget(this);
 
             Assert.IsNotNull(_configManager, $"{_configManager.GetType()} is null.");
-            var characterConfiguration = _configManager.GetConfig<SCharacterConfig>();
+            var characterConfiguration = _configManager.GetConfig<CharacterSettings>();
             Assert.IsNotNull(characterConfiguration, "Character configuration not found!");
 
             _model.SetMoveSpeed(characterConfiguration.moveSpeed);

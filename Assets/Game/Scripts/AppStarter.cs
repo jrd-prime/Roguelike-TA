@@ -1,7 +1,7 @@
 ﻿using Cysharp.Threading.Tasks;
 using Game.Scripts.Framework.Bootstrap;
+using Game.Scripts.Framework.Configuration;
 using Game.Scripts.Framework.Providers.AssetProvider;
-using Game.Scripts.Framework.Sort.Configuration;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using VContainer;

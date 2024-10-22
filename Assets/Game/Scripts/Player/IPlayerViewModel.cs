@@ -1,6 +1,6 @@
 ﻿using System;
 using Game.Scripts.Animation;
-using Game.Scripts.Framework.Sort.Camera;
+using Game.Scripts.Framework.Systems.Follow;
 using R3;
 using UnityEngine;
 using VContainer.Unity;

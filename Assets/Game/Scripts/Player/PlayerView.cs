@@ -1,4 +1,4 @@
-﻿using Game.Scripts.Framework.Sort.Animations;
+﻿using Game.Scripts.Animation;
 using R3;
 using UnityEngine;
 using UnityEngine.Assertions;

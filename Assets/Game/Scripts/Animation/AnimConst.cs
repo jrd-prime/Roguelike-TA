@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Game.Scripts.Framework.Sort.Animations
+namespace Game.Scripts.Animation
 {
     public static class AnimConst
     {

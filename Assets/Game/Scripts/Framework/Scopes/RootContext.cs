@@ -1,8 +1,9 @@
+using Game.Scripts.Framework.Camera;
+using Game.Scripts.Framework.Configuration;
+using Game.Scripts.Framework.Input;
 using Game.Scripts.Framework.Providers.AssetProvider;
-using Game.Scripts.Framework.Sort.Camera;
-using Game.Scripts.Framework.Sort.Configuration;
-using Game.Scripts.Framework.Sort.Input;
-using Game.Scripts.Framework.Sort.ScriptableObjects;
+using Game.Scripts.Framework.ScriptableObjects;
+using Game.Scripts.Framework.Systems.Follow;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.EventSystems;
