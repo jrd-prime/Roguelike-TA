@@ -34,5 +34,10 @@ namespace Game.Scripts.Player
             RotationSpeed?.Dispose();
             IsMoving?.Dispose();
         }
+
+        public void TakeDamage(float damage, string from)
+        {
+            Debug.LogWarning($"Player took {damage} damage from {from}");
+        }
     }
 }

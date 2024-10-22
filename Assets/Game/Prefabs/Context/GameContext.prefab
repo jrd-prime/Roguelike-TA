@@ -52,3 +52,7 @@ MonoBehaviour:
   - {fileID: 919132149155446097, guid: d523bb9c8436de84d957c5858c426f9e, type: 3}
   uiManager: {fileID: 7070687434955276528, guid: 0179ecfa7f3be934989ce33f11542170,
     type: 3}
+  spawnPointsManager: {fileID: 2375269258176985185, guid: 6325245e20d508c4d8f03e88953ba703,
+    type: 3}
+  enemyPrefab: {fileID: 2708799565583394941, guid: 9e4ddece5cc70224f86cccf9dac75aa7,
+    type: 3}

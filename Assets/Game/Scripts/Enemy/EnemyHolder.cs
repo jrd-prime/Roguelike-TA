@@ -1,37 +1,74 @@
 ﻿using Game.Scripts.Framework.ScriptableObjects;
+using Game.Scripts.Player;
 using UnityEngine;
 
 namespace Game.Scripts.Enemy
 {
+    [RequireComponent(typeof(Rigidbody))]
     public class EnemyHolder : MonoBehaviour
     {
+        private PlayerModel _target;
+        private Rigidbody _rb;
         public string EnemyID { get; private set; }
+        private string _enemyName;
+        private float _attackDelay;
+        private float _damage;
+        private float _speed;
+        private float _lastAttackTime = 0f;
 
-        public void SetEnemyId(string toString)
+        private void Awake()
         {
-            EnemyID = toString;
+            _rb = gameObject.GetComponent<Rigidbody>();
         }
 
-        public void Fill(EnemySettings enemiesSettings)
+        private void FixedUpdate()
         {
-            // fill with settings and prefab
+            var enemyPosition = _rb.position;
+            var targetPosition = _target.Position.CurrentValue;
+            var distanceToTarget = Vector3.Distance(enemyPosition, targetPosition);
+            // Вычисляем направление к цели
+            Vector3 directionToTarget = (targetPosition - enemyPosition).normalized;
+
+            // Вычисляем нужное вращение
+            Quaternion lookRotation = Quaternion.LookRotation(directionToTarget);
+
+            // Применяем плавное вращение
+            _rb.rotation = Quaternion.Slerp(_rb.rotation, lookRotation, 180 * Time.fixedDeltaTime);
+
+
+            if (distanceToTarget > 2f)
+            {
+                _rb.position =
+                    Vector3.MoveTowards(enemyPosition, targetPosition, _speed * Time.fixedDeltaTime);
+            }
+            else
+            {
+                if (Time.time - _lastAttackTime >= _attackDelay)
+                {
+                    _target.TakeDamage(_damage, _enemyName);
+                    _lastAttackTime = Time.time;
+                }
+            }
         }
 
-        public void FillEnemySettings(string enemyId, EnemySettings enemiesSettings)
+        public void FillEnemySettings(string enemyId, EnemySettings enemiesSettings, PlayerModel targetModel)
         {
-            // throw new System.NotImplementedException();
+            EnemyID = enemyId;
+            _enemyName = enemiesSettings.enemyName;
+            _target = targetModel;
+            _speed = enemiesSettings.speed;
+            _attackDelay = enemiesSettings.attackDelay;
+            _damage = enemiesSettings.damage;
         }
 
         public void OnSpawn()
         {
-            // Здесь можно добавить код для инициализации врага при спавне.
-            Debug.Log("Enemy spawned");
+            // Debug.Log("Enemy spawned");
         }
 
         public void OnDespawn()
         {
-            // Код для подготовки врага перед возвратом в пул.
-            Debug.Log("Enemy despawned");
+            // Debug.Log("Enemy despawned");
         }
     }
 }

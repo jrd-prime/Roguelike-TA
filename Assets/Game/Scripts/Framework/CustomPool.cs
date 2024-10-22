@@ -79,6 +79,7 @@ namespace Game.Scripts.Framework
 
         public int GetActiveCount()
         {
+            Debug.LogWarning($"Active objects count: {_activeObjects.Count}");
             return _activeObjects.Count;
         }
     }

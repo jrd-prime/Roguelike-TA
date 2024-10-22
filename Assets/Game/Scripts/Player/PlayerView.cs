@@ -1,4 +1,5 @@
 ﻿using Game.Scripts.Animation;
+using Game.Scripts.Enemy;
 using R3;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -37,6 +38,57 @@ namespace Game.Scripts.Player
         }
 
         private void FixedUpdate() => CharacterMovement();
+
+        public float scanRadius = 1f; // Радиус сканирования
+        private GameObject nearestEnemy; // Переменная для хранения ближайшего врага
+
+        // private void Update()
+        // {
+        //     nearestEnemy = FindNearestEnemy();
+        //     if (nearestEnemy != null)
+        //     {
+        //         Debug.Log("Ближайший враг: " + nearestEnemy.name);
+        //         // Дополнительные действия с ближайшим врагом
+        //     }
+        // }
+
+        // private GameObject FindNearestEnemy()
+        // {
+        //     Vector3 scanCenter = transform.position;
+        //     Collider[] hitColliders = Physics.OverlapSphere(scanCenter, scanRadius);
+        //
+        //     GameObject closestEnemy = null;
+        //     float closestDistance = Mathf.Infinity;
+        //
+        //     foreach (var hitCollider in hitColliders)
+        //     {
+        //         // Проверяем, есть ли у объекта тег "Enemy"
+        //         if (hitCollider.CompareTag("Enemy"))
+        //         {
+        //             float distanceToEnemy = Vector3.Distance(scanCenter, hitCollider.transform.position);
+        //
+        //             if (distanceToEnemy < closestDistance)
+        //             {
+        //                 closestDistance = distanceToEnemy;
+        //                 closestEnemy = hitCollider.gameObject;
+        //
+        //                 var a = closestEnemy.GetComponent<EnemyHolder>();
+        //                 Debug.LogWarning($"Enemy found: {a.EnemyID}");
+        //                 
+        //                 a.gameObject.SetActive(false);
+        //             }
+        //         }
+        //     }
+        //
+        //     return closestEnemy;
+        // }
+
+        // // Визуализация радиуса поиска в редакторе Unity
+        // private void OnDrawGizmosSelected()
+        // {
+        //     Gizmos.color = Color.red;
+        //     Gizmos.DrawWireSphere(transform.position, scanRadius);
+        // }
 
         private void Subscribe()
         {

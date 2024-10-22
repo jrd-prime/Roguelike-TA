@@ -4,8 +4,12 @@ using Cysharp.Threading.Tasks;
 using Game.Scripts.Framework;
 using Game.Scripts.Framework.Configuration;
 using Game.Scripts.Framework.ScriptableObjects;
+using Game.Scripts.Framework.Systems.Follow;
+using Game.Scripts.Player;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.Assertions;
+using UnityEngine.ResourceManagement.AsyncOperations;
 using VContainer;
 using Random = UnityEngine.Random;
 
@@ -25,6 +29,9 @@ namespace Game.Scripts.Enemy
         private EnemyManagerSettings _enemyManagerSettings;
 
         private CustomPool<EnemyHolder> _enemyHolderPool;
+        private PlayerModel _target;
+
+        Dictionary<string, GameObject> _enemyPrefabs = new();
 
         [Inject]
         private void Construct(IObjectResolver container)
@@ -32,6 +39,7 @@ namespace Game.Scripts.Enemy
             Debug.LogWarning($"Enemies manager construct");
             _configManager = container.Resolve<IConfigManager>();
             _spawnPointsManager = container.Resolve<SpawnPointsManager>();
+            _target = container.Resolve<PlayerModel>();
         }
 
         private void Awake()
@@ -48,29 +56,37 @@ namespace Game.Scripts.Enemy
 
         private async void Start()
         {
-            for (int i = 0; i < 300; i++)
+            for (int i = 0; i < 33; i++)
             {
                 SpawnEnemy();
-        
-                await UniTask.Delay(300);
+
+                await UniTask.Delay(500);
             }
-        
-            DespawnAllEnemies();
         }
 
-   
 
-        public void SpawnEnemy()
+        public async void SpawnEnemy()
         {
-            Debug.LogWarning("Spawn enemy");
+            // Debug.LogWarning("Spawn enemy");
             // get object from pool
             EnemyHolder enemyHolder = _enemyHolderPool.Get();
+
 
             // generate id
             var enemyId = Guid.NewGuid().ToString();
 
             // apply settings
-            enemyHolder.FillEnemySettings(enemyId, _enemiesSettingsList[Random.Range(0, _enemiesSettingsList.Count)]);
+            var enemySettings = _enemiesSettingsList[Random.Range(0, _enemiesSettingsList.Count)];
+
+
+            // Debug.LogWarning("Start inst");
+            var handle = await Addressables.InstantiateAsync(enemySettings.enemyPrefab, parent: enemyHolder.transform);
+
+            // Debug.LogWarning("End inst");
+
+            _enemyPrefabs.Add(handle.GetHashCode().ToString(), handle);
+
+            enemyHolder.FillEnemySettings(enemyId, enemySettings, _target);
 
             // add enemy to cache
             _enemies.Add(enemyId, enemyHolder);
@@ -98,10 +114,11 @@ namespace Game.Scripts.Enemy
 
         private void DespawnAllEnemies()
         {
-            foreach (var activeEnemy in new List<EnemyHolder>(_enemyHolderPool.GetActiveCount()))
+            Debug.LogWarning("Despawn all enemies");
+            foreach (var activeEnemy in _enemies)
             {
-                activeEnemy.OnDespawn();
-                _enemyHolderPool.Return(activeEnemy);
+                activeEnemy.Value.OnDespawn();
+                _enemyHolderPool.Return(activeEnemy.Value);
             }
         }
     }

@@ -19,7 +19,6 @@ namespace Game.Scripts.Framework.Scopes
         {
             Debug.LogWarning("<color=cyan>GAME CONTEXT</color>");
 
-
             builder.Register<PlayerViewModel>(Lifetime.Singleton).AsImplementedInterfaces();
             builder.Register<JoystickViewModel>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
 
