@@ -1,8 +1,8 @@
 ﻿using Game.Scripts.UI;
 using Game.Scripts.UI.Base;
-using Game.Scripts.UI.Models;
-using Game.Scripts.UI.ViewModels;
-using Game.Scripts.UI.Views;
+using Game.Scripts.UI.Menus.Models;
+using Game.Scripts.UI.Menus.ViewModels;
+using Game.Scripts.UI.Menus.Views;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;

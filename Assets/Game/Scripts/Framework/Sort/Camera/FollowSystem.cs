@@ -1,5 +1,4 @@
-﻿using Game.Scripts.Framework.Sort.Player;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Assertions;
 using VContainer;
 
@@ -16,10 +15,10 @@ namespace Game.Scripts.Framework.Sort.Camera
             _cameraController = cameraController;
         }
 
-        public void SetTarget(IPlayerViewModel target)
+        public void SetTarget(ITrackable target)
         {
             Assert.IsNotNull(_cameraController, "CameraController is null");
-            
+
             Debug.LogWarning("SetTarget: " + target);
             // TODO remove this
             if (_hasTarget)

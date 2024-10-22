@@ -1,4 +1,4 @@
-﻿using Game.Scripts.UI.Interfaces;
+﻿using Game.Scripts.UI.Menus.Interfaces;
 using R3;
 
 namespace Game.Scripts.UI.Base

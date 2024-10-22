@@ -30,7 +30,7 @@ namespace Game.Scripts.Framework.Bootstrap
                     service.LoaderServiceInitialization();
 
                     // fake delay per service
-                    await UniTask.Delay(1000);
+                    await UniTask.Delay(100);
                 }
                 catch (Exception ex)
                 {

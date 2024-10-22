@@ -1,5 +1,5 @@
 ﻿using System;
-using Game.Scripts.UI.Interfaces;
+using Game.Scripts.UI.Menus.Interfaces;
 using VContainer;
 
 namespace Game.Scripts.UI.Base

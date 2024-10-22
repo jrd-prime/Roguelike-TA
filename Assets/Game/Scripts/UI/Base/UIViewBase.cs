@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Game.Scripts.UI.Interfaces;
+using Game.Scripts.UI.Menus.Interfaces;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UIElements;

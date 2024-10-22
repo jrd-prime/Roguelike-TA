@@ -1,9 +1,7 @@
-using BackwoodsLife.Scripts.Framework.Manager.Input;
 using Game.Scripts.Framework.Providers.AssetProvider;
 using Game.Scripts.Framework.Sort.Camera;
 using Game.Scripts.Framework.Sort.Configuration;
-using Game.Scripts.Framework.Sort.Joystick;
-using Game.Scripts.Framework.Sort.Player;
+using Game.Scripts.Framework.Sort.Input;
 using Game.Scripts.Framework.Sort.ScriptableObjects;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -27,7 +25,7 @@ namespace Game.Scripts.Framework.Scopes
 
             // Components
             var input = Check(gameObject.AddComponent(typeof(MobileInput)));
-            builder.RegisterComponent(input).As<IInput>();
+            builder.RegisterComponent(input).AsSelf();
             builder.RegisterComponent(cameraController).As<ICameraController>();
             builder.RegisterComponent(eventSystem).AsSelf();
 
@@ -39,7 +37,6 @@ namespace Game.Scripts.Framework.Scopes
             builder.Register(typeof(AssetProvider), Lifetime.Singleton).As<IAssetProvider>();
             // Systems
             builder.Register<FollowSystem>(Lifetime.Singleton).AsSelf();
-
         }
 
 

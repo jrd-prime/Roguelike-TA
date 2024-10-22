@@ -30,7 +30,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 5828233799832149820}
+  - {fileID: 2123068649689691289}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4764412702822669971
@@ -45,8 +45,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 460da79b06664f2e935c2aa0229f4d55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainCamera: {fileID: 7975657557852541947}
---- !u!1001 &3045550052481266977
+  mainCamera: {fileID: 2538787982242740318}
+--- !u!1001 &7482550255880199812
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -67,22 +67,22 @@ PrefabInstance:
     - target: {fileID: 8836621433212430877, guid: 744f40524cbb33348bf6fb242ed82b82,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 14.94
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 8836621433212430877, guid: 744f40524cbb33348bf6fb242ed82b82,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -12.71
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8836621433212430877, guid: 744f40524cbb33348bf6fb242ed82b82,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.8305473
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 8836621433212430877, guid: 744f40524cbb33348bf6fb242ed82b82,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.5569481
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 8836621433212430877, guid: 744f40524cbb33348bf6fb242ed82b82,
         type: 3}
@@ -97,7 +97,7 @@ PrefabInstance:
     - target: {fileID: 8836621433212430877, guid: 744f40524cbb33348bf6fb242ed82b82,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 67.69
+      value: 90
       objectReference: {fileID: 0}
     - target: {fileID: 8836621433212430877, guid: 744f40524cbb33348bf6fb242ed82b82,
         type: 3}
@@ -114,15 +114,15 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 744f40524cbb33348bf6fb242ed82b82, type: 3}
---- !u!4 &5828233799832149820 stripped
+--- !u!4 &2123068649689691289 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8836621433212430877, guid: 744f40524cbb33348bf6fb242ed82b82,
     type: 3}
-  m_PrefabInstance: {fileID: 3045550052481266977}
+  m_PrefabInstance: {fileID: 7482550255880199812}
   m_PrefabAsset: {fileID: 0}
---- !u!20 &7975657557852541947 stripped
+--- !u!20 &2538787982242740318 stripped
 Camera:
   m_CorrespondingSourceObject: {fileID: 4966570886441510618, guid: 744f40524cbb33348bf6fb242ed82b82,
     type: 3}
-  m_PrefabInstance: {fileID: 3045550052481266977}
+  m_PrefabInstance: {fileID: 7482550255880199812}
   m_PrefabAsset: {fileID: 0}

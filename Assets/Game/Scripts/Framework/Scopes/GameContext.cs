@@ -1,8 +1,8 @@
 ﻿using Game.Scripts.Framework.GameStateMachine;
 using Game.Scripts.Framework.GameStateMachine.State;
-using Game.Scripts.Framework.Sort.Joystick;
-using Game.Scripts.Framework.Sort.Player;
+using Game.Scripts.Player;
 using Game.Scripts.UI;
+using Game.Scripts.UI.Joystick;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;

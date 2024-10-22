@@ -1,4 +1,4 @@
-﻿namespace BackwoodsLife.Scripts.Data.Const
+﻿namespace Game.Scripts.Framework.Sort
 {
     public static class SOPathConst
     {
