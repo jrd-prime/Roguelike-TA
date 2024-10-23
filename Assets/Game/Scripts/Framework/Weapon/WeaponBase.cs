@@ -33,27 +33,13 @@ namespace Game.Scripts.Framework.Weapon
             Assert.IsNotNull(_assetProvider, $"Asset provider is null. Add {this} to auto inject");
 
             settings = _configManager.GetConfig<WeaponSettings>();
-
-            // var weapon = await _assetProvider.InstantiateAsync(settings.weaponPrefabReference);
-            //
-            // var projectileObj = await _assetProvider.InstantiateAsync(settings.projectilePrefabReference);
-            // var projectile = projectileObj.GetComponent<Projectile>();
-            // var projectilePool = new CustomPool<Projectile>(projectile, 100, transform);
-
-            // Debug.LogWarning(weapon);
         }
 
         public void Shoot(Vector3 targetPosition, Projectile projectile)
         {
             Debug.LogWarning("Shoot");
             projectile.gameObject.SetActive(true);
-            projectile.MoveToTarget(muzzlePosition.position, new Vector3(targetPosition.x, .5f, targetPosition.z));
-        }
-
-
-        protected async UniTask<GameObject> InstantiateWeapon(AssetReference assetReference)
-        {
-            return await Addressables.InstantiateAsync(settings.weaponPrefabReference);
+            projectile.MoveToTarget(muzzlePosition.position, new Vector3(targetPosition.x, .3f, targetPosition.z));
         }
     }
 }

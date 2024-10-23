@@ -14,6 +14,7 @@ namespace Game.Scripts.Framework.Scopes
     {
         [SerializeField] private UIManager uiManager;
         [SerializeField] private SpawnPointsManager spawnPointsManager;
+        [SerializeField] private EnemiesManager enemiesManager;
 
         protected override void Configure(IContainerBuilder builder)
         {
@@ -30,6 +31,7 @@ namespace Game.Scripts.Framework.Scopes
 
             builder.RegisterComponent(uiManager).AsSelf().AsImplementedInterfaces();
             builder.RegisterComponent(spawnPointsManager).AsSelf().AsImplementedInterfaces();
+            builder.RegisterComponent(enemiesManager).AsSelf().AsImplementedInterfaces();
 
             // State machine
             builder.Register<StateMachine>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();

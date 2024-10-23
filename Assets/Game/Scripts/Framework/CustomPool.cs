@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using Game.Scripts.Enemy;
+using Game.Scripts.Framework.Providers.AssetProvider;
 using UnityEngine;
+using VContainer;
 using Object = UnityEngine.Object;
 
 namespace Game.Scripts.Framework
@@ -11,16 +14,21 @@ namespace Game.Scripts.Framework
         private readonly bool _allowGrowth;
         private int _poolSize;
         private readonly Transform _parent;
+        private readonly IObjectResolver _container;
 
         private readonly Queue<T> _cache = new();
         private readonly HashSet<T> _activeObjects = new(); // Для проверки активных объектов
+        private readonly IAssetProvider _assetProvider;
 
-        public CustomPool(T prefab, int poolSize, Transform parent, bool allowGrowth = false)
+
+        public CustomPool(T prefab, int poolSize, Transform parent, IObjectResolver container, bool allowGrowth = false)
         {
             _prefab = prefab;
             _poolSize = poolSize;
             _parent = parent;
             _allowGrowth = allowGrowth;
+            _container = container;
+            _assetProvider = container.Resolve<IAssetProvider>();
 
             Initialize();
         }
@@ -30,9 +38,14 @@ namespace Game.Scripts.Framework
             for (var i = 0; i < _poolSize; i++) CreateObject();
         }
 
-        private void CreateObject()
+        private async void CreateObject()
         {
+            Debug.LogWarning($"Instantiate ");
             var go = Object.Instantiate(_prefab, _parent);
+
+
+            Debug.LogWarning($"construct {go.GetType()}");
+            _container.Inject(go);
             go.gameObject.SetActive(false);
             _cache.Enqueue(go);
         }
@@ -65,6 +78,7 @@ namespace Game.Scripts.Framework
 
             if (_activeObjects.Contains(obj))
             {
+                Debug.LogWarning($"Return {obj.GetType()}");
                 obj.gameObject.SetActive(false);
                 _activeObjects.Remove(obj);
                 _cache.Enqueue(obj);

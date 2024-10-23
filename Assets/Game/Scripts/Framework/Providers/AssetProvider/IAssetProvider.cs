@@ -17,7 +17,7 @@ namespace Game.Scripts.Framework.Providers.AssetProvider
         public UniTask<GameObject> LoadAssetAsync(AssetReferenceGameObject assetReferenceGameObject);
         public UniTask<GameObject> InstantiateAsync(string assetId, Transform parent = null);
         public UniTask<GameObject> InstantiateAsync(AssetReference assetId, Vector3 fixedPositionValue);
-        public UniTask<GameObject> InstantiateAsync(AssetReference assetId, Transform position = null);
+        public UniTask<GameObject> InstantiateAsync(AssetReference assetId, Transform parent = null);
         public UniTask<Sprite> LoadIconAsync(string elementTypeName);
         public Sprite GetIconFromRef(AssetReferenceTexture2D icon);
     }

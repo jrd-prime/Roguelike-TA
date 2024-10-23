@@ -1,11 +1,10 @@
 ﻿using System;
+using Game.Scripts.Enemy;
 using UnityEngine;
 
 namespace Game.Scripts.Framework.Weapon
 {
-    [RequireComponent(
-        // typeof(Rigidbody), 
-        typeof(SphereCollider))]
+    [RequireComponent(typeof(SphereCollider))]
     public class Projectile : MonoBehaviour
     {
         public float speed = 100f; // Скорость движения снаряда
@@ -13,14 +12,8 @@ namespace Game.Scripts.Framework.Weapon
 
         private Vector3 targetPoint; // Точка назначения
         private bool isMoving = false; // Флаг, показывающий, движется ли снаряд
-        private Rigidbody _rb;
-        private Vector3 _st;
-        private Vector3 _end;
-
-        private void Awake()
-        {
-            _rb = gameObject.GetComponent<Rigidbody>();
-        }
+        public float damage { get; set; }
+        public Action callback { get; set; }
 
         private void FixedUpdate()
         {
@@ -30,22 +23,9 @@ namespace Game.Scripts.Framework.Weapon
             }
         }
 
-        private void OnDrawGizmos()
-        {
-            // Установите цвет линии
-            Gizmos.color = Color.red;
-
-            // Нарисуйте линию от старта к цели
-            Gizmos.DrawLine(_st, _end);
-        }
-
         // Этот метод будет вызываться извне
         public void MoveToTarget(Vector3 startPoint, Vector3 targetPoint)
         {
-            _st = startPoint;
-            _end = targetPoint;
-
-            Debug.LogWarning("Move to target");
             this.targetPoint = targetPoint; // Устанавливаем цель
             transform.position = startPoint; // Устанавливаем начальную точку
             isMoving = true; // Запускаем движение
@@ -71,9 +51,6 @@ namespace Game.Scripts.Framework.Weapon
         {
             isMoving = false; // Останавливаем движение
             Debug.Log("Target hit!");
-
-            // Логика при попадании
-            Destroy(gameObject); // Уничтожить снаряд после попадания (опционально)
         }
 
         void OnTriggerEnter(Collider other)
@@ -83,7 +60,10 @@ namespace Game.Scripts.Framework.Weapon
             {
                 Debug.Log("Hit an enemy!");
 
-                other.gameObject.SetActive(false);
+                var enemy = other.GetComponent<EnemyHolder>();
+                enemy.TakeDamage(damage);
+
+                callback.Invoke();
                 // Можно вызвать OnHitTarget для завершения движения
                 OnHitTarget();
             }

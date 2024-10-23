@@ -1,7 +1,7 @@
-﻿using Game.Scripts.Framework.ScriptableObjects;
-using Game.Scripts.Framework.ScriptableObjects.Enemy;
+﻿using Game.Scripts.Framework.ScriptableObjects.Enemy;
 using Game.Scripts.Player;
 using UnityEngine;
+using VContainer;
 
 namespace Game.Scripts.Enemy
 {
@@ -15,7 +15,15 @@ namespace Game.Scripts.Enemy
         private float _attackDelay;
         private float _damage;
         private float _speed;
+        private float _health;
         private float _lastAttackTime = 0f;
+        private EnemiesManager _enemiesManager;
+
+        [Inject]
+        private void Construct(EnemiesManager enemiesManager)
+        {
+            _enemiesManager = enemiesManager;
+        }
 
         private void Awake()
         {
@@ -54,12 +62,36 @@ namespace Game.Scripts.Enemy
 
         public void FillEnemySettings(string enemyId, EnemySettings enemiesSettings, PlayerModel targetModel)
         {
+            Debug.LogWarning("em = " + _enemiesManager);
             EnemyID = enemyId;
             _enemyName = enemiesSettings.enemyName;
             _target = targetModel;
             _speed = enemiesSettings.speed;
             _attackDelay = enemiesSettings.attackDelay;
             _damage = enemiesSettings.damage;
+            _health = enemiesSettings.health;
+        }
+
+        public void TakeDamage(float damage)
+        {
+            Debug.LogWarning($"Enemy {EnemyID} took {damage} damage");
+
+            _health -= damage;
+
+            if (_health > 0)
+            {
+                // show damage update ui
+                OnTakeDamage(damage);
+                return;
+            }
+
+            OnDie();
+        }
+
+        private void OnDie()
+        {
+            Debug.LogWarning("On die = " + EnemyID);
+            _enemiesManager.EnemyDie(EnemyID);
         }
 
         public void OnSpawn()
@@ -70,6 +102,22 @@ namespace Game.Scripts.Enemy
         public void OnDespawn()
         {
             // Debug.Log("Enemy despawned");
+        }
+
+        public void OnTakeDamage(float damage)
+        {
+            Debug.LogWarning($"I'm taking damage! Was: {_health + damage} Now: {_health}");
+        }
+
+        public void ClearEnemySettings()
+        {
+            EnemyID = default;
+            _enemyName = default;
+            _target = default;
+            _speed = default;
+            _attackDelay = default;
+            _damage = default;
+            _health = default;
         }
     }
 }

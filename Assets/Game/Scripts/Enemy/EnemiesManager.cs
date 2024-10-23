@@ -25,19 +25,20 @@ namespace Game.Scripts.Enemy
         private Dictionary<string, EnemyHolder> _enemies = new();
         private IConfigManager _configManager;
         private List<EnemySettings> _enemiesSettingsList;
-        private EnemyPool _enemyPool;
         private SpawnPointsManager _spawnPointsManager;
         private EnemyManagerSettings _enemyManagerSettings;
 
-        private CustomPool<EnemyHolder> _enemyHolderPool;
+        private CustomPool<EnemyHolder> _enemyPool;
         private PlayerModel _target;
 
         Dictionary<string, GameObject> _enemyPrefabs = new();
+        private IObjectResolver _container;
 
         [Inject]
         private void Construct(IObjectResolver container)
         {
             Debug.LogWarning($"Enemies manager construct");
+            _container = container;
             _configManager = container.Resolve<IConfigManager>();
             _spawnPointsManager = container.Resolve<SpawnPointsManager>();
             _target = container.Resolve<PlayerModel>();
@@ -51,13 +52,13 @@ namespace Game.Scripts.Enemy
             _enemiesSettingsList = _configManager.GetConfig<EnemiesMainSettings>().enemies;
             _enemyManagerSettings = _configManager.GetConfig<EnemyManagerSettings>();
 
-            _enemyHolderPool =
-                new CustomPool<EnemyHolder>(_enemyManagerSettings.enemyHolderPrefab, 100, transform, true);
+            _enemyPool =
+                new CustomPool<EnemyHolder>(_enemyManagerSettings.enemyHolderPrefab, 100, transform, _container, true);
         }
 
         private async void Start()
         {
-            for (int i = 0; i < 20; i++)
+            for (int i = 0; i < 55; i++)
             {
                 SpawnEnemy();
 
@@ -70,7 +71,7 @@ namespace Game.Scripts.Enemy
         {
             // Debug.LogWarning("Spawn enemy");
             // get object from pool
-            EnemyHolder enemyHolder = _enemyHolderPool.Get();
+            EnemyHolder enemyHolder = _enemyPool.Get();
 
 
             // generate id
@@ -119,8 +120,24 @@ namespace Game.Scripts.Enemy
             foreach (var activeEnemy in _enemies)
             {
                 activeEnemy.Value.OnDespawn();
-                _enemyHolderPool.Return(activeEnemy.Value);
+                _enemyPool.Return(activeEnemy.Value);
             }
+        }
+
+        public void EnemyDie(string enemyID)
+        {
+            if (!_enemies.ContainsKey(enemyID))
+            {
+                Debug.LogWarning($"Enemy not found! {enemyID}");
+                return;
+            }
+
+            Debug.LogWarning($"Enemy FOUND! {enemyID}");
+            var enemy = _enemies[enemyID];
+
+            enemy.ClearEnemySettings();
+
+            _enemyPool.Return(enemy);
         }
     }
 

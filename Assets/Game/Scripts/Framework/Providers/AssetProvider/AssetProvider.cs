@@ -49,10 +49,10 @@ namespace Game.Scripts.Framework.Providers.AssetProvider
             return await handle.Task;
         }
 
-        public async UniTask<GameObject> InstantiateAsync(AssetReference assetId, Transform position)
+        public async UniTask<GameObject> InstantiateAsync(AssetReference assetId, Transform parent = null)
         {
             // await CheckAsset(assetId);
-            var handle = Addressables.InstantiateAsync(assetId, position);
+            var handle = Addressables.InstantiateAsync(assetId, parent);
             return await handle.Task;
         }
 

@@ -33,12 +33,18 @@ namespace Game.Scripts.Player
 
         private readonly CompositeDisposable _disposables = new();
 
+        public WeaponBase weapon { get; set; }
+
+        public CustomPool<Projectile> projectilePool;
+
         [Inject]
-        private void Construct(IPlayerViewModel viewModel, IAssetProvider assetProvider, IConfigManager configManager)
+        private void Construct(IPlayerViewModel viewModel, IAssetProvider assetProvider, IConfigManager configManager,
+            IObjectResolver container)
         {
             _viewModel = viewModel;
             _assetProvider = assetProvider;
             _configManager = configManager;
+            _container = container;
         }
 
 
@@ -53,25 +59,21 @@ namespace Game.Scripts.Player
             _viewModel.SetModelPosition(_rb.position);
 
 
-            var settings = _configManager.GetConfig<CharacterSettings>().weapon;
+            weaponSettings = _configManager.GetConfig<CharacterSettings>().weapon;
 
             var weaponGO =
-                await _assetProvider.InstantiateAsync(settings.weaponPrefabReference, weaponHoldPont.transform);
+                await _assetProvider.InstantiateAsync(weaponSettings.weaponPrefabReference, weaponHoldPont.transform);
             weapon = weaponGO.GetComponent<WeaponBase>();
-            var projectileObj = await _assetProvider.InstantiateAsync(settings.projectilePrefabReference);
+            var projectileObj = await _assetProvider.InstantiateAsync(weaponSettings.projectilePrefabReference);
 
             projectileObj.SetActive(false);
             var projectile = projectileObj.GetComponent<Projectile>();
             projectilePool =
-                new CustomPool<Projectile>(projectile, 100, null);
+                new CustomPool<Projectile>(projectile, 100, null, _container);
 
 
             Subscribe();
         }
-
-        public WeaponBase weapon { get; set; }
-
-        public CustomPool<Projectile> projectilePool;
 
         private void Start()
         {
@@ -84,6 +86,7 @@ namespace Game.Scripts.Player
         private IAssetProvider _assetProvider;
         private IConfigManager _configManager;
         private Vector3 _nearestEnemyS;
+        private IObjectResolver _container;
 
         private void FixedUpdate()
         {
@@ -114,17 +117,23 @@ namespace Game.Scripts.Player
 
             _nearestEnemyS = nearestEnemy.transform.position;
             var projectile = projectilePool.Get();
+            projectile.damage = weaponSettings.damage;
+
+            projectile.callback = () => projectilePool.Return(projectile);
+            Debug.LogWarning("Set damage = " + projectile.damage);
 
             Debug.LogWarning($"Shoot at {nearestEnemy.transform.position}");
 
 
             weapon.Shoot(nearestEnemy.transform.position, projectile);
 
-            await UniTask.Delay(2000); // Задержка
+            await UniTask.Delay(500); // Задержка
 
             isShooting = false; // После завершения сбрасываем флаг
             // Дополнительные действия после задержки, например, стрельба по следующей цели
         }
+
+        public WeaponSettings weaponSettings { get; set; }
 
 
         private GameObject FindNearestEnemy()
@@ -146,7 +155,7 @@ namespace Game.Scripts.Player
                 float angle = Vector3.Angle(transform.forward, directionToTarget);
 
                 // Проверяем, находится ли цель в пределах угла конуса
-                if (angle <= 135 / 2)
+                if (angle <= 45 / 2)
                 {
                     float distanceToEnemy = Vector3.Distance(scanCenter, hitCollider.transform.position);
 
@@ -155,7 +164,8 @@ namespace Game.Scripts.Player
                         closestDistance = distanceToEnemy;
                         closestEnemy = hitCollider.gameObject;
                         var id = closestEnemy.GetComponent<EnemyHolder>().EnemyID;
-                        Debug.LogWarning($"closestEnemy position when find = {closestEnemy.transform.position} / id = {id}");
+                        Debug.LogWarning(
+                            $"closestEnemy position when find = {closestEnemy.transform.position} / id = {id}");
 
 
                         // var a = closestEnemy.GetComponent<EnemyHolder>();

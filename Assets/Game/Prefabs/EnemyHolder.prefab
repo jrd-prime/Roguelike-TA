@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 704360124153178353}
   - component: {fileID: 6088018448892901371}
   - component: {fileID: 292423874285756447}
-  - component: {fileID: 3247217354834945436}
+  - component: {fileID: 7663022528200343870}
   m_Layer: 0
   m_Name: EnemyHolder
   m_TagString: Enemy
@@ -125,8 +125,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &3247217354834945436
-SphereCollider:
+--- !u!136 &7663022528200343870
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -143,6 +143,8 @@ SphereCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.17
-  m_Center: {x: 0, y: 0, z: 0}
+  serializedVersion: 2
+  m_Radius: 0.23
+  m_Height: 0.91
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.45, z: 0}
