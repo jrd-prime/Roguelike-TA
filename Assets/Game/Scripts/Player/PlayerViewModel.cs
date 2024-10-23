@@ -1,8 +1,4 @@
 ﻿using Game.Scripts.Animation;
-using Game.Scripts.Framework.Configuration;
-using Game.Scripts.Framework.ScriptableObjects;
-using Game.Scripts.Framework.Systems.Follow;
-using Game.Scripts.UI.Joystick;
 using R3;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -21,42 +17,24 @@ namespace Game.Scripts.Player
         public ReactiveProperty<CharacterActionDto> CharacterAction { get; } = new();
         public ReactiveProperty<bool> IsInAction { get; } = new(false);
 
-
-        private IConfigManager _configManager;
         private PlayerModel _model;
-        private FollowSystem _followSystem;
-        private JoystickModel _joystick;
-
         private readonly CompositeDisposable _disposables = new();
 
         [Inject]
-        private void Construct(IObjectResolver container)
-        {
-            _model = container.Resolve<PlayerModel>();
-            _joystick = container.Resolve<JoystickModel>();
-            _configManager = container.Resolve<IConfigManager>();
-            _followSystem = container.Resolve<FollowSystem>();
-        }
+        private void Construct(IObjectResolver container) => _model = container.Resolve<PlayerModel>();
 
         public void Initialize()
         {
-            Assert.IsNotNull(_followSystem, $"{_followSystem.GetType()} is null.");
-            _followSystem.SetTarget(this);
-
-            Assert.IsNotNull(_configManager, $"{_configManager.GetType()} is null.");
-            var characterConfiguration = _configManager.GetConfig<CharacterSettings>();
-            Assert.IsNotNull(characterConfiguration, "Character configuration not found!");
-
-            _model.SetMoveSpeed(characterConfiguration.moveSpeed);
-            _model.SetRotationSpeed(characterConfiguration.rotationSpeed);
-
+            Assert.IsNotNull(_model.followSystem, $"FollowSystem is null.");
+            _model.followSystem.SetTarget(this);
+            
             Subscribe();
         }
 
         private void Subscribe()
         {
             //TODO on drop joystick slow speed down
-            _joystick.MoveDirection
+            _model.joystick.MoveDirection
                 .Subscribe(joystickDirection => _model.SetMoveDirection(joystickDirection))
                 .AddTo(_disposables);
         }

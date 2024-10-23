@@ -7,6 +7,7 @@ using Game.Scripts.Framework.Systems.Follow;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.EventSystems;
+using UnityEngine.Serialization;
 using VContainer;
 using VContainer.Unity;
 
@@ -14,7 +15,7 @@ namespace Game.Scripts.Framework.Scopes
 {
     public class RootContext : LifetimeScope
     {
-        [SerializeField] private SMainConfig sMainConfig;
+        [FormerlySerializedAs("sMainConfig")] [SerializeField] private MainSettings mainSettings;
         [SerializeField] private CameraController cameraController;
         [SerializeField] private EventSystem eventSystem;
 
@@ -30,7 +31,7 @@ namespace Game.Scripts.Framework.Scopes
             builder.RegisterComponent(cameraController).As<ICameraController>();
             builder.RegisterComponent(eventSystem).AsSelf();
 
-            builder.RegisterInstance(sMainConfig);
+            builder.RegisterInstance(mainSettings);
 
             // Services
             builder.Register<ConfigManager>(Lifetime.Singleton).AsImplementedInterfaces();

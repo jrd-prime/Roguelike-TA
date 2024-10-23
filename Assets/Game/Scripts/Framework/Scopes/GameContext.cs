@@ -19,20 +19,21 @@ namespace Game.Scripts.Framework.Scopes
         {
             Debug.LogWarning("<color=cyan>GAME CONTEXT</color>");
 
-            builder.Register<PlayerViewModel>(Lifetime.Singleton).AsImplementedInterfaces();
+            // Movement
+            builder.Register<JoystickModel>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
             builder.Register<JoystickViewModel>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
 
-            // Model
+            // Character
             builder.Register<PlayerModel>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
-            builder.Register<JoystickModel>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
+            builder.Register<PlayerViewModel>(Lifetime.Singleton).AsImplementedInterfaces();
 
 
             builder.RegisterComponent(uiManager).AsSelf().AsImplementedInterfaces();
             builder.RegisterComponent(spawnPointsManager).AsSelf().AsImplementedInterfaces();
+
+            // State machine
             builder.Register<StateMachine>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
             builder.Register<GameStateBase>(Lifetime.Singleton).AsSelf();
-
-            // States
             builder.Register<MenuState>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
             builder.Register<GamePlayState>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
             builder.Register<SettingsState>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();

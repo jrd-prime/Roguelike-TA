@@ -1,8 +1,17 @@
-﻿using Game.Scripts.Animation;
+﻿using System;
+using Cysharp.Threading.Tasks;
+using Game.Scripts.Animation;
 using Game.Scripts.Enemy;
+using Game.Scripts.Framework;
+using Game.Scripts.Framework.Configuration;
+using Game.Scripts.Framework.Providers.AssetProvider;
+using Game.Scripts.Framework.ScriptableObjects.Character;
+using Game.Scripts.Framework.ScriptableObjects.Weapon;
+using Game.Scripts.Framework.Weapon;
 using R3;
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.Serialization;
 using VContainer;
 
 namespace Game.Scripts.Player
@@ -10,6 +19,9 @@ namespace Game.Scripts.Player
     [RequireComponent(typeof(Rigidbody), typeof(Animator), typeof(CapsuleCollider))]
     public class PlayerView : MonoBehaviour
     {
+        [FormerlySerializedAs("shootFromPoint")]
+        public GameObject weaponHoldPont;
+
         private IPlayerViewModel _viewModel;
         private float _moveSpeed;
         private float _rotationSpeed;
@@ -17,78 +29,143 @@ namespace Game.Scripts.Player
         private Rigidbody _rb;
         private Vector3 _moveDirection;
         private bool _isMovementBlocked;
+        public float scanRadius;
 
         private readonly CompositeDisposable _disposables = new();
 
         [Inject]
-        private void Construct(IPlayerViewModel viewModel) => _viewModel = viewModel;
+        private void Construct(IPlayerViewModel viewModel, IAssetProvider assetProvider, IConfigManager configManager)
+        {
+            _viewModel = viewModel;
+            _assetProvider = assetProvider;
+            _configManager = configManager;
+        }
 
 
-        private void Awake()
+        private async void Awake()
         {
             Assert.IsNotNull(_viewModel,
-                $"ViewModel is null. Ensure that \"{this}\" is added to auto-injection in GameSceneContext prefab");
+                $"ViewModel is null. Ensure that \"{this}\" is added to auto-injection in GameContext prefab");
 
             _rb = GetComponent<Rigidbody>();
             _animator = gameObject.GetComponent<Animator>();
 
             _viewModel.SetModelPosition(_rb.position);
 
+
+            var settings = _configManager.GetConfig<CharacterSettings>().weapon;
+
+            var weaponGO =
+                await _assetProvider.InstantiateAsync(settings.weaponPrefabReference, weaponHoldPont.transform);
+            weapon = weaponGO.GetComponent<WeaponBase>();
+            var projectileObj = await _assetProvider.InstantiateAsync(settings.projectilePrefabReference);
+
+            projectileObj.SetActive(false);
+            var projectile = projectileObj.GetComponent<Projectile>();
+            projectilePool =
+                new CustomPool<Projectile>(projectile, 100, null);
+
+
             Subscribe();
         }
 
-        private void FixedUpdate() => CharacterMovement();
+        public WeaponBase weapon { get; set; }
 
-        public float scanRadius = 1f; // Радиус сканирования
+        public CustomPool<Projectile> projectilePool;
+
+        private void Start()
+        {
+            _charGun = gameObject.GetComponent<CharacterGun>();
+        }
+
         private GameObject nearestEnemy; // Переменная для хранения ближайшего врага
+        private CharacterGun _charGun;
+        private bool isShooting = false;
+        private IAssetProvider _assetProvider;
+        private IConfigManager _configManager;
+        private Vector3 _nearestEnemyS;
 
-        // private void Update()
-        // {
-        //     nearestEnemy = FindNearestEnemy();
-        //     if (nearestEnemy != null)
-        //     {
-        //         Debug.Log("Ближайший враг: " + nearestEnemy.name);
-        //         // Дополнительные действия с ближайшим врагом
-        //     }
-        // }
+        private void FixedUpdate()
+        {
+            // Debug.LogWarning($"FixedUpdate {projectilePool}");
 
-        // private GameObject FindNearestEnemy()
-        // {
-        //     Vector3 scanCenter = transform.position;
-        //     Collider[] hitColliders = Physics.OverlapSphere(scanCenter, scanRadius);
-        //
-        //     GameObject closestEnemy = null;
-        //     float closestDistance = Mathf.Infinity;
-        //
-        //     foreach (var hitCollider in hitColliders)
-        //     {
-        //         // Проверяем, есть ли у объекта тег "Enemy"
-        //         if (hitCollider.CompareTag("Enemy"))
-        //         {
-        //             float distanceToEnemy = Vector3.Distance(scanCenter, hitCollider.transform.position);
-        //
-        //             if (distanceToEnemy < closestDistance)
-        //             {
-        //                 closestDistance = distanceToEnemy;
-        //                 closestEnemy = hitCollider.gameObject;
-        //
-        //                 var a = closestEnemy.GetComponent<EnemyHolder>();
-        //                 Debug.LogWarning($"Enemy found: {a.EnemyID}");
-        //                 
-        //                 a.gameObject.SetActive(false);
-        //             }
-        //         }
-        //     }
-        //
-        //     return closestEnemy;
-        // }
+            if (!isShooting) // Проверяем, что не выполняется уже стрельба
+            {
+                nearestEnemy = FindNearestEnemy();
+                if (nearestEnemy != null)
+                {
+                    // Запускаем стрельбу
+                    ShootAtTarget(nearestEnemy);
+                }
+            }
 
-        // // Визуализация радиуса поиска в редакторе Unity
-        // private void OnDrawGizmosSelected()
-        // {
-        //     Gizmos.color = Color.red;
-        //     Gizmos.DrawWireSphere(transform.position, scanRadius);
-        // }
+            CharacterMovement();
+        }
+
+        private void OnDrawGizmos()
+        {
+            Gizmos.color = new Color(55, 55, 55, 0.2f);
+            Gizmos.DrawSphere(_nearestEnemyS + new Vector3(0, 0.5f, 0), 1f);
+        }
+
+        private async void ShootAtTarget(GameObject nearestEnemy)
+        {
+            isShooting = true;
+
+            _nearestEnemyS = nearestEnemy.transform.position;
+            var projectile = projectilePool.Get();
+
+            Debug.LogWarning($"Shoot at {nearestEnemy.transform.position}");
+
+
+            weapon.Shoot(nearestEnemy.transform.position, projectile);
+
+            await UniTask.Delay(2000); // Задержка
+
+            isShooting = false; // После завершения сбрасываем флаг
+            // Дополнительные действия после задержки, например, стрельба по следующей цели
+        }
+
+
+        private GameObject FindNearestEnemy()
+        {
+            GameObject closestEnemy = null;
+            float closestDistance = Mathf.Infinity;
+
+
+            Vector3 scanCenter = transform.position;
+            Collider[] hitColliders = Physics.OverlapSphere(scanCenter, scanRadius);
+
+            foreach (Collider hitCollider in hitColliders)
+            {
+                if (!hitCollider.CompareTag("Enemy")) continue;
+
+                Vector3 directionToTarget = (hitCollider.transform.position - scanCenter).normalized;
+
+                // Вычисляем угол между forwardDirection и directionToTarget
+                float angle = Vector3.Angle(transform.forward, directionToTarget);
+
+                // Проверяем, находится ли цель в пределах угла конуса
+                if (angle <= 135 / 2)
+                {
+                    float distanceToEnemy = Vector3.Distance(scanCenter, hitCollider.transform.position);
+
+                    if (distanceToEnemy < closestDistance)
+                    {
+                        closestDistance = distanceToEnemy;
+                        closestEnemy = hitCollider.gameObject;
+                        var id = closestEnemy.GetComponent<EnemyHolder>().EnemyID;
+                        Debug.LogWarning($"closestEnemy position when find = {closestEnemy.transform.position} / id = {id}");
+
+
+                        // var a = closestEnemy.GetComponent<EnemyHolder>();
+                    }
+                }
+            }
+
+            return closestEnemy;
+        }
+
 
         private void Subscribe()
         {

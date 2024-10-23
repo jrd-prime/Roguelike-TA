@@ -47,7 +47,7 @@ namespace Game.Scripts.Framework
                 return obj;
             }
 
-            if (!_allowGrowth) throw new NullReferenceException("Пул пуст и рост пула не разрешен!");
+            if (!_allowGrowth) throw new NullReferenceException("Pool is empty and growth is not allowed!");
 
             var newObj = Object.Instantiate(_prefab, _parent);
             newObj.gameObject.SetActive(false);

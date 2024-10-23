@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d7b5fe975a444c1bdb23332fcab8968, type: 3}
+  m_Name: CharGunSettings
+  m_EditorClassIdentifier: 
+  weaponPrefabReference:
+    m_AssetGUID: a4808e31edaa5e74aa450159175fc348
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
+  projectilePrefabReference:
+    m_AssetGUID: c5ad9f54c8e48994580fd6066be36f53
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
+  damage: 10
+  attackDelay: 1
+  attackRange: 5

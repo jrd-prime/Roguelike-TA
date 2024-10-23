@@ -17,22 +17,19 @@ namespace Game.Scripts.Framework.Configuration
             throw new NotImplementedException();
         }
 
-        // public Dictionary<string, ItemSettings> ItemsConfigCache { get; } = new();
-        // public Dictionary<string, RecipeSettings> RecipesConfigCache { get; } = new();
-
-        private SMainConfig _mainConfig;
+        private MainSettings _mainSettings;
 
         [Inject]
-        private void Construct(SMainConfig mainConfig) =>
-            _mainConfig = mainConfig;
+        private void Construct(MainSettings mainSettings) =>
+            _mainSettings = mainSettings;
 
         public void LoaderServiceInitialization()
         {
             ConfigsCache = new Dictionary<Type, object>();
 
-            AddToCache(_mainConfig.characterSettings);
-            AddToCache(_mainConfig.enemiesMainSettings);
-            AddToCache(_mainConfig.enemyManagerSettings);
+            AddToCache(_mainSettings.characterSettings);
+            AddToCache(_mainSettings.enemiesMainSettings);
+            AddToCache(_mainSettings.enemyManagerSettings);
 
             Debug.Log("ConfigManager LoaderServiceInitialization");
 

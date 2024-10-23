@@ -4,6 +4,7 @@ using Cysharp.Threading.Tasks;
 using Game.Scripts.Framework;
 using Game.Scripts.Framework.Configuration;
 using Game.Scripts.Framework.ScriptableObjects;
+using Game.Scripts.Framework.ScriptableObjects.Enemy;
 using Game.Scripts.Framework.Systems.Follow;
 using Game.Scripts.Player;
 using UnityEngine;
@@ -56,7 +57,7 @@ namespace Game.Scripts.Enemy
 
         private async void Start()
         {
-            for (int i = 0; i < 33; i++)
+            for (int i = 0; i < 20; i++)
             {
                 SpawnEnemy();
 

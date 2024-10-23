@@ -1,4 +1,5 @@
 ﻿using Game.Scripts.Framework.ScriptableObjects;
+using Game.Scripts.Framework.ScriptableObjects.Enemy;
 using Game.Scripts.Player;
 using UnityEngine;
 
@@ -36,10 +37,10 @@ namespace Game.Scripts.Enemy
             _rb.rotation = Quaternion.Slerp(_rb.rotation, lookRotation, 180 * Time.fixedDeltaTime);
 
 
-            if (distanceToTarget > 2f)
+            if (distanceToTarget > 1f)
             {
                 _rb.position =
-                    Vector3.MoveTowards(enemyPosition, targetPosition, _speed * Time.fixedDeltaTime);
+                    Vector3.MoveTowards(enemyPosition, targetPosition, _speed * 0.5f * Time.fixedDeltaTime);
             }
             else
             {
