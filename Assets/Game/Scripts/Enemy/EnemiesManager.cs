@@ -58,7 +58,7 @@ namespace Game.Scripts.Enemy
 
         private async void Start()
         {
-            for (int i = 0; i < 55; i++)
+            for (int i = 0; i < 33; i++)
             {
                 SpawnEnemy();
 

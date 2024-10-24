@@ -40,11 +40,7 @@ namespace Game.Scripts.Framework
 
         private async void CreateObject()
         {
-            Debug.LogWarning($"Instantiate ");
             var go = Object.Instantiate(_prefab, _parent);
-
-
-            Debug.LogWarning($"construct {go.GetType()}");
             _container.Inject(go);
             go.gameObject.SetActive(false);
             _cache.Enqueue(go);

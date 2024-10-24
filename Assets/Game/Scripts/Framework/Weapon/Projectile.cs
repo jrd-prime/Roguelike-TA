@@ -21,6 +21,12 @@ namespace Game.Scripts.Framework.Weapon
             {
                 MoveToTarget();
             }
+
+            if (!isMoving)
+            {
+                // Debug.LogWarning("Projectile is not moving");                
+                callback?.Invoke();
+            }
         }
 
         // Этот метод будет вызываться извне
@@ -33,7 +39,6 @@ namespace Game.Scripts.Framework.Weapon
 
         private void MoveToTarget()
         {
-            Debug.LogWarning($"position when start shoot = {targetPoint}");
             // Движение снаряда в направлении цели
             transform.position = Vector3.MoveTowards(transform.position, targetPoint, speed * Time.deltaTime);
 

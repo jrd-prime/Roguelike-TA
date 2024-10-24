@@ -1,6 +1,8 @@
 ﻿using Game.Scripts.Framework.ScriptableObjects.Enemy;
 using Game.Scripts.Player;
 using UnityEngine;
+using UnityEngine.Assertions;
+using UnityEngine.Serialization;
 using VContainer;
 
 namespace Game.Scripts.Enemy
@@ -16,8 +18,12 @@ namespace Game.Scripts.Enemy
         private float _damage;
         private float _speed;
         private float _health;
+        private float _currentHealth;
         private float _lastAttackTime = 0f;
         private EnemiesManager _enemiesManager;
+
+        [FormerlySerializedAs("enemyHUDController")] [FormerlySerializedAs("_hudController")] [SerializeField]
+        private EnemyHUD enemyHUD;
 
         [Inject]
         private void Construct(EnemiesManager enemiesManager)
@@ -28,6 +34,7 @@ namespace Game.Scripts.Enemy
         private void Awake()
         {
             _rb = gameObject.GetComponent<Rigidbody>();
+            Assert.IsNotNull(enemyHUD, $"HUDController is null. Add to {this}");
         }
 
         private void FixedUpdate()
@@ -70,15 +77,16 @@ namespace Game.Scripts.Enemy
             _attackDelay = enemiesSettings.attackDelay;
             _damage = enemiesSettings.damage;
             _health = enemiesSettings.health;
+            _currentHealth = _health;
         }
 
         public void TakeDamage(float damage)
         {
-            Debug.LogWarning($"Enemy {EnemyID} took {damage} damage");
+            Debug.LogWarning($"took {damage} damage. {_currentHealth} / {_health}");
 
-            _health -= damage;
+            _currentHealth -= damage;
 
-            if (_health > 0)
+            if (_currentHealth > 0)
             {
                 // show damage update ui
                 OnTakeDamage(damage);
@@ -106,7 +114,13 @@ namespace Game.Scripts.Enemy
 
         public void OnTakeDamage(float damage)
         {
-            Debug.LogWarning($"I'm taking damage! Was: {_health + damage} Now: {_health}");
+            Debug.LogWarning($"I'm taking damage! Was: {_currentHealth + damage} Now: {_currentHealth}");
+
+            var hpPercent = _currentHealth / _health;
+
+            Debug.LogWarning($"hpPercent = {hpPercent}");
+
+            enemyHUD.SetHP(hpPercent);
         }
 
         public void ClearEnemySettings()
@@ -118,6 +132,7 @@ namespace Game.Scripts.Enemy
             _attackDelay = default;
             _damage = default;
             _health = default;
+            _currentHealth = default;
         }
     }
 }

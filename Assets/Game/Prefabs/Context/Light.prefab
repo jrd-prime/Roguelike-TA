@@ -45,6 +45,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: DirectLight
       objectReference: {fileID: 0}
+    - target: {fileID: 3734000679153868316, guid: 27165e8acae397943ae1e35a19266d25,
+        type: 3}
+      propertyPath: m_Shadows.m_Type
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 8050660919096631455, guid: 27165e8acae397943ae1e35a19266d25,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -53,7 +58,7 @@ PrefabInstance:
     - target: {fileID: 8050660919096631455, guid: 27165e8acae397943ae1e35a19266d25,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 43.66
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8050660919096631455, guid: 27165e8acae397943ae1e35a19266d25,
         type: 3}
@@ -63,27 +68,27 @@ PrefabInstance:
     - target: {fileID: 8050660919096631455, guid: 27165e8acae397943ae1e35a19266d25,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.84169716
+      value: 0.85444456
       objectReference: {fileID: 0}
     - target: {fileID: 8050660919096631455, guid: 27165e8acae397943ae1e35a19266d25,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.524828
+      value: 0.50380856
       objectReference: {fileID: 0}
     - target: {fileID: 8050660919096631455, guid: 27165e8acae397943ae1e35a19266d25,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.10767453
+      value: 0.10930525
       objectReference: {fileID: 0}
     - target: {fileID: 8050660919096631455, guid: 27165e8acae397943ae1e35a19266d25,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.06713889
+      value: -0.06444996
       objectReference: {fileID: 0}
     - target: {fileID: 8050660919096631455, guid: 27165e8acae397943ae1e35a19266d25,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 63.89
+      value: 61.05
       objectReference: {fileID: 0}
     - target: {fileID: 8050660919096631455, guid: 27165e8acae397943ae1e35a19266d25,
         type: 3}
