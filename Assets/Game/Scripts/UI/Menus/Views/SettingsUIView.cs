@@ -11,6 +11,11 @@ namespace Game.Scripts.UI.Menus.Views
         private Button _musicButton;
         private Button _vfxButton;
 
+        protected override void Init()
+        {
+            
+        }
+
         protected override void InitElements()
         {
             _menuButton = RootVisualElement.Q<Button>(UIConst.MenuButtonIDName);

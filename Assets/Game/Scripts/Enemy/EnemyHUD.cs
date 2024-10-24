@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using DG.Tweening;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
@@ -13,9 +14,6 @@ namespace Game.Scripts.Enemy
         private float _hpBarWidth;
         private float _hpBarHeight;
 
-        private float _currentWidth;
-
-
         private void Awake()
         {
             Assert.IsNotNull(hpBarBackground, $"HPBarBackground is null. Add to {this}");
@@ -29,15 +27,12 @@ namespace Game.Scripts.Enemy
         {
             _hpBarWidth = hpBarRect.rect.width;
             _hpBarHeight = hpBarRect.rect.height;
-            _currentWidth = 1;
         }
 
-        public void SetHP(float hpProcentage)
+        public void SetHp(float hpPercentage)
         {
-            Debug.LogWarning($"Set hp bar {hpProcentage} / hpbar width {_hpBarWidth}");
-            hpBarRect.sizeDelta = new Vector2(_hpBarWidth * hpProcentage, _hpBarHeight);
-            // hpBar.fillAmount = hp / 100;
-            // hpText.text = $"{hp}%";
+            var newWidth = _hpBarWidth * hpPercentage;
+            hpBarRect.DOSizeDelta(new Vector2(newWidth, _hpBarHeight), .3f);
         }
     }
 }

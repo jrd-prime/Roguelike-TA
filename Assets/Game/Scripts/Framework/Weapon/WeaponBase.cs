@@ -39,7 +39,7 @@ namespace Game.Scripts.Framework.Weapon
         {
             Debug.LogWarning("Shoot");
             projectile.gameObject.SetActive(true);
-            projectile.MoveToTarget(muzzlePosition.position, new Vector3(targetPosition.x, .3f, targetPosition.z));
+            projectile.LaunchToTarget(muzzlePosition.position, new Vector3(targetPosition.x, .3f, targetPosition.z));
         }
     }
 }

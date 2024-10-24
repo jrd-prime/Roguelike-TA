@@ -28,5 +28,10 @@ namespace Game.Scripts.UI.Menus.Models
         {
             StateMachine.ChangeStateTo(UIType.Menu);
         }
+
+        public override void Initialize()
+        {
+            
+        }
     }
 }

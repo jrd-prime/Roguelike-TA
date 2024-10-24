@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Game.Scripts.Enemy;
-using Game.Scripts.Framework.Providers.AssetProvider;
 using UnityEngine;
 using VContainer;
 using Object = UnityEngine.Object;
@@ -12,13 +10,12 @@ namespace Game.Scripts.Framework
     {
         private readonly T _prefab;
         private readonly bool _allowGrowth;
-        private int _poolSize;
+        private readonly int _poolSize;
         private readonly Transform _parent;
         private readonly IObjectResolver _container;
 
         private readonly Queue<T> _cache = new();
         private readonly HashSet<T> _activeObjects = new(); // Для проверки активных объектов
-        private readonly IAssetProvider _assetProvider;
 
 
         public CustomPool(T prefab, int poolSize, Transform parent, IObjectResolver container, bool allowGrowth = false)
@@ -28,7 +25,6 @@ namespace Game.Scripts.Framework
             _parent = parent;
             _allowGrowth = allowGrowth;
             _container = container;
-            _assetProvider = container.Resolve<IAssetProvider>();
 
             Initialize();
         }
@@ -38,7 +34,7 @@ namespace Game.Scripts.Framework
             for (var i = 0; i < _poolSize; i++) CreateObject();
         }
 
-        private async void CreateObject()
+        private void CreateObject()
         {
             var go = Object.Instantiate(_prefab, _parent);
             _container.Inject(go);
@@ -66,31 +62,19 @@ namespace Game.Scripts.Framework
 
         public void Return(T obj)
         {
-            if (obj == null)
+            if (obj is null)
             {
-                Debug.LogError("Can't return null object to pool!");
+                Debug.Log("Can't return null object to pool!");
                 return;
             }
 
             if (_activeObjects.Contains(obj))
             {
-                Debug.LogWarning($"Return {obj.GetType()}");
                 obj.gameObject.SetActive(false);
                 _activeObjects.Remove(obj);
                 _cache.Enqueue(obj);
             }
-            else Debug.LogError("Object was taken not from this pool!");
-        }
-
-        public int GetAvailableCount()
-        {
-            return _cache.Count;
-        }
-
-        public int GetActiveCount()
-        {
-            Debug.LogWarning($"Active objects count: {_activeObjects.Count}");
-            return _activeObjects.Count;
+            else Debug.Log($"Object was taken not from this pool! {obj}");
         }
     }
 }

@@ -29,13 +29,24 @@ namespace Game.Scripts.Player
         private Rigidbody _rb;
         private Vector3 _moveDirection;
         private bool _isMovementBlocked;
-        public float scanRadius;
+        public float scanBoxHorizontal = 32f;
+        public float scanBoxVertical = 16f;
+        public LayerMask targetLayer;
 
+
+        private GameObject _nearestEnemy; // Переменная для хранения ближайшего врага
+        private CharacterGun _charGun;
+        private bool _isShooting = false;
+        private IAssetProvider _assetProvider;
+        private IConfigManager _configManager;
+        private Vector3 _nearestEnemyS;
+        private IObjectResolver _container;
         private readonly CompositeDisposable _disposables = new();
 
-        public WeaponBase weapon { get; set; }
+        private WeaponSettings weaponSettings { get; set; }
+        private WeaponBase weapon { get; set; }
 
-        public CustomPool<Projectile> projectilePool;
+        private CustomPool<Projectile> _projectilePool;
 
         [Inject]
         private void Construct(IPlayerViewModel viewModel, IAssetProvider assetProvider, IConfigManager configManager,
@@ -68,7 +79,7 @@ namespace Game.Scripts.Player
 
             projectileObj.SetActive(false);
             var projectile = projectileObj.GetComponent<Projectile>();
-            projectilePool =
+            _projectilePool =
                 new CustomPool<Projectile>(projectile, 100, null, _container);
 
 
@@ -80,25 +91,17 @@ namespace Game.Scripts.Player
             _charGun = gameObject.GetComponent<CharacterGun>();
         }
 
-        private GameObject nearestEnemy; // Переменная для хранения ближайшего врага
-        private CharacterGun _charGun;
-        private bool isShooting = false;
-        private IAssetProvider _assetProvider;
-        private IConfigManager _configManager;
-        private Vector3 _nearestEnemyS;
-        private IObjectResolver _container;
-
         private void FixedUpdate()
         {
             // Debug.LogWarning($"FixedUpdate {projectilePool}");
 
-            if (!isShooting) // Проверяем, что не выполняется уже стрельба
+            if (!_isShooting) // Проверяем, что не выполняется уже стрельба
             {
-                nearestEnemy = FindNearestEnemy();
-                if (nearestEnemy != null)
+                _nearestEnemy = FindNearestEnemy();
+                if (_nearestEnemy != null)
                 {
                     // Запускаем стрельбу
-                    ShootAtTarget(nearestEnemy);
+                    ShootAtTarget(_nearestEnemy);
                 }
             }
 
@@ -107,43 +110,42 @@ namespace Game.Scripts.Player
 
         private void OnDrawGizmos()
         {
-            Gizmos.color = new Color(55, 55, 55, 0.2f);
-            Gizmos.DrawSphere(_nearestEnemyS + new Vector3(0, 0.5f, 0), 1f);
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawWireCube(transform.position,  new Vector3(scanBoxHorizontal / 2f, 1f, scanBoxVertical / 2f));
         }
 
         private async void ShootAtTarget(GameObject nearestEnemy)
         {
-            isShooting = true;
+            _isShooting = true;
 
             _nearestEnemyS = nearestEnemy.transform.position;
-            var projectile = projectilePool.Get();
+            var projectile = _projectilePool.Get();
             projectile.damage = weaponSettings.damage;
 
-            projectile.callback = () => projectilePool.Return(projectile);
-            Debug.LogWarning("Set damage = " + projectile.damage);
-
-            Debug.LogWarning($"Shoot at {nearestEnemy.transform.position}");
-
+            projectile.callback = PoolCallback;
 
             weapon.Shoot(nearestEnemy.transform.position, projectile);
 
             await UniTask.Delay(500); // Задержка
 
-            isShooting = false; // После завершения сбрасываем флаг
+            _isShooting = false; // После завершения сбрасываем флаг
             // Дополнительные действия после задержки, например, стрельба по следующей цели
         }
 
-        public WeaponSettings weaponSettings { get; set; }
-
+        private void PoolCallback(Projectile projectile)
+        {
+            _projectilePool.Return(projectile);
+        }
 
         private GameObject FindNearestEnemy()
         {
             GameObject closestEnemy = null;
             float closestDistance = Mathf.Infinity;
 
-
+            Vector3 halfExtents = new Vector3(scanBoxHorizontal / 2f, 1f, scanBoxVertical / 2f);
             Vector3 scanCenter = transform.position;
-            Collider[] hitColliders = Physics.OverlapSphere(scanCenter, scanRadius);
+            Collider[] hitColliders =
+                Physics.OverlapBox(scanCenter, halfExtents, Quaternion.identity, targetLayer);
 
             foreach (Collider hitCollider in hitColliders)
             {
@@ -155,7 +157,7 @@ namespace Game.Scripts.Player
                 float angle = Vector3.Angle(transform.forward, directionToTarget);
 
                 // Проверяем, находится ли цель в пределах угла конуса
-                if (angle <= 45 / 2)
+                if (angle <= 45 / 2f)
                 {
                     float distanceToEnemy = Vector3.Distance(scanCenter, hitCollider.transform.position);
 

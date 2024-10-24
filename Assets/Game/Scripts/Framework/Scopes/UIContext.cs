@@ -21,6 +21,13 @@ namespace Game.Scripts.Framework.Scopes
         {
             Debug.LogWarning("<color=cyan>UI CONTEXT</color>");
 
+            // Models
+            builder.Register<IMenuUIModel, MenuUIModel>(Lifetime.Singleton);
+            builder.Register<SettingsUIModel>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
+            builder.Register<GameOverUIModel>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
+            builder.Register<PauseUIModel>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
+            builder.Register<GameUIModel>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
+            
             // ViewModels
             builder.Register<MenuUIViewModel>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
             builder.Register<SettingsUIViewModel>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
@@ -28,12 +35,6 @@ namespace Game.Scripts.Framework.Scopes
             builder.Register<PauseUIViewModel>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
             builder.Register<GameUIViewModel>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
 
-            // Models
-            builder.Register<IMenuUIModel, MenuUIModel>(Lifetime.Singleton);
-            builder.Register<SettingsUIModel>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
-            builder.Register<GameOverUIModel>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
-            builder.Register<PauseUIModel>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
-            builder.Register<GameUIModel>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
 
             // Views
             builder.RegisterComponent(menu).As<MenuUIView>();

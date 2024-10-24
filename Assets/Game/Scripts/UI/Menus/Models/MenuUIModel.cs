@@ -46,5 +46,10 @@ namespace Game.Scripts.UI.Menus.Models
         Application.Quit();
 #endif
         }
+
+        public override void Initialize()
+        {
+            
+        }
     }
 }

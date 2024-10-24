@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Game.Scripts.UI.Menus.Interfaces;
+using R3;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UIElements;
@@ -12,6 +13,7 @@ namespace Game.Scripts.UI.Base
     {
         protected VisualElement RootVisualElement;
         protected readonly Dictionary<Button, EventCallback<ClickEvent>> CallbacksCache = new();
+        protected readonly CompositeDisposable Disposables = new();
 
         public void Awake()
         {
@@ -22,6 +24,7 @@ namespace Game.Scripts.UI.Base
                 : throw new NullReferenceException("VisualTreeAsset is not set to " + name + " prefab!");
 
             InitElements();
+            Init();
             InitCallbacksCache();
         }
 
@@ -36,6 +39,8 @@ namespace Game.Scripts.UI.Base
             RootVisualElement.style.display = DisplayStyle.None;
             UnregisterCallbacks();
         }
+
+        protected abstract void Init();
 
         /// <summary>
         /// Find visual elements

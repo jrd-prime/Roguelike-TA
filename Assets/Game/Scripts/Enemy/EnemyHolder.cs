@@ -10,7 +10,7 @@ namespace Game.Scripts.Enemy
     [RequireComponent(typeof(Rigidbody))]
     public class EnemyHolder : MonoBehaviour
     {
-        private PlayerModel _target;
+        private PlayerModel _playerModel;
         private Rigidbody _rb;
         public string EnemyID { get; private set; }
         private string _enemyName;
@@ -40,7 +40,7 @@ namespace Game.Scripts.Enemy
         private void FixedUpdate()
         {
             var enemyPosition = _rb.position;
-            var targetPosition = _target.Position.CurrentValue;
+            var targetPosition = _playerModel.Position.CurrentValue;
             var distanceToTarget = Vector3.Distance(enemyPosition, targetPosition);
             // Вычисляем направление к цели
             Vector3 directionToTarget = (targetPosition - enemyPosition).normalized;
@@ -61,7 +61,7 @@ namespace Game.Scripts.Enemy
             {
                 if (Time.time - _lastAttackTime >= _attackDelay)
                 {
-                    _target.TakeDamage(_damage, _enemyName);
+                    _playerModel.TakeDamage(_damage, _enemyName);
                     _lastAttackTime = Time.time;
                 }
             }
@@ -69,10 +69,9 @@ namespace Game.Scripts.Enemy
 
         public void FillEnemySettings(string enemyId, EnemySettings enemiesSettings, PlayerModel targetModel)
         {
-            Debug.LogWarning("em = " + _enemiesManager);
             EnemyID = enemyId;
             _enemyName = enemiesSettings.enemyName;
-            _target = targetModel;
+            _playerModel = targetModel;
             _speed = enemiesSettings.speed;
             _attackDelay = enemiesSettings.attackDelay;
             _damage = enemiesSettings.damage;
@@ -88,7 +87,6 @@ namespace Game.Scripts.Enemy
 
             if (_currentHealth > 0)
             {
-                // show damage update ui
                 OnTakeDamage(damage);
                 return;
             }
@@ -120,14 +118,14 @@ namespace Game.Scripts.Enemy
 
             Debug.LogWarning($"hpPercent = {hpPercent}");
 
-            enemyHUD.SetHP(hpPercent);
+            enemyHUD.SetHp(hpPercent);
         }
 
         public void ClearEnemySettings()
         {
             EnemyID = default;
             _enemyName = default;
-            _target = default;
+            _playerModel = default;
             _speed = default;
             _attackDelay = default;
             _damage = default;

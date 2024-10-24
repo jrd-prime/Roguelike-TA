@@ -2,6 +2,7 @@
 using Game.Scripts.Framework.Configuration;
 using Game.Scripts.Framework.ScriptableObjects.Character;
 using Game.Scripts.Framework.Systems.Follow;
+using Game.Scripts.UI;
 using Game.Scripts.UI.Joystick;
 using R3;
 using UnityEngine;
@@ -20,9 +21,13 @@ namespace Game.Scripts.Player
         public ReactiveProperty<float> RotationSpeed { get; } = new();
         public ReactiveProperty<bool> IsMoving { get; } = new();
 
+        public ReactiveProperty<float> Health { get; private set; } = new();
+
+
         public CharacterSettings characterSettings { get; private set; }
         public JoystickModel joystick { get; private set; }
         public FollowSystem followSystem { get; private set; }
+
 
         [Inject]
         private void Construct(IObjectResolver container)
@@ -40,10 +45,21 @@ namespace Game.Scripts.Player
             Debug.LogWarning("Init Char Model");
             MoveSpeed.Value = characterSettings.moveSpeed;
             RotationSpeed.Value = characterSettings.rotationSpeed;
+            Health.Value = characterSettings.health;
         }
 
         public void SetPosition(Vector3 position) => Position.Value = position;
         public void SetRotation(Quaternion rotation) => Rotation.Value = rotation;
+
+        public void SetPlayerHealth(float health) => Health.Value = health;
+        public void NewGameStart() => Health.Value = characterSettings.health;
+
+        public void TakeDamage(float damage, string from)
+        {
+            var healthValue = Health.Value - damage;
+
+            SetPlayerHealth(healthValue);
+        }
 
         public void SetMoveDirection(Vector3 moveDirection)
         {
@@ -59,11 +75,6 @@ namespace Game.Scripts.Player
             MoveSpeed?.Dispose();
             RotationSpeed?.Dispose();
             IsMoving?.Dispose();
-        }
-
-        public void TakeDamage(float damage, string from)
-        {
-            // Debug.LogWarning($"Player took {damage} damage from {from}");
         }
     }
 }

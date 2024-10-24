@@ -3,9 +3,9 @@
     <ui:VisualElement name="main-container" style="flex-grow: 1; background-color: rgb(159, 186, 143);">
         <ui:VisualElement style="flex-grow: 1; top: 15%; bottom: 15%; position: relative; width: 50%; height: 70%; max-width: 50%; min-width: 50%; max-height: 70%; min-height: 70%; align-items: center; justify-content: center; align-self: center; background-color: rgb(90, 113, 92); border-top-left-radius: 16px; border-top-right-radius: 16px; border-bottom-right-radius: 16px; border-bottom-left-radius: 16px;">
             <ui:Label tabindex="-1" text="GAME OVER" parse-escape-sequences="true" display-tooltip-when-elided="true" name="menu-label" class="ui-header" />
-            <ui:Button text="START GAME" parse-escape-sequences="true" display-tooltip-when-elided="true" name="1" class="menu-btn" />
-            <ui:Button text="SETTINGS" parse-escape-sequences="true" display-tooltip-when-elided="true" name="2" class="menu-btn" />
-            <ui:Button text="EXIT" parse-escape-sequences="true" display-tooltip-when-elided="true" name="4" class="menu-btn" />
+            <ui:Button text="NEW GAME" parse-escape-sequences="true" display-tooltip-when-elided="true" name="new-game-btn" class="menu-btn" />
+            <ui:Button text="SETTINGS" parse-escape-sequences="true" display-tooltip-when-elided="true" name="settings-btn" class="menu-btn" />
+            <ui:Button text="TO MAIN MENU" parse-escape-sequences="true" display-tooltip-when-elided="true" name="menu-btn" class="menu-btn" />
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

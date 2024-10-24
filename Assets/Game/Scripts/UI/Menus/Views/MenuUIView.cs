@@ -11,6 +11,10 @@ namespace Game.Scripts.UI.Menus.Views
         private Button _settingsButton;
         private Button _exitButton;
 
+        protected override void Init()
+        {
+        }
+
         protected override void InitElements()
         {
             _startButton = RootVisualElement.Q<Button>(UIConst.StartButtonIDName);

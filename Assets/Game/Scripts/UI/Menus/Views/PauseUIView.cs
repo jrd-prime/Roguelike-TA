@@ -11,6 +11,11 @@ namespace Game.Scripts.UI.Menus.Views
         private Button _settingsButton;
         private Button _toMainMenuButton;
 
+        protected override void Init()
+        {
+            
+        }
+
         protected override void InitElements()
         {
             _continueButton = RootVisualElement.Q<Button>(UIConst.ContinueButtonIDName);

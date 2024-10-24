@@ -58,12 +58,6 @@ namespace Game.Scripts.Enemy
 
         private async void Start()
         {
-            for (int i = 0; i < 33; i++)
-            {
-                SpawnEnemy();
-
-                await UniTask.Delay(500);
-            }
         }
 
 
@@ -139,6 +133,31 @@ namespace Game.Scripts.Enemy
 
             _enemyPool.Return(enemy);
         }
+
+        public async void StartTheGame()
+        {
+            if (isStarted) return;
+
+            Debug.LogWarning("<color=green>SPAWN STARTED</color>");
+            isStarted = true;
+            for (int i = 0; i < 33; i++)
+            {
+                SpawnEnemy();
+
+                await UniTask.Delay(500);
+            }
+        }
+
+        public void StopTheGame()
+        {
+            if (!isStarted) return;
+
+            Debug.LogWarning("<color=red>SPAWN STOPPED</color>");
+            isStarted = false;
+            DespawnAllEnemies();
+        }
+
+        public bool isStarted;
     }
 
     public interface IEnemiesManager

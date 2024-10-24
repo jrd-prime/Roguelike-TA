@@ -454,7 +454,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponHoldPont: {fileID: 8226430096591477122}
-  scanRadius: 20
+  scanBoxHorizontal: 32
+  scanBoxVertical: 16
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 536870912
 --- !u!136 &8588959746800964482
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -490,9 +494,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd6395d9b5b848689aa67ee993344a93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  settings: {fileID: 0}
+  settings: {fileID: 11400000, guid: 29cdf7964ab6ebd43b1efd1047f2940c, type: 2}
   muzzlePosition: {fileID: 0}
-  weaponHold: {fileID: 0}
 --- !u!1 &2316015844871755886
 GameObject:
   m_ObjectHideFlags: 0

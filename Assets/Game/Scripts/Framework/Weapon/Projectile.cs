@@ -1,6 +1,8 @@
 ﻿using System;
 using Game.Scripts.Enemy;
 using UnityEngine;
+using UnityEngine.Assertions;
+using VContainer;
 
 namespace Game.Scripts.Framework.Weapon
 {
@@ -8,70 +10,65 @@ namespace Game.Scripts.Framework.Weapon
     public class Projectile : MonoBehaviour
     {
         public float speed = 100f; // Скорость движения снаряда
-        public float hitThreshold = 0.1f; // Допустимое расстояние для попадания
 
-        private Vector3 targetPoint; // Точка назначения
-        private bool isMoving = false; // Флаг, показывающий, движется ли снаряд
+        private Vector3 _targetPosition; // Точка назначения
+        private bool _isMoving; // Флаг, показывающий, движется ли снаряд
         public float damage { get; set; }
-        public Action callback { get; set; }
+        public Action<Projectile> callback { get; set; }
+
+        [Inject]
+        private void Construct()
+        {
+            // Debug.LogWarning("Projectile construct");
+        }
 
         private void FixedUpdate()
         {
-            if (isMoving)
-            {
-                MoveToTarget();
-            }
-
-            if (!isMoving)
-            {
-                // Debug.LogWarning("Projectile is not moving");                
-                callback?.Invoke();
-            }
+            if (!_isMoving) return;
+            MoveToTarget();
         }
 
         // Этот метод будет вызываться извне
-        public void MoveToTarget(Vector3 startPoint, Vector3 targetPoint)
+        public void LaunchToTarget(Vector3 from, Vector3 to)
         {
-            this.targetPoint = targetPoint; // Устанавливаем цель
-            transform.position = startPoint; // Устанавливаем начальную точку
-            isMoving = true; // Запускаем движение
+            Assert.IsNotNull(callback, "ProjectilePool callback is not set");
+            _targetPosition = to;
+            transform.position = from;
+            _isMoving = true;
         }
 
         private void MoveToTarget()
         {
             // Движение снаряда в направлении цели
-            transform.position = Vector3.MoveTowards(transform.position, targetPoint, speed * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, _targetPosition, speed * Time.deltaTime);
 
-            transform.LookAt(targetPoint);
+            transform.LookAt(_targetPosition);
 
-            // Проверка попадания
-            float distanceToTarget = Vector3.Distance(transform.position, targetPoint);
-            if (distanceToTarget <= hitThreshold)
-            {
-                OnHitTarget();
-            }
+            if (transform.position != _targetPosition) return;
+            callback?.Invoke(this);
+            _isMoving = false;
         }
 
-        private void OnHitTarget()
-        {
-            isMoving = false; // Останавливаем движение
-            Debug.Log("Target hit!");
-        }
+        // private void OnHitTarget()
+        // {
+        //     isMoving = false; // Останавливаем движение
+        //     Debug.Log("Target hit!");
+        // }
 
         void OnTriggerEnter(Collider other)
         {
-            // Проверяем, что объект с тегом "Enemy"
-            if (other.CompareTag("Enemy"))
-            {
-                Debug.Log("Hit an enemy!");
+            if (!other.CompareTag("Enemy")) return;
 
-                var enemy = other.GetComponent<EnemyHolder>();
-                enemy.TakeDamage(damage);
+            _isMoving = false;
+            Debug.Log("Hit an enemy!");
 
-                callback.Invoke();
-                // Можно вызвать OnHitTarget для завершения движения
-                OnHitTarget();
-            }
+            var enemy = other.GetComponent<EnemyHolder>();
+            enemy.TakeDamage(damage);
+            callback.Invoke(this);
+            // Можно вызвать OnHitTarget для завершения движения
+            // OnHitTarget();
         }
+
+        public Action poolCallback { get; set; }
     }
 }

@@ -7,7 +7,7 @@ namespace Game.Scripts.UI.Base
 {
     public abstract class UIViewModelCustom<T> : UIViewModelBase where T : class, IUIModel
     {
-        protected T Model { get; private set; }
+        protected static T Model { get; private set; }
 
         [Inject]
         private void Construct(T model)

@@ -7,10 +7,11 @@ namespace Game.Scripts.UI.Menus.ViewModels
     public class GameUIViewModel : UIViewModelCustom<IGameUIModel>
     {
         public Subject<Unit> MenuButtonClicked { get; } = new();
+        public ReadOnlyReactiveProperty<float> PlayerHealth => Model.PlayerHealth;
 
         public override void Initialize()
         {
-           MenuButtonClicked.Subscribe(_ => Model.MenuButtonClicked()).AddTo(Disposables);
+            MenuButtonClicked.Subscribe(_ => Model.MenuButtonClicked()).AddTo(Disposables);
         }
     }
 }

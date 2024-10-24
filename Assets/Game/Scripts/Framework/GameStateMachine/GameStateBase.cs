@@ -6,11 +6,13 @@ namespace Game.Scripts.Framework.GameStateMachine
     public class GameStateBase
     {
         protected UIManager UIManager;
+        protected IObjectResolver Resolver;
 
         [Inject]
-        private void Construct(UIManager uiManager)
+        private void Construct(UIManager uiManager, IObjectResolver resolver)
         {
             UIManager = uiManager;
+            Resolver = resolver;
         }
     }
 }
