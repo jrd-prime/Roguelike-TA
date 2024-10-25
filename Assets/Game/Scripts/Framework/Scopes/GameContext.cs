@@ -12,6 +12,7 @@ namespace Game.Scripts.Framework.Scopes
 {
     public class GameContext : LifetimeScope
     {
+        [SerializeField] private GameManager gameManager;
         [SerializeField] private UIManager uiManager;
         [SerializeField] private SpawnPointsManager spawnPointsManager;
         [SerializeField] private EnemiesManager enemiesManager;
@@ -29,6 +30,7 @@ namespace Game.Scripts.Framework.Scopes
             builder.Register<PlayerViewModel>(Lifetime.Singleton).AsImplementedInterfaces();
 
 
+            builder.RegisterComponent(gameManager).AsSelf().AsImplementedInterfaces();
             builder.RegisterComponent(uiManager).AsSelf().AsImplementedInterfaces();
             builder.RegisterComponent(spawnPointsManager).AsSelf().AsImplementedInterfaces();
             builder.RegisterComponent(enemiesManager).AsSelf().AsImplementedInterfaces();
@@ -41,6 +43,7 @@ namespace Game.Scripts.Framework.Scopes
             builder.Register<SettingsState>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
             builder.Register<GameOverState>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
             builder.Register<PauseState>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
+            builder.Register<WinState>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
         }
     }
 }

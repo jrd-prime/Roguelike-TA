@@ -22,6 +22,7 @@ namespace Game.Scripts.Framework.GameStateMachine
             _states.Add(UIType.Pause, container.Resolve<PauseState>());
             _states.Add(UIType.Game, container.Resolve<GamePlayState>());
             _states.Add(UIType.Settings, container.Resolve<SettingsState>());
+            _states.Add(UIType.Win, container.Resolve<WinState>());
         }
 
         private void ChangeState(IGameState newState)

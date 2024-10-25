@@ -16,7 +16,7 @@ namespace Game.Scripts.UI.Base
 
         private void Start()
         {
-            if (ViewModel == null) throw new NullReferenceException($"ViewModel in {name} is null");
+            if (ViewModel == null) throw new NullReferenceException($"ViewModel in {name} is null. Check container registration!");
         }
     }
 }

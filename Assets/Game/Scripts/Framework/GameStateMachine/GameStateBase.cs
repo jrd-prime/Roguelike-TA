@@ -1,18 +1,16 @@
-﻿using Game.Scripts.UI;
-using VContainer;
+﻿using VContainer;
 
 namespace Game.Scripts.Framework.GameStateMachine
 {
     public abstract class GameStateBase
     {
-        protected UIManager UIManager;
-        protected IObjectResolver Resolver;
+        protected GameManager GameManager { get; private set; }
+
 
         [Inject]
-        private void Construct(UIManager uiManager, IObjectResolver resolver)
+        private void Construct(IObjectResolver resolver)
         {
-            UIManager = uiManager;
-            Resolver = resolver;
+            GameManager = resolver.Resolve<GameManager>();
         }
     }
 }

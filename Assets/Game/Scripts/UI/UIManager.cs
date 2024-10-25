@@ -15,6 +15,7 @@ namespace Game.Scripts.UI
         [SerializeField] private UIViewBase pause;
         [SerializeField] private UIViewBase gameOver;
         [SerializeField] private UIViewBase settings;
+        [SerializeField] private UIViewBase win;
         [SerializeField] private PopUpView popUp;
 
         private readonly Dictionary<UIType, UIViewBase> _views = new();
@@ -27,6 +28,7 @@ namespace Game.Scripts.UI
             InitializeView(UIType.Pause, pause);
             InitializeView(UIType.GameOver, gameOver);
             InitializeView(UIType.Settings, settings);
+            InitializeView(UIType.Win, win);
         }
 
         public void ShowView(UIType view) => _views[view].Show();

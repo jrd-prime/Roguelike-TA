@@ -1,5 +1,4 @@
 ﻿using DG.Tweening;
-using TMPro;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
@@ -10,7 +9,6 @@ namespace Game.Scripts.Enemy
     {
         [SerializeField] private Image hpBarBackground;
         [SerializeField] private RectTransform hpBarRect;
-        [SerializeField] private TMP_Text hpText;
         private float _hpBarWidth;
         private float _hpBarHeight;
 
@@ -18,9 +16,6 @@ namespace Game.Scripts.Enemy
         {
             Assert.IsNotNull(hpBarBackground, $"HPBarBackground is null. Add to {this}");
             Assert.IsNotNull(hpBarRect, $"HPBar is null. Add to {this}");
-            Assert.IsNotNull(hpText, $"HPText is null. Add to {this}");
-
-            hpText.text = "";
         }
 
         private void Start()

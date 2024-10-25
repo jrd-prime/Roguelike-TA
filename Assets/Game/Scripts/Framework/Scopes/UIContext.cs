@@ -1,5 +1,4 @@
-﻿using Game.Scripts.UI;
-using Game.Scripts.UI.Base;
+﻿using Game.Scripts.UI.Base;
 using Game.Scripts.UI.Menus.Models;
 using Game.Scripts.UI.Menus.ViewModels;
 using Game.Scripts.UI.Menus.Views;
@@ -16,6 +15,7 @@ namespace Game.Scripts.Framework.Scopes
         [SerializeField] private UIViewBase pause;
         [SerializeField] private UIViewBase gameOver;
         [SerializeField] private UIViewBase settings;
+        [SerializeField] private UIViewBase win;
 
         protected override void Configure(IContainerBuilder builder)
         {
@@ -27,6 +27,7 @@ namespace Game.Scripts.Framework.Scopes
             builder.Register<GameOverUIModel>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
             builder.Register<PauseUIModel>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
             builder.Register<GameUIModel>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
+            builder.Register<WinUIModel>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
             
             // ViewModels
             builder.Register<MenuUIViewModel>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
@@ -34,6 +35,7 @@ namespace Game.Scripts.Framework.Scopes
             builder.Register<GameOverUIViewModel>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
             builder.Register<PauseUIViewModel>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
             builder.Register<GameUIViewModel>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
+            builder.Register<WinUIViewModel>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
 
 
             // Views
@@ -42,6 +44,7 @@ namespace Game.Scripts.Framework.Scopes
             builder.RegisterComponent(pause).As<PauseUIView>();
             builder.RegisterComponent(gameOver).As<GameOverUIView>();
             builder.RegisterComponent(settings).As<SettingsUIView>();
+            builder.RegisterComponent(win).As<WinUIView>();
         }
     }
 }

@@ -7,6 +7,7 @@
         Pause,
         GameOver,
         Settings,
-        PopUp
+        PopUp,
+        Win
     }
 }

@@ -1,8 +1,5 @@
-﻿using Game.Scripts.Enemy;
-using Game.Scripts.Player;
-using Game.Scripts.UI;
+﻿using Game.Scripts.UI;
 using UnityEngine;
-using VContainer;
 
 namespace Game.Scripts.Framework.GameStateMachine.State
 {
@@ -11,13 +8,19 @@ namespace Game.Scripts.Framework.GameStateMachine.State
         public void Enter()
         {
             Debug.LogWarning("game play state enter");
-            var playerModel = Resolver.Resolve<PlayerModel>();
 
             UIManager.ShowView(UIType.Game);
-            playerModel.NewGameStart();
 
-            var enemiesManager = Resolver.Resolve<EnemiesManager>();
-            enemiesManager.StartTheGame();
+            if (GameManager.isGameStarted) return;
+
+            StartNewGame();
+        }
+
+        private void StartNewGame()
+        {
+            PlayerModel.NewGameStart();
+            EnemiesManager.StartTheGame();
+            GameManager.isGameStarted = true;
         }
 
         public void Exit()
