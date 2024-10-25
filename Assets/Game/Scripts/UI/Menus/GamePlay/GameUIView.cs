@@ -1,10 +1,9 @@
 ﻿using Game.Scripts.UI.Base;
-using Game.Scripts.UI.Menus.ViewModels;
 using R3;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace Game.Scripts.UI.Menus.Views
+namespace Game.Scripts.UI.Menus.GamePlay
 {
     public class GameUIView : UIViewCustom<GameUIViewModel>
     {
@@ -12,12 +11,15 @@ namespace Game.Scripts.UI.Menus.Views
         private VisualElement _healthBarBg;
         private VisualElement _healthBarHp;
         private Label _healthBarLabel;
+        private Label _killCountLabel;
 
         private float _playerInitialHealth;
         private float _fullwidth;
         public bool isFullwidthSet;
         private float _pxPerPoint;
         private float currentBarWidth;
+        private int _killCount = 0;
+        private int _killToWin = 0;
 
         protected override void InitElements()
         {
@@ -25,12 +27,14 @@ namespace Game.Scripts.UI.Menus.Views
             _healthBarBg = RootVisualElement.Q<VisualElement>(UIConst.HealthBarContainerIDName);
             _healthBarLabel = _healthBarBg.Q<Label>(UIConst.HealthBarLabelIDName);
             _healthBarHp = _healthBarBg.Q<VisualElement>(UIConst.HealthBarMoveIDName);
+            _killCountLabel = RootVisualElement.Q<Label>(UIConst.KillCountLabelIDName);
 
 
             CheckOnNull(_menuButton, UIConst.MenuButtonIDName, name);
             CheckOnNull(_healthBarBg, UIConst.HealthBarContainerIDName, name);
             CheckOnNull(_healthBarLabel, UIConst.HealthBarLabelIDName, name);
             CheckOnNull(_healthBarHp, UIConst.HealthBarMoveIDName, name);
+            CheckOnNull(_killCountLabel, UIConst.KillCountLabelIDName, name);
         }
 
         private void SetHpBarWidth(float width)
@@ -45,11 +49,11 @@ namespace Game.Scripts.UI.Menus.Views
         protected override void Init()
         {
             _healthBarHp.RegisterCallback<GeometryChangedEvent>(_ => SetHpBarWidth(_healthBarHp.resolvedStyle.width));
-            
+
             ViewModel.PlayerInitialHealth
                 .Subscribe(initialHealth => _playerInitialHealth = initialHealth)
                 .AddTo(Disposables);
-            
+
             ViewModel.PlayerHealth
                 .Subscribe(health =>
                 {
@@ -62,6 +66,28 @@ namespace Game.Scripts.UI.Menus.Views
                     currentBarWidth = _pxPerPoint * health;
                 })
                 .AddTo(Disposables);
+
+            ViewModel.KillCount
+                .Subscribe(killCount =>
+                {
+                    _killCount = killCount;
+                    UpdateKillCount();
+                })
+                .AddTo(Disposables);
+
+            ViewModel.KillToWin
+                .Subscribe(killToWin =>
+                {
+                    _killToWin = killToWin;
+                    UpdateKillCount();
+                })
+                .AddTo(Disposables);
+        }
+
+        private void UpdateKillCount()
+        {
+            Debug.LogWarning("UpdateKillCount");
+            _killCountLabel.text = _killCount + " / " + _killToWin;
         }
 
 

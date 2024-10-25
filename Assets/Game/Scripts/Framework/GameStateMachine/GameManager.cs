@@ -1,10 +1,10 @@
-﻿using System;
-using Game.Scripts.Enemy;
+﻿using Game.Scripts.Enemy;
 using Game.Scripts.Player;
 using Game.Scripts.UI;
 using R3;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.Serialization;
 using VContainer;
 
 namespace Game.Scripts.Framework.GameStateMachine
@@ -19,7 +19,15 @@ namespace Game.Scripts.Framework.GameStateMachine
 
         private readonly CompositeDisposable _disposables = new();
         private StateMachine _stateMachine;
-        private bool isGamePaused;
+        private bool _isGamePaused;
+
+        public ReactiveProperty<int> KillCount => _enemiesManager.Kills;
+        public ReactiveProperty<int> KillToWin => _enemiesManager.KillToWin;
+
+        [SerializeField] private int spawnDelay = 500;
+        [SerializeField] private int minEnemiesOnMap = 5;
+        [SerializeField] private int maxEnemiesOnMap = 10;
+        [SerializeField] private int killsToWin = 20;
 
         [Inject]
         private void Construct(IObjectResolver resolver)
@@ -30,7 +38,6 @@ namespace Game.Scripts.Framework.GameStateMachine
             _playerModel = _resolver.Resolve<PlayerModel>();
             _uiManager = _resolver.Resolve<UIManager>();
         }
-
 
         public void GameOver()
         {
@@ -51,18 +58,19 @@ namespace Game.Scripts.Framework.GameStateMachine
 
             isGameStarted = true;
             _playerModel.ResetPlayer();
-            _enemiesManager.StartTheGame();
+
+            _enemiesManager.StartSpawnEnemies(killsToWin, minEnemiesOnMap, maxEnemiesOnMap, spawnDelay);
         }
 
         public void Pause()
         {
-            isGamePaused = true;
+            _isGamePaused = true;
             Time.timeScale = 0;
         }
 
         public void UnPause()
         {
-            isGamePaused = false;
+            _isGamePaused = false;
             Time.timeScale = 1;
         }
     }

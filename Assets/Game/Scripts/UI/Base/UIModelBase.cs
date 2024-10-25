@@ -7,9 +7,11 @@ namespace Game.Scripts.UI.Base
 {
     public abstract class UIModelBase : IInitializable
     {
-        protected StateMachine StateMachine;
-        protected UIManager UIManager;
-        protected IObjectResolver Container;
+        protected StateMachine StateMachine { get; private set; }
+        protected UIManager UIManager { get; private set; }
+        protected IObjectResolver Container { get; private set; }
+        protected GameManager GamwManager { get; private set; }
+
         protected readonly CompositeDisposable Disposables = new();
 
         [Inject]
@@ -18,6 +20,7 @@ namespace Game.Scripts.UI.Base
             StateMachine = stateMachine;
             UIManager = uiManager;
             Container = container;
+            GamwManager = Container.Resolve<GameManager>();
         }
 
         public abstract void Initialize();
