@@ -29,9 +29,9 @@ namespace Game.Scripts.Enemy
         private EnemyManagerSettings _enemyManagerSettings;
 
         private CustomPool<EnemyHolder> _enemyPool;
-        private PlayerModel _followTargetModel;
+        private PlayerModel _target;
 
-        // Dictionary<string, GameObject> _enemyPrefabs = new();
+        Dictionary<string, GameObject> _enemyPrefabs = new();
         private IObjectResolver _container;
 
         [Inject]
@@ -41,7 +41,7 @@ namespace Game.Scripts.Enemy
             _container = container;
             _configManager = container.Resolve<IConfigManager>();
             _spawnPointsManager = container.Resolve<SpawnPointsManager>();
-            _followTargetModel = container.Resolve<PlayerModel>();
+            _target = container.Resolve<PlayerModel>();
         }
 
         private void Awake()
@@ -49,16 +49,17 @@ namespace Game.Scripts.Enemy
             Debug.LogWarning($"Enemies manager awake");
             Assert.IsNotNull(_configManager, $"Config manager is null. Add to auto inject!");
             Assert.IsNotNull(_spawnPointsManager, $"Spawn points manager is null. Add to auto inject!");
-
             _enemiesSettingsList = _configManager.GetConfig<EnemiesMainSettings>().enemies;
-            Assert.IsNotNull(_enemiesSettingsList, $"Enemies settings list is null.");
-
             _enemyManagerSettings = _configManager.GetConfig<EnemyManagerSettings>();
-            Assert.IsNotNull(_enemyManagerSettings, $"Enemy holder prefab is null.");
 
             _enemyPool =
                 new CustomPool<EnemyHolder>(_enemyManagerSettings.enemyHolderPrefab, 100, transform, _container, true);
         }
+
+        private async void Start()
+        {
+        }
+
 
         public async void SpawnEnemy()
         {
@@ -66,28 +67,33 @@ namespace Game.Scripts.Enemy
             // get object from pool
             EnemyHolder enemyHolder = _enemyPool.Get();
 
-            // get enemy settings
-            EnemySettings enemySettings = GetRandomEnemySettings();
 
-            // instantiate enemy prefab to enemy holder
-            await Addressables.InstantiateAsync(enemySettings.enemyPrefab, parent: enemyHolder.transform);
-
-            // generate id and fill settings
+            // generate id
             var enemyId = Guid.NewGuid().ToString();
-            enemyHolder.FillEnemySettings(enemyId, enemySettings, _followTargetModel);
+
+            // apply settings
+            var enemySettings = _enemiesSettingsList[Random.Range(0, _enemiesSettingsList.Count)];
+
+
+            // Debug.LogWarning("Start inst");
+            var handle = await Addressables.InstantiateAsync(enemySettings.enemyPrefab, parent: enemyHolder.transform);
+
+            // Debug.LogWarning("End inst");
+
+            _enemyPrefabs.Add(handle.GetHashCode().ToString(), handle);
+
+            enemyHolder.FillEnemySettings(enemyId, enemySettings, _target);
 
             // add enemy to cache
             _enemies.Add(enemyId, enemyHolder);
 
             // get spawn point
             Vector3 spawnPoint = _spawnPointsManager.GetRandomSpawnPointPosition();
-
-            enemyHolder.Spawn(enemyId, enemySettings, spawnPoint, _followTargetModel);
+            enemyHolder.OnSpawn();
+            // spawn enemy
+            enemyHolder.transform.position = spawnPoint;
+            enemyHolder.gameObject.SetActive(true);
         }
-
-        private EnemySettings GetRandomEnemySettings() =>
-            _enemiesSettingsList[Random.Range(0, _enemiesSettingsList.Count)];
-
 
         public void RemoveEnemy(string enemyId)
         {
@@ -108,7 +114,6 @@ namespace Game.Scripts.Enemy
             foreach (var activeEnemy in _enemies)
             {
                 activeEnemy.Value.OnDespawn();
-                activeEnemy.Value.ClearEnemySettings();
                 _enemyPool.Return(activeEnemy.Value);
             }
         }
@@ -135,9 +140,8 @@ namespace Game.Scripts.Enemy
 
             Debug.LogWarning("<color=green>SPAWN STARTED</color>");
             isStarted = true;
-            for (int i = 0; i < 55; i++)
+            for (int i = 0; i < 33; i++)
             {
-                if (!isStarted) break;
                 SpawnEnemy();
 
                 await UniTask.Delay(500);
