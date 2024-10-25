@@ -11,13 +11,13 @@ namespace Game.Scripts.Framework.GameStateMachine.State
         public void Enter()
         {
             Debug.LogWarning("game play state enter");
-            var playerModel = Resolver.Resolve<PlayerModel>();
+            // var playerModel = Resolver.Resolve<PlayerModel>();
 
-            playerModel.NewGameStart();
+            // playerModel.NewGameStart();
             UIManager.ShowView(UIType.Game);
 
-            var enemiesManager = Resolver.Resolve<EnemiesManager>();
-            enemiesManager.StartTheGame();
+            // var enemiesManager = Resolver.Resolve<EnemiesManager>();
+            // enemiesManager.StartTheGame();
         }
 
         public void Exit()

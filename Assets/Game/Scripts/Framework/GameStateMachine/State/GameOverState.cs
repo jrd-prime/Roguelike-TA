@@ -9,10 +9,10 @@ namespace Game.Scripts.Framework.GameStateMachine.State
         {
             Debug.LogWarning("gameo over state enter");
             UIManager.ShowView(UIType.GameOver);
-            EnemiesManager.StopTheGame();
+            // EnemiesManager.StopTheGame();
             GameManager.isGameStarted = false;
             
-            GameManager.StopTheGame();
+            // GameManager.StopTheGame();
         }
 
         public void Exit()

@@ -10,7 +10,7 @@ namespace Game.Scripts.Framework.GameStateMachine.State
             Debug.LogWarning("win state enter");
 
             UIManager.ShowView(UIType.Win);
-            EnemiesManager.StopTheGame();
+            // EnemiesManager.StopTheGame();
             GameManager.isGameStarted = false;
         }
 
