@@ -2,7 +2,7 @@
 
 namespace Game.Scripts.Framework.GameStateMachine
 {
-    public abstract class GameStateBase
+    public class GameStateBase
     {
         protected GameManager GameManager { get; private set; }
 

@@ -1,7 +1,9 @@
-﻿using Game.Scripts.Player;
+﻿using Game.Scripts.Framework.Configuration;
+using Game.Scripts.Player;
 using Game.Scripts.UI.Base;
 using Game.Scripts.UI.Menus.Interfaces;
 using R3;
+using UnityEngine;
 using VContainer;
 
 namespace Game.Scripts.UI.Menus.Models
@@ -10,8 +12,6 @@ namespace Game.Scripts.UI.Menus.Models
     {
         public ReactiveProperty<float> PlayerHealth { get; } = new();
 
-        public ReactiveProperty<float> PlayerInitialHealth { get; } = new();
-
         private PlayerModel _playerModel;
 
         public override void Initialize()
@@ -19,11 +19,22 @@ namespace Game.Scripts.UI.Menus.Models
             _playerModel = Container.Resolve<PlayerModel>();
 
             PlayerHealth.Value = _playerModel.Health.Value;
-            PlayerInitialHealth.Value = _playerModel.characterSettings.health;
 
             // Subscribe to player health changes
-            _playerModel.Health.Subscribe(health => PlayerHealth.Value = health).AddTo(Disposables);
+            _playerModel.Health.Subscribe(health =>
+            {
+                if (PlayerHealth.Value <= 0)
+                {
+                    Debug.LogWarning("Game ui model => GAME OVER");
+                    StateMachine.ChangeStateTo(UIType.GameOver);
+                    return;
+                }
+
+
+                PlayerHealth.Value = health;
+            }).AddTo(Disposables);
         }
+
 
         public void MenuButtonClicked()
         {
@@ -34,7 +45,6 @@ namespace Game.Scripts.UI.Menus.Models
     public interface IGameUIModel : IUIModel
     {
         public ReactiveProperty<float> PlayerHealth { get; }
-        public ReactiveProperty<float> PlayerInitialHealth { get; }
         public void MenuButtonClicked();
     }
 }

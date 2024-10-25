@@ -16,13 +16,12 @@ namespace Game.Scripts.UI.Menus.Models
 
         public void SettingsButtonClicked()
         {
-            UIManager.ShowPopUpAsync("Low priority. Will be implemented later.");
-            // StateMachine.ChangeStateTo(UIType.Settings);
+            StateMachine.ChangeStateTo(UIType.Settings);
         }
 
         public void MenuButtonClicked()
         {
-            StateMachine.ChangeStateTo(UIType.Menu);
+            StateMachine.ChangeStateTo(UIType.Pause);
         }
     }
 

@@ -63,7 +63,6 @@ namespace Game.Scripts.Player
         public void NewGameStart()
         {
             SetHealth(characterSettings.health);
-            SetPosition(Vector3.zero);
         }
 
         public void TakeDamage(float damage)
@@ -76,6 +75,7 @@ namespace Game.Scripts.Player
                 Debug.LogWarning("PLAYER MODEL => GAME OVER");
                 _stateMachine.ChangeStateTo(UIType.GameOver);
 
+                SetPosition(Vector3.zero);
                 return;
             }
 

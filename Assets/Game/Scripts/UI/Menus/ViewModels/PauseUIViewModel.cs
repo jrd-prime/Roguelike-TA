@@ -6,7 +6,6 @@ namespace Game.Scripts.UI.Menus.ViewModels
 {
     public class PauseUIViewModel : UIViewModelCustom<IPauseUIModel>
     {
-        public Subject<Unit> ExitButtonClicked { get; } = new();
         public Subject<Unit> ContinueButtonClicked { get; } = new();
         public Subject<Unit> SettingsButtonClicked { get; } = new();
         public Subject<Unit> ToMainMenuButtonClicked { get; } = new();
@@ -16,7 +15,6 @@ namespace Game.Scripts.UI.Menus.ViewModels
             ContinueButtonClicked.Subscribe(_ => Model.ContinueButtonClicked()).AddTo(Disposables);
             SettingsButtonClicked.Subscribe(_ => Model.SettingsButtonClicked()).AddTo(Disposables);
             ToMainMenuButtonClicked.Subscribe(_ => Model.ToMainMenuButtonClicked()).AddTo(Disposables);
-            ExitButtonClicked.Subscribe(_ => Model.ExitButtonClicked()).AddTo(Disposables);
         }
     }
 }

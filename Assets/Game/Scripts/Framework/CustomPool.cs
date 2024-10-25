@@ -62,12 +62,19 @@ namespace Game.Scripts.Framework
 
         public void Return(T obj)
         {
-            if (obj is null) return;
+            if (obj is null)
+            {
+                Debug.Log("Can't return null object to pool!");
+                return;
+            }
 
-            if (!_activeObjects.Contains(obj)) return;
-            obj.gameObject.SetActive(false);
-            _activeObjects.Remove(obj);
-            _cache.Enqueue(obj);
+            if (_activeObjects.Contains(obj))
+            {
+                obj.gameObject.SetActive(false);
+                _activeObjects.Remove(obj);
+                _cache.Enqueue(obj);
+            }
+            else Debug.Log($"Object was taken not from this pool! {obj}");
         }
     }
 }

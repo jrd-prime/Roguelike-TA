@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using Game.Scripts.Framework;
 using Game.Scripts.Framework.Configuration;
-using Game.Scripts.Framework.GameStateMachine;
+using Game.Scripts.Framework.ScriptableObjects;
 using Game.Scripts.Framework.ScriptableObjects.Enemy;
+using Game.Scripts.Framework.Systems.Follow;
 using Game.Scripts.Player;
-using Game.Scripts.UI;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Assertions;
+using UnityEngine.ResourceManagement.AsyncOperations;
 using VContainer;
 using Random = UnityEngine.Random;
 
@@ -20,8 +21,6 @@ namespace Game.Scripts.Enemy
         private float _spawnDelay = 3f;
         private float _spawnTimer = 0f;
         private int _minEnemiesOnMap = 5;
-
-        private int _enemiesToWin = 3;
 
         private Dictionary<string, EnemyHolder> _enemies = new();
         private IConfigManager _configManager;
@@ -84,8 +83,6 @@ namespace Game.Scripts.Enemy
             Vector3 spawnPoint = _spawnPointsManager.GetRandomSpawnPointPosition();
 
             enemyHolder.Spawn(enemyId, enemySettings, spawnPoint, _followTargetModel);
-
-            Debug.LogWarning($"Spawn. Enemies in dictionary: {_enemies.Count}");
         }
 
         private EnemySettings GetRandomEnemySettings() =>
@@ -127,19 +124,9 @@ namespace Game.Scripts.Enemy
             Debug.LogWarning($"Enemy FOUND! {enemyID}");
             var enemy = _enemies[enemyID];
 
-            _enemies.Remove(enemyID);
-
             enemy.ClearEnemySettings();
 
             _enemyPool.Return(enemy);
-            Debug.LogWarning($"Die. Enemies in dictionary: {_enemies.Count}");
-
-            if (_enemies.Count == 0)
-            {
-                Debug.LogWarning("<color=red>ALL ENEMIES DIED</color>");
-                StateMachine stateMachine = _container.Resolve<StateMachine>();
-                stateMachine.ChangeStateTo(UIType.Win);
-            }
         }
 
         public async void StartTheGame()
@@ -148,7 +135,7 @@ namespace Game.Scripts.Enemy
 
             Debug.LogWarning("<color=green>SPAWN STARTED</color>");
             isStarted = true;
-            for (int i = 0; i < _enemiesToWin; i++)
+            for (int i = 0; i < 55; i++)
             {
                 if (!isStarted) break;
                 SpawnEnemy();
