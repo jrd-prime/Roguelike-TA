@@ -26,11 +26,11 @@ namespace Game.Scripts.Framework.Bootstrap
                 try
                 {
                     Debug.LogWarning($"Initialize {service.GetType().Name}...");
-                    LoadingText.Value = $"Loading: {service.Description}..";
+                    LoadingText.Value = $"(+ fake delayed) Loading: {service.Description}..";
                     service.LoaderServiceInitialization();
 
                     // fake delay per service
-                    await UniTask.Delay(100);
+                    await UniTask.Delay(1000);
                 }
                 catch (Exception ex)
                 {

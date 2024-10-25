@@ -1,8 +1,8 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/Game/UI/main.uss?fileID=7433441132597879392&amp;guid=ee438deb7368e10499accdce92cdd2bf&amp;type=3#main" />
-    <ui:VisualElement name="main-container" style="flex-grow: 1; background-color: rgb(159, 186, 143);">
-        <ui:VisualElement style="flex-grow: 1; top: 15%; bottom: 15%; position: relative; width: 50%; height: 70%; max-width: 50%; min-width: 50%; max-height: 70%; min-height: 70%; align-items: center; justify-content: center; align-self: center; background-color: rgb(193, 202, 66); border-top-left-radius: 16px; border-top-right-radius: 16px; border-bottom-right-radius: 16px; border-bottom-left-radius: 16px; color: rgb(0, 0, 0);">
-            <ui:Label tabindex="-1" text="YOU WIN!!!" parse-escape-sequences="true" display-tooltip-when-elided="true" class="ui-header" style="display: flex; color: rgb(14, 101, 11);" />
+    <ui:VisualElement name="main-container" class="main-cont" style="flex-grow: 1;">
+        <ui:VisualElement class="mini-cont" style="flex-grow: 1; top: 15%; bottom: 15%; position: relative; width: 50%; height: 70%; max-width: 50%; min-width: 50%; max-height: 70%; min-height: 70%; align-items: center; justify-content: center; align-self: center; color: rgb(0, 0, 0); background-color: rgb(255, 253, 76);">
+            <ui:Label tabindex="-1" text="YOU WIN !" parse-escape-sequences="true" display-tooltip-when-elided="true" class="ui-header" style="display: flex; color: rgb(255, 0, 137);" />
             <ui:Button text="START NEW GAME" parse-escape-sequences="true" display-tooltip-when-elided="true" name="start-btn" class="menu-btn" />
             <ui:Button text="TO MAIN MENU" parse-escape-sequences="true" display-tooltip-when-elided="true" name="menu-btn" class="menu-btn" />
             <ui:Button text="EXIT" parse-escape-sequences="true" display-tooltip-when-elided="true" name="exit-btn" class="menu-btn" />

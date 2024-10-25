@@ -167,6 +167,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isGameStarted: 0
+  spawnDelay: 500
+  minEnemiesOnMap: 5
+  maxEnemiesOnMap: 10
+  killsToWin: 20
 --- !u!1001 &310450050
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -175,6 +179,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1139024540}
     m_Modifications:
+    - target: {fileID: 5781617435690375179, guid: 7409edbaf9919f840824347fde040a6b,
+        type: 3}
+      propertyPath: centerX
+      value: 75
+      objectReference: {fileID: 0}
+    - target: {fileID: 5781617435690375179, guid: 7409edbaf9919f840824347fde040a6b,
+        type: 3}
+      propertyPath: centerY
+      value: 75
+      objectReference: {fileID: 0}
+    - target: {fileID: 5781617435690375179, guid: 7409edbaf9919f840824347fde040a6b,
+        type: 3}
+      propertyPath: screenOffsetX
+      value: 600
+      objectReference: {fileID: 0}
+    - target: {fileID: 5781617435690375179, guid: 7409edbaf9919f840824347fde040a6b,
+        type: 3}
+      propertyPath: screenOffsetY
+      value: 190
+      objectReference: {fileID: 0}
     - target: {fileID: 7922457812623207056, guid: 7409edbaf9919f840824347fde040a6b,
         type: 3}
       propertyPath: m_Name
@@ -507,7 +531,7 @@ MonoBehaviour:
   m_ParentUI: {fileID: 0}
   sourceAsset: {fileID: 9197481963319205126, guid: e057fa7a04ef5304a86ff4663f53867f,
     type: 3}
-  m_SortingOrder: 100
+  m_SortingOrder: 111
 --- !u!1001 &1963794419
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -676,6 +700,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1565032831}
     m_Modifications:
+    - target: {fileID: 461425588749186418, guid: d2d08f9cb1637cc45a6fe624a1f64786,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 111
+      objectReference: {fileID: 0}
     - target: {fileID: 5238875191850592979, guid: d2d08f9cb1637cc45a6fe624a1f64786,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1253,6 +1282,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameOverUI
       objectReference: {fileID: 0}
+    - target: {fileID: 7866912233324899459, guid: 654cbb15d2aa10440a9104fcb5943e3c,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 111
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1363,6 +1397,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: PauseUI
       objectReference: {fileID: 0}
+    - target: {fileID: 8066735634650968574, guid: f0e919d489206604ab3cb36bad871bb8,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 111
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1455,6 +1494,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2701567796711382026, guid: ac77fe7fec9588d41ac3e0fb4096f6c8,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 111
       objectReference: {fileID: 0}
     - target: {fileID: 7494714380683305902, guid: ac77fe7fec9588d41ac3e0fb4096f6c8,
         type: 3}

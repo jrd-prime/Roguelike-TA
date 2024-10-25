@@ -28,7 +28,7 @@ namespace Game.Scripts.Framework.Bootstrap
             Assert.IsNotNull(_uiViewModel, "ViewModel is null");
             _uiViewModel.HeaderView.Subscribe(x => header.text = x);
 
-            uiDocument.rootVisualElement.style.opacity = 0.1f; // TODO remove
+            uiDocument.rootVisualElement.style.opacity = 1f; // TODO remove
         }
     }
 }

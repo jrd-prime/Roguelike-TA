@@ -8,6 +8,7 @@ namespace Game.Scripts.UI.Joystick
     [RequireComponent(typeof(UIDocument))]
     public class JoystickView : MonoBehaviour
     {
+        // TODO rework joystic
         [SerializeField] private float screenOffsetX = 600f;
         [SerializeField] private float screenOffsetY = 190f;
         [SerializeField] private float centerX = 75f;
