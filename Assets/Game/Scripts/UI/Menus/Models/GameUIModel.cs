@@ -29,7 +29,7 @@ namespace Game.Scripts.UI.Menus.Models
 
         public void MenuButtonClicked()
         {
-            StateMachine.ChangeStateTo(UIType.Pause);
+            StateMachine.ChangeStateTo(StateType.Pause);
         }
     }
 

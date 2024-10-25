@@ -31,6 +31,9 @@ namespace Game.Scripts.Enemy
         Dictionary<string, GameObject> _enemyPrefabs = new();
         private IObjectResolver _container;
 
+        public bool isStarted;
+        private PlayerModel _followTargetModel;
+
         [Inject]
         private void Construct(IObjectResolver container)
         {
@@ -38,7 +41,7 @@ namespace Game.Scripts.Enemy
             _container = container;
             _configManager = container.Resolve<IConfigManager>();
             _spawnPointsManager = container.Resolve<SpawnPointsManager>();
-            _target = container.Resolve<PlayerModel>();
+            _followTargetModel = container.Resolve<PlayerModel>();
         }
 
         private void Awake()
@@ -59,33 +62,56 @@ namespace Game.Scripts.Enemy
             // get object from pool
             EnemyHolder enemyHolder = _enemyPool.Get();
 
+            // get enemy settings
+            EnemySettings enemySettings = GetRandomEnemySettings();
+            // instantiate enemy prefab to enemy holder
+            await Addressables.InstantiateAsync(enemySettings.enemyPrefab, parent: enemyHolder.transform);
 
-            // generate id
+            // generate id and fill settings
             var enemyId = Guid.NewGuid().ToString();
-
-            // apply settings
-            var enemySettings = _enemiesSettingsList[Random.Range(0, _enemiesSettingsList.Count)];
-
-
-            // Debug.LogWarning("Start inst");
-            var handle = await Addressables.InstantiateAsync(enemySettings.enemyPrefab, parent: enemyHolder.transform);
-
-            // Debug.LogWarning("End inst");
-
-            _enemyPrefabs.Add(handle.GetHashCode().ToString(), handle);
-
-            enemyHolder.FillEnemySettings(enemyId, enemySettings, _target);
+            enemyHolder.FillEnemySettings(enemyId, enemySettings, _followTargetModel);
 
             // add enemy to cache
             _enemies.Add(enemyId, enemyHolder);
 
             // get spawn point
             Vector3 spawnPoint = _spawnPointsManager.GetRandomSpawnPointPosition();
-            enemyHolder.OnSpawn();
-            // spawn enemy
-            enemyHolder.transform.position = spawnPoint;
-            enemyHolder.gameObject.SetActive(true);
+            enemyHolder.Spawn(enemyId, enemySettings, spawnPoint, _followTargetModel);
+
+            // // Debug.LogWarning("Spawn enemy");
+            // // get object from pool
+            // EnemyHolder enemyHolder = _enemyPool.Get();
+            //
+            //
+            // // generate id
+            // var enemyId = Guid.NewGuid().ToString();
+            //
+            // // apply settings
+            // var enemySettings = _enemiesSettingsList[Random.Range(0, _enemiesSettingsList.Count)];
+            //
+            //
+            // // Debug.LogWarning("Start inst");
+            // var handle = await Addressables.InstantiateAsync(enemySettings.enemyPrefab, parent: enemyHolder.transform);
+            //
+            // // Debug.LogWarning("End inst");
+            //
+            // _enemyPrefabs.Add(handle.GetHashCode().ToString(), handle);
+            //
+            // enemyHolder.FillEnemySettings(enemyId, enemySettings, _target);
+            //
+            // // add enemy to cache
+            // _enemies.Add(enemyId, enemyHolder);
+            //
+            // // get spawn point
+            // Vector3 spawnPoint = _spawnPointsManager.GetRandomSpawnPointPosition();
+            // enemyHolder.OnSpawn();
+            // // spawn enemy
+            // enemyHolder.transform.position = spawnPoint;
+            // enemyHolder.gameObject.SetActive(true);
         }
+
+        private EnemySettings GetRandomEnemySettings() =>
+            _enemiesSettingsList[Random.Range(0, _enemiesSettingsList.Count)];
 
         public void RemoveEnemy(string enemyId)
         {
@@ -118,7 +144,6 @@ namespace Game.Scripts.Enemy
                 return;
             }
 
-            Debug.LogWarning($"Enemy FOUND! {enemyID}");
             var enemy = _enemies[enemyID];
 
             enemy.ClearEnemySettings();
@@ -132,8 +157,9 @@ namespace Game.Scripts.Enemy
 
             Debug.LogWarning("<color=green>SPAWN STARTED</color>");
             isStarted = true;
-            for (int i = 0; i < 33; i++)
+            for (var i = 0; i < 33; i++)
             {
+                if (!isStarted) break;
                 SpawnEnemy();
 
                 await UniTask.Delay(500);
@@ -148,8 +174,6 @@ namespace Game.Scripts.Enemy
             isStarted = false;
             DespawnAllEnemies();
         }
-
-        public bool isStarted;
     }
 
     public interface IEnemiesManager

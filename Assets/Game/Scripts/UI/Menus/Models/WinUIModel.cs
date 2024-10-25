@@ -19,7 +19,7 @@ namespace Game.Scripts.UI.Menus.Models
         public void StartButtonClicked()
         {
             // TODO : sound manager on/off music
-            StateMachine.ChangeStateTo(UIType.Game);
+            StateMachine.ChangeStateTo(StateType.Game);
         }
 
 // TODO DRY menuUI
@@ -47,7 +47,7 @@ namespace Game.Scripts.UI.Menus.Models
 
         public void MenuButtonClicked()
         {
-            StateMachine.ChangeStateTo(UIType.Menu);
+            StateMachine.ChangeStateTo(StateType.Menu);
         }
 
         public override void Initialize()

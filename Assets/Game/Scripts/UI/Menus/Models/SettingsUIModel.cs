@@ -26,7 +26,7 @@ namespace Game.Scripts.UI.Menus.Models
 
         public void MenuButtonClicked()
         {
-            StateMachine.ChangeStateTo(UIType.Menu);
+            StateMachine.ChangeStateTo(StateType.Menu);
         }
 
         public override void Initialize()

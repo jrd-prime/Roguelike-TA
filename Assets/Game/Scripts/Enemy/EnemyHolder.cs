@@ -1,4 +1,5 @@
 ﻿using Game.Scripts.Framework.ScriptableObjects.Enemy;
+using Game.Scripts.Framework.Systems.Follow;
 using Game.Scripts.Player;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -10,7 +11,7 @@ namespace Game.Scripts.Enemy
     [RequireComponent(typeof(Rigidbody))]
     public class EnemyHolder : MonoBehaviour
     {
-        private PlayerModel _playerModel;
+        private ITrackable _playerModel;
         private Rigidbody _rb;
         public string EnemyID { get; private set; }
         private string _enemyName;
@@ -61,17 +62,17 @@ namespace Game.Scripts.Enemy
             {
                 if (Time.time - _lastAttackTime >= _attackDelay)
                 {
-                    _playerModel.TakeDamage(_damage, _enemyName);
+                    _playerModel.TrackableAction.Invoke(_damage);
                     _lastAttackTime = Time.time;
                 }
             }
         }
 
-        public void FillEnemySettings(string enemyId, EnemySettings enemiesSettings, PlayerModel targetModel)
+        public void FillEnemySettings(string enemyId, EnemySettings enemiesSettings, ITrackable trackableTarget)
         {
             EnemyID = enemyId;
             _enemyName = enemiesSettings.enemyName;
-            _playerModel = targetModel;
+            _playerModel = trackableTarget;
             _speed = enemiesSettings.speed;
             _attackDelay = enemiesSettings.attackDelay;
             _damage = enemiesSettings.damage;
@@ -112,12 +113,7 @@ namespace Game.Scripts.Enemy
 
         public void OnTakeDamage(float damage)
         {
-            Debug.LogWarning($"I'm taking damage! Was: {_currentHealth + damage} Now: {_currentHealth}");
-
             var hpPercent = _currentHealth / _health;
-
-            Debug.LogWarning($"hpPercent = {hpPercent}");
-
             enemyHUD.SetHp(hpPercent);
         }
 
@@ -131,6 +127,16 @@ namespace Game.Scripts.Enemy
             _damage = default;
             _health = default;
             _currentHealth = default;
+        }
+
+        public void Spawn(string id, EnemySettings enemySettings, Vector3 spawnPoint,
+            ITrackable followTargetModel)
+        {
+            FillEnemySettings(id, enemySettings, followTargetModel);
+            // spawn enemy
+            transform.position = spawnPoint;
+            gameObject.SetActive(true);
+            OnSpawn();
         }
     }
 }

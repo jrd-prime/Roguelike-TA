@@ -18,25 +18,25 @@ namespace Game.Scripts.UI
         [SerializeField] private UIViewBase win;
         [SerializeField] private PopUpView popUp;
 
-        private readonly Dictionary<UIType, UIViewBase> _views = new();
+        private readonly Dictionary<StateType, UIViewBase> _views = new();
         private CancellationTokenSource _cts;
 
         private void Awake()
         {
-            InitializeView(UIType.Menu, menu);
-            InitializeView(UIType.Game, game);
-            InitializeView(UIType.Pause, pause);
-            InitializeView(UIType.GameOver, gameOver);
-            InitializeView(UIType.Settings, settings);
-            InitializeView(UIType.Win, win);
+            InitializeView(StateType.Menu, menu);
+            InitializeView(StateType.Game, game);
+            InitializeView(StateType.Pause, pause);
+            InitializeView(StateType.GameOver, gameOver);
+            InitializeView(StateType.Settings, settings);
+            InitializeView(StateType.Win, win);
         }
 
-        public void ShowView(UIType mainMenu) => _views[mainMenu].Show();
+        public void ShowView(StateType mainMenu) => _views[mainMenu].Show();
 
-        public void HideView(UIType mainMenu) => _views[mainMenu].Hide();
+        public void HideView(StateType mainMenu) => _views[mainMenu].Hide();
 
 
-        private void InitializeView(UIType type, UIViewBase uiView)
+        private void InitializeView(StateType type, UIViewBase uiView)
         {
             if (uiView == null) throw new NullReferenceException($"View of type {type} not set to UIManager prefab!");
             uiView.Hide();

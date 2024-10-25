@@ -17,8 +17,9 @@ namespace Game.Scripts.Framework.GameStateMachine
         private PlayerModel _playerModel;
         private UIManager _uiManager;
 
-        private readonly CompositeDisposable Disposables = new();
+        private readonly CompositeDisposable _disposables = new();
         private StateMachine _stateMachine;
+        private bool isGamePaused;
 
         [Inject]
         private void Construct(IObjectResolver resolver)
@@ -30,20 +31,13 @@ namespace Game.Scripts.Framework.GameStateMachine
             _uiManager = _resolver.Resolve<UIManager>();
         }
 
-        private void Awake()
-        {
-            _playerModel.Health.Where(x => x <= 0).Subscribe(_ => GameOver()).AddTo(Disposables);
-        }
 
-        private void GameOver()
+        public void GameOver()
         {
             Debug.LogWarning("GAME OVER");
-            _playerModel.ResetPlayer();
-            _stateMachine.ChangeStateTo(UIType.GameOver);
+            _enemiesManager.StopTheGame();
+            isGameStarted = false;
         }
-
-        public void ShowView(UIType viewType) => _uiManager.ShowView(viewType);
-        public void HideView(UIType viewType) => _uiManager.HideView(viewType);
 
         public void StopTheGame()
         {
@@ -53,8 +47,23 @@ namespace Game.Scripts.Framework.GameStateMachine
 
         public void StartThegame()
         {
-            _playerModel.NewGameStart();
+            if (isGameStarted) return;
+
+            isGameStarted = true;
+            _playerModel.ResetPlayer();
             _enemiesManager.StartTheGame();
+        }
+
+        public void Pause()
+        {
+            isGamePaused = true;
+            Time.timeScale = 0;
+        }
+
+        public void UnPause()
+        {
+            isGamePaused = false;
+            Time.timeScale = 1;
         }
     }
 }

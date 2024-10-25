@@ -111,7 +111,7 @@ namespace Game.Scripts.Player
         private void OnDrawGizmos()
         {
             Gizmos.color = Color.yellow;
-            Gizmos.DrawWireCube(transform.position,  new Vector3(scanBoxHorizontal / 2f, 1f, scanBoxVertical / 2f));
+            Gizmos.DrawWireCube(transform.position, new Vector3(scanBoxHorizontal / 2f, 1f, scanBoxVertical / 2f));
         }
 
         private async void ShootAtTarget(GameObject nearestEnemy)
@@ -181,6 +181,8 @@ namespace Game.Scripts.Player
 
         private void Subscribe()
         {
+            _viewModel.Position
+                .Subscribe(position => _rb.position = position).AddTo(_disposables);
             _viewModel.MoveSpeed
                 .Subscribe(moveSpeed => { _moveSpeed = moveSpeed; })
                 .AddTo(_disposables);

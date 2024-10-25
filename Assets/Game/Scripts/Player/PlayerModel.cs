@@ -13,10 +13,11 @@ using VContainer.Unity;
 
 namespace Game.Scripts.Player
 {
-    public class PlayerModel : IInitializable, IDisposable
+    public class PlayerModel : ITrackable, IInitializable, IDisposable
     {
-        private StateMachine _stateMachine;
+        public Action<float> TrackableAction { get; private set; }
         public ReactiveProperty<Vector3> Position { get; } = new();
+
         public ReactiveProperty<Quaternion> Rotation { get; } = new();
         public ReactiveProperty<Vector3> MoveDirection { get; } = new();
         public ReactiveProperty<float> MoveSpeed { get; } = new();
@@ -36,6 +37,7 @@ namespace Game.Scripts.Player
         {
             joystick = container.Resolve<JoystickModel>();
             followSystem = container.Resolve<FollowSystem>();
+            Assert.IsNotNull(followSystem, $"FollowSystem is null.");
 
             var configManager = container.Resolve<IConfigManager>();
             characterSettings = configManager.GetConfig<CharacterSettings>();
@@ -47,16 +49,19 @@ namespace Game.Scripts.Player
             Debug.LogWarning("Init Char Model");
             MoveSpeed.Value = characterSettings.moveSpeed;
             RotationSpeed.Value = characterSettings.rotationSpeed;
-            Health.Value = characterSettings.health;
+
+            SetPlayerHealth(characterSettings.health);
+            TrackableAction = TakeDamage;
+            followSystem.SetTarget(this);
         }
 
         public void SetPosition(Vector3 position) => Position.Value = position;
         public void SetRotation(Quaternion rotation) => Rotation.Value = rotation;
 
         public void SetPlayerHealth(float health) => Health.Value = health;
-        public void NewGameStart() => Health.Value = characterSettings.health;
 
-        public void TakeDamage(float damage, string from)
+
+        public void TakeDamage(float damage)
         {
             var healthValue = Health.Value - damage;
 
@@ -81,6 +86,7 @@ namespace Game.Scripts.Player
 
         public void ResetPlayer()
         {
+            Debug.LogWarning("Reset Char Model");
             SetPosition(Vector3.zero);
             SetPlayerHealth(characterSettings.health);
         }

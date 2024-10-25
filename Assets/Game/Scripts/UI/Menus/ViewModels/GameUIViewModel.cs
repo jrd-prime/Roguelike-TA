@@ -8,6 +8,7 @@ namespace Game.Scripts.UI.Menus.ViewModels
     {
         public Subject<Unit> MenuButtonClicked { get; } = new();
         public ReadOnlyReactiveProperty<float> PlayerHealth => Model.PlayerHealth;
+        public ReadOnlyReactiveProperty<float> PlayerInitialHealth => Model.PlayerInitialHealth;
 
         public override void Initialize()
         {

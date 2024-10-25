@@ -6,13 +6,13 @@ namespace Game.Scripts.Framework.GameStateMachine.State
     {
         public void Enter()
         {
-            GameManager.ShowView(UIType.GameOver);
-            GameManager.StopTheGame();
+            UIManager.ShowView(StateType.GameOver);
+            GameManager.GameOver();
         }
 
         public void Exit()
         {
-            GameManager.HideView(UIType.GameOver);
+            UIManager.HideView(StateType.GameOver);
         }
     }
 }

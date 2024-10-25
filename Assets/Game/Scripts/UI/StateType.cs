@@ -1,6 +1,6 @@
 ﻿namespace Game.Scripts.UI
 {
-    public enum UIType
+    public enum StateType
     {
         Menu,
         Game,

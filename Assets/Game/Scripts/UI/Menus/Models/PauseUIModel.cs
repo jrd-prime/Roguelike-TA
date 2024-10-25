@@ -7,7 +7,7 @@ namespace Game.Scripts.UI.Menus.Models
     {
         public void ContinueButtonClicked()
         {
-            StateMachine.ChangeStateTo(UIType.Game);
+            StateMachine.ChangeStateTo(StateType.Game);
         }
 
         public void SettingsButtonClicked()
@@ -18,7 +18,7 @@ namespace Game.Scripts.UI.Menus.Models
 
         public void ToMainMenuButtonClicked()
         {
-            StateMachine.ChangeStateTo(UIType.Menu);
+            StateMachine.ChangeStateTo(StateType.Menu);
         }
 
         public override void Initialize()

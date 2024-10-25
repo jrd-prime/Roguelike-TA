@@ -29,7 +29,6 @@ namespace Game.Scripts.Framework.Scopes
             builder.Register<PlayerModel>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
             builder.Register<PlayerViewModel>(Lifetime.Singleton).AsImplementedInterfaces();
 
-
             builder.RegisterComponent(gameManager).AsSelf().AsImplementedInterfaces();
             builder.RegisterComponent(uiManager).AsSelf().AsImplementedInterfaces();
             builder.RegisterComponent(spawnPointsManager).AsSelf().AsImplementedInterfaces();

@@ -1,5 +1,4 @@
 ﻿using Game.Scripts.UI;
-using UnityEngine;
 
 namespace Game.Scripts.Framework.GameStateMachine.State
 {
@@ -7,14 +6,14 @@ namespace Game.Scripts.Framework.GameStateMachine.State
     {
         public void Enter()
         {
-            Debug.LogWarning("pause state enter");
-            GameManager.ShowView(UIType.Pause);
+            UIManager.ShowView(StateType.Pause);
+            GameManager.Pause();
         }
 
         public void Exit()
         {
-            Debug.LogWarning("pause state exit");
-            GameManager.HideView(UIType.Pause);
+            UIManager.HideView(StateType.Pause);
+            GameManager.UnPause();
         }
     }
 }

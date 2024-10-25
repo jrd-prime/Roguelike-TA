@@ -18,12 +18,12 @@ namespace Game.Scripts.UI.Menus.Models
 
         public void StartButtonClicked()
         {
-            StateMachine.ChangeStateTo(UIType.Game);
+            StateMachine.ChangeStateTo(StateType.Game);
         }
 
         public void SettingsButtonClicked()
         {
-            StateMachine.ChangeStateTo(UIType.Settings);
+            StateMachine.ChangeStateTo(StateType.Settings);
         }
 
         public void ExitButtonClicked()

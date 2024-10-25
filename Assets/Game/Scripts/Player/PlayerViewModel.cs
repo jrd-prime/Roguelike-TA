@@ -25,9 +25,6 @@ namespace Game.Scripts.Player
 
         public void Initialize()
         {
-            Assert.IsNotNull(_model.followSystem, $"FollowSystem is null.");
-            _model.followSystem.SetTarget(this);
-            
             Subscribe();
         }
 
