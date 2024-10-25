@@ -1,5 +1,6 @@
 ﻿using System;
 using Game.Scripts.Framework.Configuration;
+using Game.Scripts.Framework.GameStateMachine;
 using Game.Scripts.Framework.ScriptableObjects.Character;
 using Game.Scripts.Framework.Systems.Follow;
 using Game.Scripts.UI;
@@ -14,6 +15,7 @@ namespace Game.Scripts.Player
 {
     public class PlayerModel : IInitializable, IDisposable
     {
+        private StateMachine _stateMachine;
         public ReactiveProperty<Vector3> Position { get; } = new();
         public ReactiveProperty<Quaternion> Rotation { get; } = new();
         public ReactiveProperty<Vector3> MoveDirection { get; } = new();
@@ -75,6 +77,12 @@ namespace Game.Scripts.Player
             MoveSpeed?.Dispose();
             RotationSpeed?.Dispose();
             IsMoving?.Dispose();
+        }
+
+        public void ResetPlayer()
+        {
+            SetPosition(Vector3.zero);
+            SetPlayerHealth(characterSettings.health);
         }
     }
 }

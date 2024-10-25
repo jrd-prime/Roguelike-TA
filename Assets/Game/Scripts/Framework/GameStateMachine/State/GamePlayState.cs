@@ -1,8 +1,4 @@
-﻿using Game.Scripts.Enemy;
-using Game.Scripts.Player;
-using Game.Scripts.UI;
-using UnityEngine;
-using VContainer;
+﻿using Game.Scripts.UI;
 
 namespace Game.Scripts.Framework.GameStateMachine.State
 {
@@ -10,20 +6,13 @@ namespace Game.Scripts.Framework.GameStateMachine.State
     {
         public void Enter()
         {
-            Debug.LogWarning("game play state enter");
-            // var playerModel = Resolver.Resolve<PlayerModel>();
-
-            // playerModel.NewGameStart();
-            UIManager.ShowView(UIType.Game);
-
-            // var enemiesManager = Resolver.Resolve<EnemiesManager>();
-            // enemiesManager.StartTheGame();
+            GameManager.ShowView(UIType.Game);
+            GameManager.StartThegame();
         }
 
         public void Exit()
         {
-            Debug.LogWarning("game play state exit");
-            UIManager.HideView(UIType.Game);
+            GameManager.HideView(UIType.Game);
         }
     }
 }

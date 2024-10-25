@@ -1,5 +1,4 @@
 ﻿using Game.Scripts.UI;
-using UnityEngine;
 
 namespace Game.Scripts.Framework.GameStateMachine.State
 {
@@ -7,18 +6,13 @@ namespace Game.Scripts.Framework.GameStateMachine.State
     {
         public void Enter()
         {
-            Debug.LogWarning("gameo over state enter");
-            UIManager.ShowView(UIType.GameOver);
-            // EnemiesManager.StopTheGame();
-            GameManager.isGameStarted = false;
-            
-            // GameManager.StopTheGame();
+            GameManager.ShowView(UIType.GameOver);
+            GameManager.StopTheGame();
         }
 
         public void Exit()
         {
-            Debug.LogWarning("gameo over state exit");
-            UIManager.HideView(UIType.GameOver);
+            GameManager.HideView(UIType.GameOver);
         }
     }
 }

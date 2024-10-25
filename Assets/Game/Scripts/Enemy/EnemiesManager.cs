@@ -3,14 +3,11 @@ using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using Game.Scripts.Framework;
 using Game.Scripts.Framework.Configuration;
-using Game.Scripts.Framework.ScriptableObjects;
 using Game.Scripts.Framework.ScriptableObjects.Enemy;
-using Game.Scripts.Framework.Systems.Follow;
 using Game.Scripts.Player;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Assertions;
-using UnityEngine.ResourceManagement.AsyncOperations;
 using VContainer;
 using Random = UnityEngine.Random;
 
@@ -55,11 +52,6 @@ namespace Game.Scripts.Enemy
             _enemyPool =
                 new CustomPool<EnemyHolder>(_enemyManagerSettings.enemyHolderPrefab, 100, transform, _container, true);
         }
-
-        private async void Start()
-        {
-        }
-
 
         public async void SpawnEnemy()
         {
