@@ -1,6 +1,8 @@
-﻿using Sirenix.OdinInspector;
+﻿using System;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.Assertions;
 
 namespace Game.Scripts.Framework.ScriptableObjects.Enemy
 {
@@ -18,5 +20,10 @@ namespace Game.Scripts.Framework.ScriptableObjects.Enemy
         public float attackDelay = 3f;
 
         [Title("Movement")] public float speed = 5f;
+
+        private void OnValidate()
+        {
+            Assert.IsNotNull(enemyPrefab, "Enemy Prefab is null.");
+        }
     }
 }

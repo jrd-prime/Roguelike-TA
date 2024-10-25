@@ -17,7 +17,8 @@
         public const string JoystickRing = "joystick-ring";
 
         // Game UI
-        public const string HealthBarContainerIDName = "health-bar-container";
+        public const string HealthBarContainerIDName = "health-bar-bg";
         public const string HealthBarLabelIDName = "health-bar-label";
+        public const string HealthBarMoveIDName = "health-bar-move";
     }
 }

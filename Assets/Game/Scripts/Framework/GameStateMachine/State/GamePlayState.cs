@@ -13,8 +13,8 @@ namespace Game.Scripts.Framework.GameStateMachine.State
             Debug.LogWarning("game play state enter");
             var playerModel = Resolver.Resolve<PlayerModel>();
 
-            playerModel.NewGameStart();
             UIManager.ShowView(UIType.Game);
+            playerModel.NewGameStart();
 
             var enemiesManager = Resolver.Resolve<EnemiesManager>();
             enemiesManager.StartTheGame();

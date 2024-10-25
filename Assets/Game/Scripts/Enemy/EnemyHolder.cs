@@ -1,5 +1,7 @@
 ﻿using Game.Scripts.Framework.ScriptableObjects.Enemy;
+using Game.Scripts.Framework.Systems.Follow;
 using Game.Scripts.Player;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.Serialization;
@@ -10,9 +12,9 @@ namespace Game.Scripts.Enemy
     [RequireComponent(typeof(Rigidbody))]
     public class EnemyHolder : MonoBehaviour
     {
-        private PlayerModel _playerModel;
+        private ITrackable _trackable;
         private Rigidbody _rb;
-        public string EnemyID { get; private set; }
+        [ReadOnly] public string EnemyID;
         private string _enemyName;
         private float _attackDelay;
         private float _damage;
@@ -40,7 +42,7 @@ namespace Game.Scripts.Enemy
         private void FixedUpdate()
         {
             var enemyPosition = _rb.position;
-            var targetPosition = _playerModel.Position.CurrentValue;
+            var targetPosition = _trackable.Position.CurrentValue;
             var distanceToTarget = Vector3.Distance(enemyPosition, targetPosition);
             // Вычисляем направление к цели
             Vector3 directionToTarget = (targetPosition - enemyPosition).normalized;
@@ -61,17 +63,17 @@ namespace Game.Scripts.Enemy
             {
                 if (Time.time - _lastAttackTime >= _attackDelay)
                 {
-                    _playerModel.TakeDamage(_damage, _enemyName);
+                    _trackable.TrackableAction?.Invoke(_damage);
                     _lastAttackTime = Time.time;
                 }
             }
         }
 
-        public void FillEnemySettings(string enemyId, EnemySettings enemiesSettings, PlayerModel targetModel)
+        public void FillEnemySettings(string enemyId, EnemySettings enemiesSettings, ITrackable targetModel)
         {
             EnemyID = enemyId;
             _enemyName = enemiesSettings.enemyName;
-            _playerModel = targetModel;
+            _trackable = targetModel;
             _speed = enemiesSettings.speed;
             _attackDelay = enemiesSettings.attackDelay;
             _damage = enemiesSettings.damage;
@@ -125,12 +127,23 @@ namespace Game.Scripts.Enemy
         {
             EnemyID = default;
             _enemyName = default;
-            _playerModel = default;
+            _trackable = default;
             _speed = default;
             _attackDelay = default;
             _damage = default;
             _health = default;
             _currentHealth = default;
+        }
+
+        public void Spawn(string id, EnemySettings enemySettings, Vector3 spawnPoint,
+            ITrackable followTargetModel)
+        {
+            FillEnemySettings(id, enemySettings, followTargetModel);
+            // spawn enemy
+            transform.position = spawnPoint;
+            gameObject.SetActive(true);
+
+            OnSpawn();
         }
     }
 }

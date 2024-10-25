@@ -9,12 +9,14 @@ namespace Game.Scripts.Framework.GameStateMachine.State
         {
             Debug.LogWarning("pause state enter");
             UIManager.ShowView(UIType.Pause);
+            Time.timeScale = 0;
         }
 
         public void Exit()
         {
             Debug.LogWarning("pause state exit");
             UIManager.HideView(UIType.Pause);
+            Time.timeScale = 1;
         }
     }
 }

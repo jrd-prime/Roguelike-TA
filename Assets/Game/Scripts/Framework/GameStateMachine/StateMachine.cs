@@ -44,12 +44,8 @@ namespace Game.Scripts.Framework.GameStateMachine
             Debug.LogWarning("State machine post start");
             if (_currentState != null) return;
 
-            // TODO remove
-            ChangeState(_states[UIType.Game]);
-            _currentState = _states[UIType.Game];
-
-            // ChangeState(_states[UIType.Menu]);
-            // _currentState = _states[UIType.Menu];
+            ChangeState(_states[UIType.Menu]);
+            _currentState = _states[UIType.Menu];
         }
     }
 }

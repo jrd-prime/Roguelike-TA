@@ -30,13 +30,18 @@ namespace Game.Scripts.UI.Base
 
         public void Show()
         {
+            Debug.LogWarning("Show view: " + name);
             RegisterCallbacks();
             RootVisualElement.style.display = DisplayStyle.Flex;
         }
 
         public void Hide()
         {
+            Debug.LogWarning("Hide view: " + name);
+            Debug.LogWarning("Hide view: " + name + " " + "rootVisualElement  = " + RootVisualElement);
             RootVisualElement.style.display = DisplayStyle.None;
+
+            Debug.LogWarning($" {name} / {RootVisualElement.style.display}");
             UnregisterCallbacks();
         }
 

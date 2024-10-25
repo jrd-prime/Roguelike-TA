@@ -34,8 +34,8 @@ namespace Game.Scripts.Player
         public LayerMask targetLayer;
 
 
-        private GameObject _nearestEnemy; // Переменная для хранения ближайшего врага
-        private CharacterGun _charGun;
+        private GameObject _nearestEnemy;
+
         private bool _isShooting = false;
         private IAssetProvider _assetProvider;
         private IConfigManager _configManager;
@@ -86,11 +86,6 @@ namespace Game.Scripts.Player
             Subscribe();
         }
 
-        private void Start()
-        {
-            _charGun = gameObject.GetComponent<CharacterGun>();
-        }
-
         private void FixedUpdate()
         {
             // Debug.LogWarning($"FixedUpdate {projectilePool}");
@@ -111,7 +106,7 @@ namespace Game.Scripts.Player
         private void OnDrawGizmos()
         {
             Gizmos.color = Color.yellow;
-            Gizmos.DrawWireCube(transform.position,  new Vector3(scanBoxHorizontal / 2f, 1f, scanBoxVertical / 2f));
+            Gizmos.DrawWireCube(transform.position, new Vector3(scanBoxHorizontal / 2f, 1f, scanBoxVertical / 2f));
         }
 
         private async void ShootAtTarget(GameObject nearestEnemy)
@@ -128,8 +123,7 @@ namespace Game.Scripts.Player
 
             await UniTask.Delay(500); // Задержка
 
-            _isShooting = false; // После завершения сбрасываем флаг
-            // Дополнительные действия после задержки, например, стрельба по следующей цели
+            _isShooting = false;
         }
 
         private void PoolCallback(Projectile projectile)
@@ -181,6 +175,9 @@ namespace Game.Scripts.Player
 
         private void Subscribe()
         {
+            _viewModel.Position
+                .Subscribe(position => _rb.position = position).AddTo(_disposables);
+
             _viewModel.MoveSpeed
                 .Subscribe(moveSpeed => { _moveSpeed = moveSpeed; })
                 .AddTo(_disposables);

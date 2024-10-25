@@ -29,9 +29,9 @@ namespace Game.Scripts.UI
             InitializeView(UIType.Settings, settings);
         }
 
-        public void ShowView(UIType mainMenu) => _views[mainMenu].Show();
+        public void ShowView(UIType view) => _views[view].Show();
 
-        public void HideView(UIType mainMenu) => _views[mainMenu].Hide();
+        public void HideView(UIType view) => _views[view].Hide();
 
 
         private void InitializeView(UIType type, UIViewBase uiView)
