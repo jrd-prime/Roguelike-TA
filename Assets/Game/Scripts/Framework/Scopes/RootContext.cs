@@ -1,5 +1,5 @@
-using Game.Scripts.Framework.Camera;
 using Game.Scripts.Framework.Input;
+using Game.Scripts.Framework.Managers.Camera;
 using Game.Scripts.Framework.Managers.Settings;
 using Game.Scripts.Framework.Providers.AssetProvider;
 using Game.Scripts.Framework.ScriptableObjects;
@@ -16,19 +16,19 @@ namespace Game.Scripts.Framework.Scopes
     public class RootContext : LifetimeScope
     {
         [FormerlySerializedAs("sMainConfig")] [SerializeField] private MainSettings mainSettings;
-        [SerializeField] private CameraController cameraController;
+        [FormerlySerializedAs("cameraController")] [SerializeField] private CameraManager cameraManager;
         [SerializeField] private EventSystem eventSystem;
 
         protected override void Configure(IContainerBuilder builder)
         {
             Debug.LogWarning("<color=cyan>ROOT CONTEXT</color>");
-            Check(cameraController);
+            Check(cameraManager);
 
 
             // Components
             var input = Check(gameObject.AddComponent(typeof(MobileInput)));
             builder.RegisterComponent(input).AsSelf();
-            builder.RegisterComponent(cameraController).As<ICameraController>();
+            builder.RegisterComponent(cameraManager).As<ICameraManager>();
             builder.RegisterComponent(eventSystem).AsSelf();
 
             builder.RegisterInstance(mainSettings);
