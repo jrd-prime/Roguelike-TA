@@ -1,9 +1,9 @@
+using Game.Scripts.Framework.Configuration.SO;
 using Game.Scripts.Framework.Input;
 using Game.Scripts.Framework.Managers.Camera;
 using Game.Scripts.Framework.Managers.Settings;
 using Game.Scripts.Framework.Providers.AssetProvider;
-using Game.Scripts.Framework.ScriptableObjects;
-using Game.Scripts.Framework.Systems.Follow;
+using Game.Scripts.Framework.Systems;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.EventSystems;
@@ -38,7 +38,7 @@ namespace Game.Scripts.Framework.Scopes
 
             builder.Register(typeof(AssetProvider), Lifetime.Singleton).As<IAssetProvider>();
             // Systems
-            builder.Register<FollowSystem>(Lifetime.Singleton).AsSelf();
+            builder.Register<CameraFollowSystem>(Lifetime.Singleton).AsSelf();
         }
 
 

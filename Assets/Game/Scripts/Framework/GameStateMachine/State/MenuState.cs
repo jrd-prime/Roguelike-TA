@@ -1,11 +1,15 @@
 ﻿using Game.Scripts.UI;
+using UnityEngine;
 
 namespace Game.Scripts.Framework.GameStateMachine.State
 {
-    public class MenuState : GameStateBase, IGameState
+    public sealed class MenuState : GameStateBase, IGameState
     {
         public void Enter()
         {
+            Debug.LogWarning("menu state enter");
+            if (GameManager.isGameStarted.CurrentValue) GameManager.GameOver();
+
             UIManager.ShowView(StateType.Menu);
         }
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using R3;
+using UnityEngine;
 
 namespace Game.Scripts.Framework.Bootstrap.UI
 {
@@ -12,6 +13,7 @@ namespace Game.Scripts.Framework.Bootstrap.UI
             if (string.IsNullOrEmpty(value))
                 throw new ArgumentException("value can't be null", nameof(value));
 
+            Debug.LogWarning("Set loading text");
             LoadingText.Value = value;
         }
 

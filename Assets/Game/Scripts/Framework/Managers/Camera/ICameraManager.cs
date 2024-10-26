@@ -1,10 +1,10 @@
-﻿using Game.Scripts.Framework.Systems.Follow;
+﻿using Game.Scripts.Framework.CommonModel;
 
 namespace Game.Scripts.Framework.Managers.Camera
 {
     public interface ICameraManager
     {
-        public void SetTarget(ITrackable target);
+        public void SetTarget(ITrackableModel target);
         public void RemoveTarget();
     }
 }

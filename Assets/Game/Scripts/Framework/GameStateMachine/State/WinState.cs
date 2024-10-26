@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Game.Scripts.Framework.GameStateMachine.State
 {
-    public class WinState : GameStateBase, IGameState
+    public sealed class WinState : GameStateBase, IGameState
     {
         public void Enter()
         {

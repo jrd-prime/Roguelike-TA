@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Game.Scripts.Framework.ScriptableObjects;
+using Game.Scripts.Framework.Configuration.SO;
 using UnityEngine;
 using VContainer;
 

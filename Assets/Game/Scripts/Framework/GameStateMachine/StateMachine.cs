@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Game.Scripts.Framework.GameStateMachine.State;
-using Game.Scripts.Player;
+using Game.Scripts.Framework.Managers.Game;
+using Game.Scripts.Player.Interfaces;
 using Game.Scripts.UI;
 using R3;
 using UnityEngine;
@@ -9,19 +11,19 @@ using VContainer.Unity;
 
 namespace Game.Scripts.Framework.GameStateMachine
 {
-    public class StateMachine : IPostStartable, IInitializable
+    public class StateMachine : IPostStartable, IDisposable
     {
         private readonly Dictionary<StateType, IGameState> _states = new();
-        private readonly CompositeDisposable _disposables = new();
 
         private IGameState _currentState;
-        private PlayerModel _playerModel;
-
+        private IPlayerModel _playerModel;
+        private GameManager _gameManager;
+        private readonly CompositeDisposable _disposables = new();
+        private bool isGameStarted;
 
         [Inject]
         private void Construct(IObjectResolver container)
         {
-            Debug.LogWarning("State machine construct");
             _states.Add(StateType.Menu, container.Resolve<MenuState>());
             _states.Add(StateType.GameOver, container.Resolve<GameOverState>());
             _states.Add(StateType.Pause, container.Resolve<PauseState>());
@@ -29,7 +31,38 @@ namespace Game.Scripts.Framework.GameStateMachine
             _states.Add(StateType.Settings, container.Resolve<SettingsState>());
             _states.Add(StateType.Win, container.Resolve<WinState>());
 
-            _playerModel = container.Resolve<PlayerModel>();
+            _playerModel = container.Resolve<IPlayerModel>();
+            _gameManager = container.Resolve<GameManager>();
+        }
+
+        public void PostStart()
+        {
+            Debug.LogWarning("state machine post start");
+            Debug.LogWarning($"current state: {_currentState}");
+            if (_currentState != null) return;
+
+            ChangeState(_states[StateType.Menu]);
+            _currentState = _states[StateType.Menu];
+
+            _gameManager.isGameStarted
+                .Subscribe(value => isGameStarted = value).AddTo(_disposables);
+
+            _playerModel.Health
+                .Where(h => h <= 0)
+                .Subscribe(h =>
+                {
+                    if (isGameStarted) ChangeStateTo(StateType.GameOver);
+                })
+                .AddTo(_disposables);
+        }
+
+        public void ChangeStateTo(StateType stateType)
+        {
+            Debug.LogWarning($"change state to: {stateType}");
+            if (!_states.TryGetValue(stateType, out IGameState state))
+                throw new KeyNotFoundException($"State: {stateType} not found!");
+
+            ChangeState(state);
         }
 
         private void ChangeState(IGameState newState)
@@ -39,27 +72,9 @@ namespace Game.Scripts.Framework.GameStateMachine
             _currentState.Enter();
         }
 
-        public void ChangeStateTo(StateType stateType)
+        public void Dispose()
         {
-            if (!_states.TryGetValue(stateType, out IGameState state))
-                throw new KeyNotFoundException($"State: {stateType} not found!");
-
-            ChangeState(state);
-        }
-
-        public void PostStart()
-        {
-            Debug.LogWarning("State machine post start");
-            if (_currentState != null) return;
-
-            ChangeState(_states[StateType.Menu]);
-            _currentState = _states[StateType.Menu];
-        }
-
-        public void Initialize()
-        {
-            _playerModel.Health.Where(x => x <= 0).Subscribe(_ => ChangeStateTo(StateType.GameOver))
-                .AddTo(_disposables);
+            _disposables?.Dispose();
         }
     }
 }

@@ -1,45 +1,55 @@
-﻿using Cysharp.Threading.Tasks;
-using Game.Scripts.Framework.Managers.Settings;
-using Game.Scripts.Framework.Providers.AssetProvider;
-using Game.Scripts.Framework.ScriptableObjects.Weapon;
+﻿using System;
+using Cysharp.Threading.Tasks;
+using Game.Scripts.Framework.Configuration.SO.Weapon;
+using Game.Scripts.Framework.Providers.Pools;
+using R3;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
-using UnityEngine.Assertions;
-using VContainer;
 
 namespace Game.Scripts.Framework.Weapon
 {
     public abstract class WeaponBase : MonoBehaviour
     {
-        [SerializeField] protected WeaponSettings settings;
-
         [SerializeField] public Transform muzzlePosition;
+        public ReactiveProperty<bool> isShooting { get; } = new(false);
 
-        private ISettingsManager _settingsManager;
-        private IAssetProvider _assetProvider;
-
+        private WeaponSettings _weaponSettings;
         private CustomPool<Projectile> _projectilePool;
+        private const float ShootHeightOffset = .3f;
+        private bool _isInitialized;
 
-        [Inject]
-        private void Construct(ISettingsManager settingsManager, IAssetProvider assetProvider)
+        public void InitializeWeapon(WeaponSettings weaponSettings, CustomPool<Projectile> projectilePool)
         {
-            _settingsManager = settingsManager;
-            _assetProvider = assetProvider;
+            _weaponSettings = weaponSettings;
+            _projectilePool = projectilePool;
+            _isInitialized = true;
         }
 
-        private async void Awake()
+        private void Shoot(Vector3 targetPosition, Projectile projectile)
         {
-            Assert.IsNotNull(_settingsManager, $"Config manager is null. Add {this} to auto inject");
-            Assert.IsNotNull(_assetProvider, $"Asset provider is null. Add {this} to auto inject");
-
-            settings = _settingsManager.GetConfig<WeaponSettings>();
-        }
-
-        public void Shoot(Vector3 targetPosition, Projectile projectile)
-        {
-            Debug.LogWarning("Shoot");
             projectile.gameObject.SetActive(true);
-            projectile.LaunchToTarget(muzzlePosition.position, new Vector3(targetPosition.x, .3f, targetPosition.z));
+            projectile.LaunchToTarget(muzzlePosition.position,
+                new Vector3(targetPosition.x, ShootHeightOffset, targetPosition.z));
         }
+
+        private void PoolCallback(Projectile projectile) => _projectilePool.Return(projectile);
+
+
+        public async UniTask ShootAtTarget(GameObject nearestEnemy)
+        {
+            if (!_isInitialized) throw new Exception("Weapon is not initialized!");
+
+            Shooting(true);
+
+            var projectile = _projectilePool.Get();
+            projectile.Initialize(_weaponSettings, PoolCallback);
+
+            Shoot(nearestEnemy.transform.position, projectile);
+
+            await UniTask.Delay(_weaponSettings.attackDelayMS);
+
+            Shooting(false);
+        }
+
+        private void Shooting(bool value) => isShooting.Value = value;
     }
 }

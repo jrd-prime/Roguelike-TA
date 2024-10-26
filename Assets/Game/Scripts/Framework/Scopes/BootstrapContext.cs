@@ -15,10 +15,10 @@ namespace Game.Scripts.Framework.Scopes
             Debug.LogWarning("<color=cyan>BOOSTRAP CONTEXT</color>");
 
             builder.Register<ILoadingScreenModel, LoadingScreenModel>(Lifetime.Singleton);
-            builder.Register<LoadingScreenUIViewModel>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
+            builder.Register<ILoadingScreenViewModel, LoadingScreenViewModel>(Lifetime.Singleton);
 
             builder.RegisterComponent(loadingScreenView);
-            builder.Register<Loader>(Lifetime.Singleton).AsImplementedInterfaces();
+            builder.Register<ILoader, Loader>(Lifetime.Singleton);
 
             builder.RegisterEntryPoint<AppStarter>();
         }

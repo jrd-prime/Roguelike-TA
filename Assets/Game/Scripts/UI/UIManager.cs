@@ -8,7 +8,7 @@ using UnityEngine;
 namespace Game.Scripts.UI
 {
     // TODO : consider safe areas for the user interface
-    public class UIManager : MonoBehaviour //, IInitializable
+    public class UIManager : MonoBehaviour
     {
         [SerializeField] private UIViewBase menu;
         [SerializeField] private UIViewBase game;
@@ -31,10 +31,8 @@ namespace Game.Scripts.UI
             InitializeView(StateType.Win, win);
         }
 
-        public void ShowView(StateType mainMenu) => _views[mainMenu].Show();
-
-        public void HideView(StateType mainMenu) => _views[mainMenu].Hide();
-
+        public void ShowView(StateType menuForStateType) => _views[menuForStateType].Show();
+        public void HideView(StateType menuForStateType) => _views[menuForStateType].Hide();
 
         private void InitializeView(StateType type, UIViewBase uiView)
         {

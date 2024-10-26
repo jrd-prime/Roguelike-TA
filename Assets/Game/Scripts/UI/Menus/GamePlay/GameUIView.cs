@@ -84,11 +84,7 @@ namespace Game.Scripts.UI.Menus.GamePlay
                 .AddTo(Disposables);
         }
 
-        private void UpdateKillCount()
-        {
-            Debug.LogWarning("UpdateKillCount");
-            _killCountLabel.text = _killCount + " / " + _killToWin;
-        }
+        private void UpdateKillCount() => _killCountLabel.text = _killCount + " / " + _killToWin;
 
 
         protected override void InitCallbacksCache()

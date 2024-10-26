@@ -24,6 +24,9 @@ namespace Game.Scripts.Framework.Bootstrap
 
         public async UniTask StartServicesInitializationAsync()
         {
+            if (_loadingQueue.Count == 0)
+                throw new Exception("No services to initialize! Use AddServiceForInitialization first.");
+
             foreach (var service in _loadingQueue)
             {
                 try
@@ -32,7 +35,7 @@ namespace Game.Scripts.Framework.Bootstrap
                     service.LoaderServiceInitialization();
 
                     // fake delay per service
-                    await UniTask.Delay(1000);
+                    await UniTask.Delay(100);
                 }
                 catch (Exception ex)
                 {

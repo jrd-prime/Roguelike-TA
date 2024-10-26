@@ -33,5 +33,7 @@ namespace Game.Scripts.UI.Joystick
                 throw new Exception(
                     $"Are you sure you are passing the correct handle? You pass: {expectedElement.name}. Expected: {expectedElementName}");
         }
+
+        public void SetMoveDirection(Vector3 value) => MoveDirection.Value = value;
     }
 }

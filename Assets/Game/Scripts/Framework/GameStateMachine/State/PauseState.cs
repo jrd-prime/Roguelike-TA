@@ -2,7 +2,7 @@
 
 namespace Game.Scripts.Framework.GameStateMachine.State
 {
-    public class PauseState : GameStateBase, IGameState
+    public sealed class PauseState : GameStateBase, IGameState
     {
         public void Enter()
         {

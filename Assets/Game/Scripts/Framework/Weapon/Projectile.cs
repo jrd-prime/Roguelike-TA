@@ -1,34 +1,29 @@
 ﻿using System;
 using Game.Scripts.Enemy;
+using Game.Scripts.Framework.Configuration.SO.Weapon;
 using UnityEngine;
 using UnityEngine.Assertions;
-using VContainer;
 
 namespace Game.Scripts.Framework.Weapon
 {
     [RequireComponent(typeof(SphereCollider))]
     public class Projectile : MonoBehaviour
     {
-        public float speed = 100f; // Скорость движения снаряда
+        private Action<Projectile> callback { get; set; }
+        public float speed = 100f;
+        public float damage = 10f;
 
-        private Vector3 _targetPosition; // Точка назначения
-        private bool _isMoving; // Флаг, показывающий, движется ли снаряд
-        public float damage { get; set; }
-        public Action<Projectile> callback { get; set; }
-
-        [Inject]
-        private void Construct()
-        {
-            // Debug.LogWarning("Projectile construct");
-        }
+        private Vector3 _targetPosition;
+        private bool _isMoving;
+        private bool _isInitialized;
 
         private void FixedUpdate()
         {
+            if (!_isInitialized) throw new Exception("Projectile is not initialized!");
             if (!_isMoving) return;
             MoveToTarget();
         }
 
-        // Этот метод будет вызываться извне
         public void LaunchToTarget(Vector3 from, Vector3 to)
         {
             Assert.IsNotNull(callback, "ProjectilePool callback is not set");
@@ -39,36 +34,35 @@ namespace Game.Scripts.Framework.Weapon
 
         private void MoveToTarget()
         {
-            // Движение снаряда в направлении цели
             transform.position = Vector3.MoveTowards(transform.position, _targetPosition, speed * Time.deltaTime);
-
             transform.LookAt(_targetPosition);
-
+            
             if (transform.position != _targetPosition) return;
             callback?.Invoke(this);
             _isMoving = false;
         }
 
-        // private void OnHitTarget()
-        // {
-        //     isMoving = false; // Останавливаем движение
-        //     Debug.Log("Target hit!");
-        // }
-
         void OnTriggerEnter(Collider other)
         {
             if (!other.CompareTag("Enemy")) return;
-
             _isMoving = false;
-            Debug.Log("Hit an enemy!");
 
             var enemy = other.GetComponent<EnemyHolder>();
             enemy.TakeDamage(damage);
             callback.Invoke(this);
-            // Можно вызвать OnHitTarget для завершения движения
-            // OnHitTarget();
         }
 
-        public Action poolCallback { get; set; }
+        private void SetDamage(float value) => damage = value;
+        private void SetSpeed(float value) => speed = value;
+
+        public void Initialize(WeaponSettings weaponSettings, Action<Projectile> poolCallback)
+        {
+            SetDamage(weaponSettings.projectileDamage);
+            SetSpeed(weaponSettings.projectileSpeed);
+
+            callback = poolCallback;
+
+            _isInitialized = true;
+        }
     }
 }

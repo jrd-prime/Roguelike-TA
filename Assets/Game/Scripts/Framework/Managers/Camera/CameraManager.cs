@@ -1,5 +1,5 @@
 ﻿using System;
-using Game.Scripts.Framework.Systems.Follow;
+using Game.Scripts.Framework.CommonModel;
 using R3;
 using UnityEngine;
 
@@ -9,7 +9,7 @@ namespace Game.Scripts.Framework.Managers.Camera
     {
         [SerializeField] private UnityEngine.Camera mainCamera;
 
-        private ITrackable _targetModel;
+        private ITrackableModel _targetModel;
         private readonly CompositeDisposable _disposables = new();
 
         private void Awake()
@@ -17,7 +17,7 @@ namespace Game.Scripts.Framework.Managers.Camera
             if (mainCamera == null) throw new NullReferenceException($"MainCamera is null. {this}");
         }
 
-        public void SetTarget(ITrackable target)
+        public void SetTarget(ITrackableModel target)
         {
             if (target == null) throw new ArgumentNullException($"Target is null. {this}");
 
@@ -33,7 +33,7 @@ namespace Game.Scripts.Framework.Managers.Camera
             _disposables?.Dispose();
         }
 
-        private void SubscribeToTargetPosition(ITrackable target)
+        private void SubscribeToTargetPosition(ITrackableModel target)
         {
             _targetModel = target;
             _targetModel.Position

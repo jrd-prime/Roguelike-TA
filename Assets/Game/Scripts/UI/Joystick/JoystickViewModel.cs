@@ -25,7 +25,7 @@ namespace Game.Scripts.UI.Joystick
 
         public void OnOutEvent(PointerOutEvent _)
         {
-            _model.MoveDirection.Value = Vector3.zero;
+            _model.SetMoveDirection(Vector3.zero);
             ResetJoystickPosition();
         }
 
@@ -39,7 +39,7 @@ namespace Game.Scripts.UI.Joystick
             _moveInput = handlePosition / (joystickRing.layout.width / 2);
             _moveInput = Vector2.ClampMagnitude(_moveInput, 1.0f);
 
-            _model.MoveDirection.Value = new Vector3(_moveInput.x, 0, _moveInput.y * -1f);
+            _model.SetMoveDirection(new Vector3(_moveInput.x, 0, _moveInput.y * -1f));
         }
 
         private void ResetJoystickPosition()

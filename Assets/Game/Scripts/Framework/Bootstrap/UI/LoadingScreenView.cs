@@ -1,4 +1,5 @@
-﻿using R3;
+﻿using System;
+using R3;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UIElements;
@@ -9,7 +10,7 @@ namespace Game.Scripts.Framework.Bootstrap.UI
     [RequireComponent(typeof(UIDocument))]
     public sealed class LoadingScreenView : MonoBehaviour
     {
-        private LoadingScreenUIViewModel _model;
+        private ILoadingScreenViewModel _viewModel;
         private Label _title;
 
         private readonly CompositeDisposable _disposables = new();
@@ -17,11 +18,11 @@ namespace Game.Scripts.Framework.Bootstrap.UI
         private const string TitleLabelId = "header-label";
 
         [Inject]
-        private void Construct(LoadingScreenUIViewModel uiModel) => _model = uiModel;
+        private void Construct(ILoadingScreenViewModel viewModel) => _viewModel = viewModel;
 
         private void Awake()
         {
-            Assert.IsNotNull(_model, "ViewModel is null");
+            Assert.IsNotNull(_viewModel, "ViewModel is null");
 
             var uiDocument = gameObject.GetComponent<UIDocument>();
             Assert.IsNotNull(uiDocument.visualTreeAsset, "VisualTreeAsset is not set to " + name + " prefab!");
@@ -29,7 +30,7 @@ namespace Game.Scripts.Framework.Bootstrap.UI
             _title = uiDocument.rootVisualElement.Q<Label>(TitleLabelId);
             Assert.IsNotNull(_title, $"Can't find label with id {TitleLabelId} in {uiDocument.name}");
 
-            _model.TitleText.Subscribe(SetTitle).AddTo(_disposables);
+            _viewModel.TitleText.Subscribe(SetTitle).AddTo(_disposables);
         }
 
         private void SetTitle(string value)

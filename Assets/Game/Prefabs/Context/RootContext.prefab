@@ -51,7 +51,7 @@ MonoBehaviour:
   autoRun: 1
   autoInjectGameObjects: []
   mainSettings: {fileID: 11400000, guid: 4cb43ff2357a5b848884fcf4ae7fa367, type: 2}
-  cameraController: {fileID: 3540248167536373346}
+  cameraManager: {fileID: 3540248167536373346}
   eventSystem: {fileID: 1821850690637664398}
 --- !u!1001 &2914048384746644707
 PrefabInstance:

@@ -1,8 +1,10 @@
 ﻿using Game.Scripts.UI.Base;
+using Game.Scripts.UI.Menus.GameOver;
 using Game.Scripts.UI.Menus.GamePlay;
-using Game.Scripts.UI.Menus.Models;
-using Game.Scripts.UI.Menus.ViewModels;
-using Game.Scripts.UI.Menus.Views;
+using Game.Scripts.UI.Menus.MainMenu;
+using Game.Scripts.UI.Menus.Pause;
+using Game.Scripts.UI.Menus.Settings;
+using Game.Scripts.UI.Menus.Win;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;

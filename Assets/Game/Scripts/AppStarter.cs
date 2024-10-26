@@ -1,5 +1,6 @@
 ﻿using Cysharp.Threading.Tasks;
 using Game.Scripts.Framework.Bootstrap;
+using Game.Scripts.Framework.Constants;
 using Game.Scripts.Framework.Managers.Settings;
 using Game.Scripts.Framework.Providers.AssetProvider;
 using UnityEngine;
@@ -34,7 +35,7 @@ namespace Game.Scripts
             Debug.LogWarning("Services initialization completed...");
 
 
-            var gameScene = await _assetProvider.LoadSceneAsync(AssetConst.GameScene, LoadSceneMode.Additive);
+            var gameScene = await _assetProvider.LoadSceneAsync(AssetsConst.GameScene, LoadSceneMode.Additive);
 
             // TODO FadeOut loading screen view 
             // Unloading current scene

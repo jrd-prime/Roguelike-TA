@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using Game.Scripts.Enemy;
+using Game.Scripts.Framework.Configuration.SO.Enemy;
 using Game.Scripts.Framework.GameStateMachine;
 using Game.Scripts.Framework.Managers.Settings;
-using Game.Scripts.Framework.ScriptableObjects.Enemy;
-using Game.Scripts.Player;
+using Game.Scripts.Framework.Managers.SpawnPoints;
+using Game.Scripts.Framework.Providers.Pools;
+using Game.Scripts.Player.Interfaces;
 using Game.Scripts.UI;
 using R3;
 using UnityEngine;
@@ -16,34 +18,30 @@ using Random = UnityEngine.Random;
 
 namespace Game.Scripts.Framework.Managers.Enemy
 {
-    public class EnemiesManager : MonoBehaviour, IEnemiesManager
+    public class EnemiesManager : MonoBehaviour
     {
         public ReactiveProperty<int> Kills { get; } = new();
         public ReactiveProperty<int> KillToWin { get; } = new();
+        private bool _isStarted;
 
-        private Dictionary<string, EnemyHolder> _enemiesCache = new();
         private ISettingsManager _settingsManager;
         private List<EnemySettings> _enemiesSettingsList;
         private SpawnPointsManager _spawnPointsManager;
         private EnemyManagerSettings _enemyManagerSettings;
-
         private CustomPool<EnemyHolder> _enemyPool;
-        private PlayerModel _target;
-
-        Dictionary<string, GameObject> _enemyPrefabs = new();
+        private IPlayerModel _target;
         private IObjectResolver _container;
+        private IPlayerModel _followTargetModel;
 
-        public bool isStarted;
-        private PlayerModel _followTargetModel;
+        private readonly Dictionary<string, EnemyHolder> _enemiesCache = new();
 
         [Inject]
         private void Construct(IObjectResolver container)
         {
-            Debug.LogWarning($"Enemies manager construct");
             _container = container;
             _settingsManager = container.Resolve<ISettingsManager>();
             _spawnPointsManager = container.Resolve<SpawnPointsManager>();
-            _followTargetModel = container.Resolve<PlayerModel>();
+            _followTargetModel = container.Resolve<IPlayerModel>();
         }
 
         private void Awake()
@@ -60,53 +58,38 @@ namespace Game.Scripts.Framework.Managers.Enemy
 
         private async void SpawnEnemy()
         {
-            // get object from pool
             EnemyHolder enemyHolder = _enemyPool.Get();
-
-            // get enemy settings
             EnemySettings enemySettings = GetRandomEnemySettings();
 
-            // instantiate enemy prefab to enemy holder
             await Addressables.InstantiateAsync(enemySettings.enemyPrefab, parent: enemyHolder.transform);
 
-            // generate id and fill settings
             var enemyId = Guid.NewGuid().ToString();
             enemyHolder.FillEnemySettings(enemyId, enemySettings, _followTargetModel);
 
-            // add enemy to cache
             _enemiesCache.Add(enemyId, enemyHolder);
 
-            // get spawn point
-            Vector3 spawnPoint = _spawnPointsManager.GetRandomSpawnPointPosition();
+            var spawnPoint = _spawnPointsManager.GetRandomSpawnPointPosition();
 
-            // spawn enemy
             enemyHolder.Spawn(enemyId, enemySettings, spawnPoint, _followTargetModel);
-
-            Debug.LogWarning($"Enemies spawned: {_enemiesCache.Count}");
         }
 
         private EnemySettings GetRandomEnemySettings() =>
             _enemiesSettingsList[Random.Range(0, _enemiesSettingsList.Count)];
 
-        public void RemoveEnemy(string enemyId)
+        private void RemoveEnemy(string enemyId)
         {
             var enemy = _enemiesCache[enemyId];
 
             enemy.gameObject.SetActive(false);
-
-            // remove enemy from cache
             _enemiesCache.Remove(enemyId);
-
-            // return to pool
+            enemy.ClearEnemySettings();
             _enemyPool.Return(enemy);
         }
 
         private void DespawnAllEnemies()
         {
-            Debug.LogWarning("Despawn all enemies");
             foreach (var activeEnemy in _enemiesCache)
             {
-                activeEnemy.Value.OnDespawn();
                 activeEnemy.Value.ClearEnemySettings();
                 _enemyPool.Return(activeEnemy.Value);
             }
@@ -116,44 +99,36 @@ namespace Game.Scripts.Framework.Managers.Enemy
 
         public void EnemyDie(string enemyID)
         {
-            if (!_enemiesCache.ContainsKey(enemyID))
-            {
-                Debug.LogWarning($"Enemy not found! {enemyID}");
-                return;
-            }
+            if (!_enemiesCache.ContainsKey(enemyID)) return;
 
-            Kills.Value += 1;
+            RemoveEnemy(enemyID);
+            AddKill();
+            CheckWin();
+        }
 
-            var enemy = _enemiesCache[enemyID];
-
-            _enemiesCache.Remove(enemyID);
-            enemy.ClearEnemySettings();
-
-            _enemyPool.Return(enemy);
-
+        private void CheckWin()
+        {
             if (Kills.CurrentValue != KillToWin.CurrentValue) return;
-
-            Debug.LogWarning("<color=red>WIN COMPLETE</color>");
             StateMachine stateMachine = _container.Resolve<StateMachine>();
             stateMachine.ChangeStateTo(StateType.Win);
         }
 
+        private void AddKill() => Kills.Value += 1;
+
+
         public async void StartSpawnEnemies(int killToWin, int minOnMap, int maxOnMap, int spawnDelay)
         {
-            if (isStarted) return;
+            if (_isStarted) return;
 
             Kills.Value = 0;
             KillToWin.Value = killToWin;
             KillToWin.ForceNotify();
 
-            Debug.LogWarning($"<color=green>SPAWN STARTED {_enemiesCache.Count}</color>");
-            isStarted = true;
+            _isStarted = true;
 
-
-            while (isStarted)
+            while (_isStarted)
             {
                 var enemyCount = _enemiesCache.Count;
-
 
                 if (enemyCount < minOnMap)
                 {
@@ -161,7 +136,7 @@ namespace Game.Scripts.Framework.Managers.Enemy
 
                     for (var i = 0; i < enemiesToSpawn; i++)
                     {
-                        if (!isStarted) break;
+                        if (!_isStarted) break;
                         SpawnEnemy();
                         await UniTask.Delay(spawnDelay);
                     }
@@ -172,7 +147,7 @@ namespace Game.Scripts.Framework.Managers.Enemy
                     await UniTask.Delay(spawnDelay);
                 }
 
-                if (!isStarted) break;
+                if (!_isStarted) break;
                 await UniTask.Delay(spawnDelay);
             }
         }
@@ -180,25 +155,18 @@ namespace Game.Scripts.Framework.Managers.Enemy
 
         public void StopTheGame()
         {
-            if (!isStarted) return;
+            if (!_isStarted) return;
 
-            Debug.LogWarning("<color=red>SPAWN STOPPED</color>");
-            isStarted = false;
+            _isStarted = false;
             DespawnAllEnemies();
         }
 
         public void Dispose()
         {
-            _target?.Dispose();
             _container?.Dispose();
-            _followTargetModel?.Dispose();
             Kills?.Dispose();
             KillToWin?.Dispose();
             _enemiesCache.Clear();
         }
-    }
-
-    public interface IEnemiesManager : IDisposable
-    {
     }
 }

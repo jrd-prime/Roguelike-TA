@@ -1,8 +1,8 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/Game/UI/main.uss?fileID=7433441132597879392&amp;guid=ee438deb7368e10499accdce92cdd2bf&amp;type=3#main" />
     <ui:VisualElement name="main-container" class="main-cont">
-        <ui:VisualElement class="mini-cont">
-            <ui:Label tabindex="-1" text="GAME OVER" parse-escape-sequences="true" display-tooltip-when-elided="true" name="menu-label" class="ui-header" />
+        <ui:VisualElement class="mini-cont" style="background-color: rgb(176, 92, 90);">
+            <ui:Label tabindex="-1" text="GAME OVER" parse-escape-sequences="true" display-tooltip-when-elided="true" name="menu-label" class="ui-header" style="color: rgb(255, 255, 255); display: flex;" />
             <ui:Button text="NEW GAME" parse-escape-sequences="true" display-tooltip-when-elided="true" name="new-game-btn" class="menu-btn" />
             <ui:Button text="SETTINGS" parse-escape-sequences="true" display-tooltip-when-elided="true" name="settings-btn" class="menu-btn" />
             <ui:Button text="TO MAIN MENU" parse-escape-sequences="true" display-tooltip-when-elided="true" name="menu-btn" class="menu-btn" />
