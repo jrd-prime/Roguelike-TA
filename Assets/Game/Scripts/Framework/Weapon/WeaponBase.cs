@@ -1,5 +1,5 @@
 ﻿using Cysharp.Threading.Tasks;
-using Game.Scripts.Framework.Configuration;
+using Game.Scripts.Framework.Managers.Settings;
 using Game.Scripts.Framework.Providers.AssetProvider;
 using Game.Scripts.Framework.ScriptableObjects.Weapon;
 using UnityEngine;
@@ -15,24 +15,24 @@ namespace Game.Scripts.Framework.Weapon
 
         [SerializeField] public Transform muzzlePosition;
 
-        private IConfigManager _configManager;
+        private ISettingsManager _settingsManager;
         private IAssetProvider _assetProvider;
 
         private CustomPool<Projectile> _projectilePool;
 
         [Inject]
-        private void Construct(IConfigManager configManager, IAssetProvider assetProvider)
+        private void Construct(ISettingsManager settingsManager, IAssetProvider assetProvider)
         {
-            _configManager = configManager;
+            _settingsManager = settingsManager;
             _assetProvider = assetProvider;
         }
 
         private async void Awake()
         {
-            Assert.IsNotNull(_configManager, $"Config manager is null. Add {this} to auto inject");
+            Assert.IsNotNull(_settingsManager, $"Config manager is null. Add {this} to auto inject");
             Assert.IsNotNull(_assetProvider, $"Asset provider is null. Add {this} to auto inject");
 
-            settings = _configManager.GetConfig<WeaponSettings>();
+            settings = _settingsManager.GetConfig<WeaponSettings>();
         }
 
         public void Shoot(Vector3 targetPosition, Projectile projectile)

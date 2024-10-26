@@ -1,6 +1,7 @@
 ﻿using Game.Scripts.Enemy;
 using Game.Scripts.Framework.GameStateMachine;
 using Game.Scripts.Framework.GameStateMachine.State;
+using Game.Scripts.Framework.Managers.Enemy;
 using Game.Scripts.Player;
 using Game.Scripts.UI;
 using Game.Scripts.UI.Joystick;

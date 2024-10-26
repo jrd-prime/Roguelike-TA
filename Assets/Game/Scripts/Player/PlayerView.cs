@@ -3,7 +3,7 @@ using Cysharp.Threading.Tasks;
 using Game.Scripts.Animation;
 using Game.Scripts.Enemy;
 using Game.Scripts.Framework;
-using Game.Scripts.Framework.Configuration;
+using Game.Scripts.Framework.Managers.Settings;
 using Game.Scripts.Framework.Providers.AssetProvider;
 using Game.Scripts.Framework.ScriptableObjects.Character;
 using Game.Scripts.Framework.ScriptableObjects.Weapon;
@@ -38,7 +38,7 @@ namespace Game.Scripts.Player
         private CharacterGun _charGun;
         private bool _isShooting = false;
         private IAssetProvider _assetProvider;
-        private IConfigManager _configManager;
+        private ISettingsManager _settingsManager;
         private Vector3 _nearestEnemyS;
         private IObjectResolver _container;
         private readonly CompositeDisposable _disposables = new();
@@ -49,12 +49,12 @@ namespace Game.Scripts.Player
         private CustomPool<Projectile> _projectilePool;
 
         [Inject]
-        private void Construct(IPlayerViewModel viewModel, IAssetProvider assetProvider, IConfigManager configManager,
+        private void Construct(IPlayerViewModel viewModel, IAssetProvider assetProvider, ISettingsManager settingsManager,
             IObjectResolver container)
         {
             _viewModel = viewModel;
             _assetProvider = assetProvider;
-            _configManager = configManager;
+            _settingsManager = settingsManager;
             _container = container;
         }
 
@@ -70,7 +70,7 @@ namespace Game.Scripts.Player
             _viewModel.SetModelPosition(_rb.position);
 
 
-            weaponSettings = _configManager.GetConfig<CharacterSettings>().weapon;
+            weaponSettings = _settingsManager.GetConfig<CharacterSettings>().weapon;
 
             var weaponGO =
                 await _assetProvider.InstantiateAsync(weaponSettings.weaponPrefabReference, weaponHoldPont.transform);

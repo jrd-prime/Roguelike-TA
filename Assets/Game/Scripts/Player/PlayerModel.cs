@@ -1,6 +1,6 @@
 ﻿using System;
-using Game.Scripts.Framework.Configuration;
 using Game.Scripts.Framework.GameStateMachine;
+using Game.Scripts.Framework.Managers.Settings;
 using Game.Scripts.Framework.ScriptableObjects.Character;
 using Game.Scripts.Framework.Systems.Follow;
 using Game.Scripts.UI;
@@ -39,7 +39,7 @@ namespace Game.Scripts.Player
             followSystem = container.Resolve<FollowSystem>();
             Assert.IsNotNull(followSystem, $"FollowSystem is null.");
 
-            var configManager = container.Resolve<IConfigManager>();
+            var configManager = container.Resolve<ISettingsManager>();
             characterSettings = configManager.GetConfig<CharacterSettings>();
             Assert.IsNotNull(characterSettings, "Character settings not found!");
         }

@@ -1,6 +1,6 @@
 using Game.Scripts.Framework.Camera;
-using Game.Scripts.Framework.Configuration;
 using Game.Scripts.Framework.Input;
+using Game.Scripts.Framework.Managers.Settings;
 using Game.Scripts.Framework.Providers.AssetProvider;
 using Game.Scripts.Framework.ScriptableObjects;
 using Game.Scripts.Framework.Systems.Follow;
@@ -34,7 +34,7 @@ namespace Game.Scripts.Framework.Scopes
             builder.RegisterInstance(mainSettings);
 
             // Services
-            builder.Register<ConfigManager>(Lifetime.Singleton).AsImplementedInterfaces();
+            builder.Register<SettingsManager>(Lifetime.Singleton).AsImplementedInterfaces();
 
             builder.Register(typeof(AssetProvider), Lifetime.Singleton).As<IAssetProvider>();
             // Systems

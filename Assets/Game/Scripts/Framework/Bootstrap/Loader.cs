@@ -1,19 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
-using R3;
-using UnityEngine;
+using Game.Scripts.Framework.Bootstrap.UI;
 using UnityEngine.Assertions;
+using VContainer;
 
 namespace Game.Scripts.Framework.Bootstrap
 {
-    public sealed class Loader : ILoader, ILoadingScreenModel
+    public class Loader : ILoader
     {
         private readonly Queue<ILoadingOperation> _loadingQueue = new();
+        private ILoadingScreenModel _loadingScreenModel;
 
-        public ReactiveProperty<string> LoadingText { get; } = new("Default");
+        [Inject]
+        private void Construct(ILoadingScreenModel loadingScreenModel) => _loadingScreenModel = loadingScreenModel;
 
-        public void AddServiceToInitialize(ILoadingOperation service)
+
+        public void AddServiceForInitialization(ILoadingOperation service)
         {
             Assert.IsNotNull(service, "Service is null!");
             _loadingQueue.Enqueue(service);
@@ -25,8 +28,7 @@ namespace Game.Scripts.Framework.Bootstrap
             {
                 try
                 {
-                    Debug.LogWarning($"Initialize {service.GetType().Name}...");
-                    LoadingText.Value = $"(+ fake delayed) Loading: {service.Description}..";
+                    _loadingScreenModel.SetLoadingText($"(+ fake delayed) Loading: {service.Description}..");
                     service.LoaderServiceInitialization();
 
                     // fake delay per service

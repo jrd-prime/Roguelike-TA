@@ -1,4 +1,5 @@
-﻿using Game.Scripts.Framework.ScriptableObjects.Enemy;
+﻿using Game.Scripts.Framework.Managers.Enemy;
+using Game.Scripts.Framework.ScriptableObjects.Enemy;
 using Game.Scripts.Framework.Systems.Follow;
 using Game.Scripts.Player;
 using UnityEngine;

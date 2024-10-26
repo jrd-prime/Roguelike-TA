@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
-using Game.Scripts.Framework;
-using Game.Scripts.Framework.Configuration;
+using Game.Scripts.Enemy;
 using Game.Scripts.Framework.GameStateMachine;
+using Game.Scripts.Framework.Managers.Settings;
 using Game.Scripts.Framework.ScriptableObjects.Enemy;
 using Game.Scripts.Player;
 using Game.Scripts.UI;
@@ -14,7 +14,7 @@ using UnityEngine.Assertions;
 using VContainer;
 using Random = UnityEngine.Random;
 
-namespace Game.Scripts.Enemy
+namespace Game.Scripts.Framework.Managers.Enemy
 {
     public class EnemiesManager : MonoBehaviour, IEnemiesManager
     {
@@ -22,7 +22,7 @@ namespace Game.Scripts.Enemy
         public ReactiveProperty<int> KillToWin { get; } = new();
 
         private Dictionary<string, EnemyHolder> _enemiesCache = new();
-        private IConfigManager _configManager;
+        private ISettingsManager _settingsManager;
         private List<EnemySettings> _enemiesSettingsList;
         private SpawnPointsManager _spawnPointsManager;
         private EnemyManagerSettings _enemyManagerSettings;
@@ -41,7 +41,7 @@ namespace Game.Scripts.Enemy
         {
             Debug.LogWarning($"Enemies manager construct");
             _container = container;
-            _configManager = container.Resolve<IConfigManager>();
+            _settingsManager = container.Resolve<ISettingsManager>();
             _spawnPointsManager = container.Resolve<SpawnPointsManager>();
             _followTargetModel = container.Resolve<PlayerModel>();
         }
@@ -49,10 +49,10 @@ namespace Game.Scripts.Enemy
         private void Awake()
         {
             Debug.LogWarning($"Enemies manager awake");
-            Assert.IsNotNull(_configManager, $"Config manager is null. Add to auto inject!");
+            Assert.IsNotNull(_settingsManager, $"Config manager is null. Add to auto inject!");
             Assert.IsNotNull(_spawnPointsManager, $"Spawn points manager is null. Add to auto inject!");
-            _enemiesSettingsList = _configManager.GetConfig<EnemiesMainSettings>().enemies;
-            _enemyManagerSettings = _configManager.GetConfig<EnemyManagerSettings>();
+            _enemiesSettingsList = _settingsManager.GetConfig<EnemiesMainSettings>().enemies;
+            _enemyManagerSettings = _settingsManager.GetConfig<EnemyManagerSettings>();
 
             _enemyPool =
                 new CustomPool<EnemyHolder>(_enemyManagerSettings.enemyHolderPrefab, 100, transform, _container, true);

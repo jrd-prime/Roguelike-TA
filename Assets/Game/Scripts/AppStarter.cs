@@ -1,6 +1,6 @@
 ﻿using Cysharp.Threading.Tasks;
 using Game.Scripts.Framework.Bootstrap;
-using Game.Scripts.Framework.Configuration;
+using Game.Scripts.Framework.Managers.Settings;
 using Game.Scripts.Framework.Providers.AssetProvider;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -13,20 +13,20 @@ namespace Game.Scripts
     {
         private ILoader _loader;
         private IAssetProvider _assetProvider;
-        private IConfigManager _configManager;
+        private ISettingsManager _settingsManager;
 
         [Inject]
         private void Construct(IObjectResolver container)
         {
             _loader = container.Resolve<ILoader>();
             _assetProvider = container.Resolve<IAssetProvider>();
-            _configManager = container.Resolve<IConfigManager>();
+            _settingsManager = container.Resolve<ISettingsManager>();
         }
 
         public async void Initialize()
         {
-            _loader.AddServiceToInitialize(_configManager);
-            _loader.AddServiceToInitialize(_assetProvider);
+            _loader.AddServiceForInitialization(_settingsManager);
+            _loader.AddServiceForInitialization(_assetProvider);
 
 
             Debug.LogWarning("Starting services initialization...");

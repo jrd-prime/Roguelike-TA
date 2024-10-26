@@ -1,4 +1,4 @@
-﻿namespace Game.Scripts.Framework.Configuration
+﻿namespace Game.Scripts.Framework.ScriptableObjects
 {
     public interface IConfigScriptable : IConfig
     {
