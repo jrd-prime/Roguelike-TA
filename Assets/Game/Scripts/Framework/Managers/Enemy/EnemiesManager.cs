@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Cysharp.Threading.Tasks;
 using Game.Scripts.Enemy;
 using Game.Scripts.Framework.CommonModel;
@@ -16,7 +17,6 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Assertions;
 using VContainer;
-using Random = UnityEngine.Random;
 
 namespace Game.Scripts.Framework.Managers.Enemy
 {
@@ -35,7 +35,6 @@ namespace Game.Scripts.Framework.Managers.Enemy
         private IObjectResolver _container;
         private IPlayerModel _followTargetModel;
 
-        private readonly Dictionary<string, EnemyHolder> _enemiesCache = new();
 
         [Inject]
         private void Construct(IObjectResolver container)
@@ -58,7 +57,7 @@ namespace Game.Scripts.Framework.Managers.Enemy
                 new CustomPool<EnemyHolder>(_enemyManagerSettings.enemyHolderPrefab, 100, transform, _container, true);
         }
 
-        private async void SpawnRandomEnemy()
+        private async void SpawnRandomEnemyAsync()
         {
             EnemySettings enemySettings = _enemiesSettingsList.GetRandomSettings();
 
@@ -96,8 +95,12 @@ namespace Game.Scripts.Framework.Managers.Enemy
             return enemy;
         }
 
+        private readonly Dictionary<string, EnemyHolder> _enemiesCache = new();
+
         private void RemoveEnemy(string enemyId)
         {
+            if (!_enemiesCache.ContainsKey(enemyId)) return;
+
             var enemy = _enemiesCache[enemyId];
 
             enemy.gameObject.SetActive(false);
@@ -108,15 +111,13 @@ namespace Game.Scripts.Framework.Managers.Enemy
 
         private void DespawnAllEnemies()
         {
-            foreach (var enemy in _enemiesCache)
-            {
-                RemoveEnemy(enemy.Value.EnemyID);
-            }
+            var enemyIds = _enemiesCache.Keys.ToList();
+            foreach (var enemyId in enemyIds) RemoveEnemy(enemyId);
 
             _enemiesCache.Clear();
         }
 
-        public void EnemyDie(string enemyID)
+        public void EnemyDied(string enemyID)
         {
             if (!_enemiesCache.ContainsKey(enemyID)) return;
 
@@ -128,12 +129,11 @@ namespace Game.Scripts.Framework.Managers.Enemy
         private void CheckWin()
         {
             if (Kills.CurrentValue != KillToWin.CurrentValue) return;
-            StateMachine stateMachine = _container.Resolve<StateMachine>();
+            var stateMachine = _container.Resolve<StateMachine>();
             stateMachine.ChangeStateTo(StateType.Win);
         }
 
         private void AddKill() => Kills.Value += 1;
-
 
         public async void StartSpawnEnemiesAsync(int killToWin, int minOnMap, int maxOnMap, int spawnDelay)
         {
@@ -156,13 +156,13 @@ namespace Game.Scripts.Framework.Managers.Enemy
                     for (var i = 0; i < enemiesToSpawn; i++)
                     {
                         if (!_isStarted) break;
-                        SpawnRandomEnemy();
+                        SpawnRandomEnemyAsync();
                         await UniTask.Delay(spawnDelay);
                     }
                 }
                 else if (enemyCount < maxOnMap)
                 {
-                    SpawnRandomEnemy();
+                    SpawnRandomEnemyAsync();
                     await UniTask.Delay(spawnDelay);
                 }
 
@@ -171,9 +171,9 @@ namespace Game.Scripts.Framework.Managers.Enemy
             }
         }
 
-
         public void StopSpawn()
         {
+            Debug.LogWarning("Stop spawn enemies " + _isStarted);
             if (!_isStarted) return;
 
             _isStarted = false;
@@ -198,11 +198,5 @@ namespace Game.Scripts.Framework.Managers.Enemy
         public float AttackDelayMs;
         public float Damage;
         public float Health;
-    }
-
-    public interface IEnemiesManager
-    {
-        public void StartSpawnEnemiesAsync(int killToWin, int minOnMap, int maxOnMap, int spawnDelay);
-        public void StopSpawn();
     }
 }

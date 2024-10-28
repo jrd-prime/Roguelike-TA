@@ -22,7 +22,7 @@ namespace Game.Scripts.Framework.Managers.Game
 
         [ReadOnly] public ReactiveProperty<bool> isGameStarted { get; } = new();
         private IObjectResolver _resolver;
-        private EnemiesManager _enemiesManager;
+        private IEnemiesManager _enemiesManager;
         private IPlayerModel _playerModel;
         private UIManager _uiManager;
 
@@ -35,7 +35,7 @@ namespace Game.Scripts.Framework.Managers.Game
         {
             Debug.LogWarning("game manager construct");
             _resolver = resolver;
-            _enemiesManager = _resolver.Resolve<EnemiesManager>();
+            _enemiesManager = _resolver.Resolve<IEnemiesManager>();
             _playerModel = _resolver.Resolve<IPlayerModel>();
             _uiManager = _resolver.Resolve<UIManager>();
         }
@@ -49,7 +49,6 @@ namespace Game.Scripts.Framework.Managers.Game
 
         public void GameOver()
         {
-            Debug.LogWarning("GAME OVER");
             _enemiesManager.StopSpawn();
             isGameStarted.Value = false;
         }
@@ -85,7 +84,6 @@ namespace Game.Scripts.Framework.Managers.Game
         public void Dispose()
         {
             _resolver?.Dispose();
-            _enemiesManager?.Dispose();
             _disposables?.Dispose();
             isGameStarted?.Dispose();
         }
