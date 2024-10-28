@@ -1,4 +1,6 @@
 ﻿using System;
+using Game.Scripts.Framework.Managers.Experience;
+using Game.Scripts.Framework.Scopes;
 using Game.Scripts.UI.Menus.Interfaces;
 using UnityEngine;
 using VContainer;

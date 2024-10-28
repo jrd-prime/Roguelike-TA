@@ -21,5 +21,10 @@
         public const string HealthBarLabelIDName = "health-bar-label";
         public const string HealthBarMoveIDName = "health-bar-move";
         public const string KillCountLabelIDName = "kill-count-label";
+        
+        public const string ExpBarContainerIDName = "exp-bar-bg";
+        public const string ExpBarLabelIDName = "exp-bar-label";
+        public const string ExpBarMoveIDName = "exp-bar-move";
+        public const string LvlLabelIDName = "lvl-label";
     }
 }
