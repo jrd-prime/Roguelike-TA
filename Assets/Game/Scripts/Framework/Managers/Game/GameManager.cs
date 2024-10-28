@@ -50,13 +50,13 @@ namespace Game.Scripts.Framework.Managers.Game
         public void GameOver()
         {
             Debug.LogWarning("GAME OVER");
-            _enemiesManager.StopTheGame();
+            _enemiesManager.StopSpawn();
             isGameStarted.Value = false;
         }
 
         public void StopTheGame()
         {
-            _enemiesManager.StopTheGame();
+            _enemiesManager.StopSpawn();
             isGameStarted.Value = false;
         }
 
@@ -67,7 +67,7 @@ namespace Game.Scripts.Framework.Managers.Game
             isGameStarted.Value = true;
             _playerModel.ResetPlayer();
 
-            _enemiesManager.StartSpawnEnemies(killsToWin, minEnemiesOnMap, maxEnemiesOnMap, spawnDelay);
+            _enemiesManager.StartSpawnEnemiesAsync(killsToWin, minEnemiesOnMap, maxEnemiesOnMap, spawnDelay);
         }
 
         public void Pause()
