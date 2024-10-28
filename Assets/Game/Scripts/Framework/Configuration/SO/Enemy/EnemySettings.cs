@@ -2,6 +2,7 @@
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.Serialization;
 
 namespace Game.Scripts.Framework.Configuration.SO.Enemy
 {
@@ -12,7 +13,7 @@ namespace Game.Scripts.Framework.Configuration.SO.Enemy
     public class EnemySettings : ScriptableObject
     {
         [Title("Main")] public string enemyName = "Not Set";
-        public AssetReferenceGameObject enemyPrefab;
+        [FormerlySerializedAs("enemyPrefab")] public AssetReferenceGameObject enemySkinPrefab;
 
         [Title("Life")] public float health = 100;
         [Title("Attack")] public float damage = 10;

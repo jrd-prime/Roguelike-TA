@@ -1,132 +1,81 @@
-﻿using Game.Scripts.Framework.Configuration.SO.Enemy;
-using Game.Scripts.Framework.Managers.Enemy;
-using Game.Scripts.Player.Interfaces;
+﻿using Game.Scripts.Framework.Constants;
 using UnityEngine;
-using UnityEngine.Assertions;
-using VContainer;
 
 namespace Game.Scripts.Enemy
 {
-    [RequireComponent(typeof(Rigidbody))]
-    public class EnemyHolder : MonoBehaviour
+    public class EnemyHolder : EnemyBase
     {
-        [SerializeField] private EnemyHUD enemyHUD;
-        private string EnemyID { get; set; }
-        private float _attackDelay;
-        private float _damage;
-        private float _speed;
-        private float _health;
-        private float _currentHealth;
-        private float _lastAttackTime;
-        private EnemiesManager _enemiesManager;
-        private bool _isAttacking;
-        private IPlayerModel _playerModel;
-        private Rigidbody _rb;
-        private Animator _animator;
-        private static readonly int IsReached = Animator.StringToHash("isReached");
-
-        [Inject]
-        private void Construct(EnemiesManager enemiesManager) => _enemiesManager = enemiesManager;
-
-        private void Awake()
-        {
-            _rb = gameObject.GetComponent<Rigidbody>();
-            Assert.IsNotNull(enemyHUD, $"HUDController is null. Add to {this}");
-        }
-
         private void FixedUpdate()
         {
-            _animator ??= GetComponentInChildren<Animator>();
+            if (!IsInitialized) return;
 
+            TargetPosition = Target.Position.CurrentValue;
+            RbPosition = Rb.position;
 
-            var enemyPosition = _rb.position;
-            var targetPosition = _playerModel.Position.CurrentValue;
+            if (!CloseEnoughToAttack()) MoveToTarget();
+            else PerformAttack();
 
-            var directionToTarget = (targetPosition - enemyPosition).normalized;
+            RotateToTarget();
+        }
+
+        private void RotateToTarget()
+        {
+            var directionToTarget = (TargetPosition - Rb.position).normalized;
 
             Quaternion lookRotation = Quaternion.LookRotation(directionToTarget);
-            _rb.rotation = Quaternion.Slerp(_rb.rotation, lookRotation, 10 * Time.fixedDeltaTime);
-
-            var distanceToTarget = Vector3.Distance(enemyPosition, targetPosition);
-
-            if (distanceToTarget > 1f)
-            {
-                _rb.position = Vector3.MoveTowards(enemyPosition, targetPosition, _speed * 0.5f * Time.fixedDeltaTime);
-                _animator.SetBool(IsReached, false);
-                _isAttacking = false;
-            }
-            else
-            {
-                if (!_isAttacking && Time.time - _lastAttackTime >= _attackDelay)
-                {
-                    _animator.SetBool(IsReached, true);
-                    _playerModel.TrackableAction.Invoke(_damage);
-                    _lastAttackTime = Time.time;
-                    _isAttacking = true;
-                }
-                else if (_isAttacking && Time.time - _lastAttackTime >= _attackDelay)
-                {
-                    _isAttacking = false;
-                }
-
-                if (Time.time - _lastAttackTime >= 0.1f)
-                {
-                    _animator.SetBool(IsReached, false);
-                }
-            }
+            Rb.rotation = Quaternion.Slerp(Rb.rotation, lookRotation, RotationSpeed * Time.fixedDeltaTime);
         }
 
-
-        public void FillEnemySettings(string enemyId, EnemySettings enemiesSettings, IPlayerModel trackableModelTarget)
+        private void MoveToTarget()
         {
-            EnemyID = enemyId;
-            _playerModel = trackableModelTarget;
-            _speed = enemiesSettings.speed;
-            _attackDelay = enemiesSettings.attackDelay;
-            _damage = enemiesSettings.damage;
-            _health = enemiesSettings.health;
-            _currentHealth = _health;
+            Rb.position =
+                Vector3.MoveTowards(RbPosition, TargetPosition, Settings.Speed * Time.fixedDeltaTime);
+
+            Animator.SetBool(AnimConst.IsTargetReached, false);
+            IsAttacking = false;
         }
+
+        private void PerformAttack()
+        {
+            if (CanStartAttack())
+            {
+                Animator.SetBool(AnimConst.IsTargetReached, true);
+                Attack();
+                LastAttackTime = Time.time;
+                IsAttacking = true;
+            }
+            else if (CanStopAttack()) IsAttacking = false;
+
+            // skip attack animation // TODO refactor anim blend
+            if (Time.time - LastAttackTime >= 0.1f) Animator.SetBool(AnimConst.IsTargetReached, false);
+        }
+
+        private bool CanStopAttack() => IsAttacking && Time.time - LastAttackTime >= Settings.AttackDelayMs;
+
+        private bool CanStartAttack() => !IsAttacking && Time.time - LastAttackTime >= Settings.AttackDelayMs;
+
+        private bool CloseEnoughToAttack() => Vector3.Distance(RbPosition, TargetPosition) < DistanceToAttack;
+
 
         public void TakeDamage(float damage)
         {
-            _currentHealth -= damage;
+            CurrentHealth -= damage;
 
-            if (_currentHealth > 0)
+            if (CurrentHealth > 0)
             {
-                OnTakeDamage(damage);
+                OnTakeDamage();
                 return;
             }
 
             OnDie();
         }
 
-        private void OnDie() => _enemiesManager.EnemyDie(EnemyID);
-        
-        private void OnTakeDamage(float damage)
+        public override void OnDie() => EnemiesManager.EnemyDied(Settings.ID);
+
+        public override void OnTakeDamage()
         {
-            var hpPercent = _currentHealth / _health;
+            var hpPercent = CurrentHealth / Settings.Health;
             enemyHUD.SetHp(hpPercent);
-        }
-
-        public void ClearEnemySettings()
-        {
-            EnemyID = default;
-            _playerModel = default;
-            _speed = default;
-            _attackDelay = default;
-            _damage = default;
-            _health = default;
-            _currentHealth = default;
-            _lastAttackTime = default;
-        }
-
-        public void Spawn(string id, EnemySettings enemySettings, Vector3 spawnPoint,
-            IPlayerModel followTargetModel)
-        {
-            FillEnemySettings(id, enemySettings, followTargetModel);
-            transform.position = spawnPoint;
-            gameObject.SetActive(true);
         }
     }
 }

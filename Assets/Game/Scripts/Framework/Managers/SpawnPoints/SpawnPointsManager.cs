@@ -13,7 +13,7 @@ namespace Game.Scripts.Framework.Managers.SpawnPoints
             Debug.LogWarning($"Spawn points count: {spawnPoints.Count}");
         }
 
-        public Vector3 GetRandomSpawnPointPosition()
+        public Vector3 GetRandomSpawnPoint()
         {
             var point = spawnPoints[Random.Range(0, spawnPoints.Count)].transform.position;
             // Debug.LogWarning($"Random spawn point position: {point}");

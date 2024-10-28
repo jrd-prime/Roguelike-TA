@@ -33,8 +33,8 @@ namespace Game.Scripts.Framework.Scopes
             builder.RegisterComponent(weaponManager).AsSelf().AsImplementedInterfaces();
             builder.RegisterComponent(uiManager).AsSelf().AsImplementedInterfaces();
             builder.RegisterComponent(spawnPointsManager).AsSelf().AsImplementedInterfaces();
-            builder.RegisterComponent(enemiesManager).AsSelf().AsImplementedInterfaces();
-            
+            builder.RegisterComponent(enemiesManager).As<IEnemiesManager>();
+
             // Movement
             builder.Register<JoystickModel>(Lifetime.Singleton).AsSelf();
             builder.Register<JoystickViewModel>(Lifetime.Singleton).AsSelf();

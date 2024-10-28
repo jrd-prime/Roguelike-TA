@@ -17,16 +17,26 @@ namespace Game.Scripts.Framework.Weapon
         private bool _isMoving;
         private bool _isInitialized;
 
+        public void Initialize(WeaponSettings weaponSettings, Action<Projectile> poolCallback)
+        {
+            Assert.IsNotNull(poolCallback, "ProjectilePool callback is not set");
+
+            SetDamage(weaponSettings.projectileDamage);
+            SetSpeed(weaponSettings.projectileSpeed);
+
+            callback = poolCallback;
+
+            _isInitialized = true;
+        }
+
         private void FixedUpdate()
         {
-            if (!_isInitialized) throw new Exception("Projectile is not initialized!");
-            if (!_isMoving) return;
+            if (!_isInitialized || !_isMoving) return;
             MoveToTarget();
         }
 
         public void LaunchToTarget(Vector3 from, Vector3 to)
         {
-            Assert.IsNotNull(callback, "ProjectilePool callback is not set");
             _targetPosition = to;
             transform.position = from;
             _isMoving = true;
@@ -36,13 +46,13 @@ namespace Game.Scripts.Framework.Weapon
         {
             transform.position = Vector3.MoveTowards(transform.position, _targetPosition, speed * Time.deltaTime);
             transform.LookAt(_targetPosition);
-            
+
             if (transform.position != _targetPosition) return;
             callback?.Invoke(this);
             _isMoving = false;
         }
 
-        void OnTriggerEnter(Collider other)
+        private void OnTriggerEnter(Collider other)
         {
             if (!other.CompareTag("Enemy")) return;
             _isMoving = false;
@@ -54,15 +64,5 @@ namespace Game.Scripts.Framework.Weapon
 
         private void SetDamage(float value) => damage = value;
         private void SetSpeed(float value) => speed = value;
-
-        public void Initialize(WeaponSettings weaponSettings, Action<Projectile> poolCallback)
-        {
-            SetDamage(weaponSettings.projectileDamage);
-            SetSpeed(weaponSettings.projectileSpeed);
-
-            callback = poolCallback;
-
-            _isInitialized = true;
-        }
     }
 }
