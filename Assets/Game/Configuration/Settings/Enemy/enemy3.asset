@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: enemy3
   m_EditorClassIdentifier: Assembly-CSharp:Game.Scripts.Framework.ScriptableObjects:EnemySettings
   enemyName: enemy3
-  enemyPrefab:
+  enemySkinPrefab:
     m_AssetGUID: 2db03e7c8a8135146b280e5da7e0289c
     m_SubObjectName: 
     m_SubObjectType: 
@@ -22,3 +22,4 @@ MonoBehaviour:
   damage: 3
   attackDelay: 3
   speed: 3
+  baseExperiencePoints: 11

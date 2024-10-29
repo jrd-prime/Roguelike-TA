@@ -20,5 +20,7 @@ namespace Game.Scripts.Framework.Configuration.SO.Enemy
         public float attackDelay = 3f;
 
         [Title("Movement")] public float speed = 5f;
+
+        [Title("Experience")] public int baseExperiencePoints = 10;
     }
 }

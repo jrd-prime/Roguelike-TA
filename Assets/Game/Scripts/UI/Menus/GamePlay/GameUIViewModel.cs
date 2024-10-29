@@ -10,6 +10,10 @@ namespace Game.Scripts.UI.Menus.GamePlay
         public ReadOnlyReactiveProperty<float> PlayerInitialHealth => Model.PlayerInitialHealth;
         public ReadOnlyReactiveProperty<int> KillCount => Model.KillCount;
         public ReadOnlyReactiveProperty<int> KillToWin => Model.KillToWin;
+        public ReadOnlyReactiveProperty<int> EnemiesCount => Model.EnemiesCount;
+        public ReadOnlyReactiveProperty<int> PlayerLevel => Model.PlayerLevel;
+        public ReadOnlyReactiveProperty<float> PlayerExp => Model.CurrentExp;
+        public ReadOnlyReactiveProperty<float> ExpToNextLevel => Model.ExpToNextLevel;
 
         public override void Initialize()
         {

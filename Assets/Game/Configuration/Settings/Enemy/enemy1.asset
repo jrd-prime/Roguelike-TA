@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: enemy1
   m_EditorClassIdentifier: 
   enemyName: enemy1
-  enemyPrefab:
+  enemySkinPrefab:
     m_AssetGUID: 47a3741b253f088469eedd6d403dd89a
     m_SubObjectName: 
     m_SubObjectType: 
@@ -22,3 +22,4 @@ MonoBehaviour:
   damage: 1
   attackDelay: 3
   speed: 1
+  baseExperiencePoints: 33

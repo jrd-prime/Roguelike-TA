@@ -11,7 +11,7 @@ namespace Game.Scripts.UI.Base
         protected StateMachine StateMachine { get; private set; }
         protected UIManager UIManager { get; private set; }
         protected IObjectResolver Container { get; private set; }
-        protected GameManager GamwManager { get; private set; }
+        protected GameManager GameManager { get; private set; }
 
         protected readonly CompositeDisposable Disposables = new();
 
@@ -21,7 +21,7 @@ namespace Game.Scripts.UI.Base
             StateMachine = stateMachine;
             UIManager = uiManager;
             Container = container;
-            GamwManager = Container.Resolve<GameManager>();
+            GameManager = Container.Resolve<GameManager>();
         }
 
         public abstract void Initialize();

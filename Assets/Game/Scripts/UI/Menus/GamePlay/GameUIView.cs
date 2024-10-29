@@ -1,8 +1,6 @@
-﻿using Game.Scripts.Framework.Managers.Experience;
-using Game.Scripts.UI.Base;
+﻿using Game.Scripts.UI.Base;
 using R3;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UIElements;
 
 namespace Game.Scripts.UI.Menus.GamePlay
@@ -21,18 +19,19 @@ namespace Game.Scripts.UI.Menus.GamePlay
         private Label _expBarLabel;
         private Label _lvlLabel;
 
-
+        // health bar
         private float _playerInitialHealth;
         private float _fullHpWidth;
         public bool isFullHpWidthSet;
         private float _pxPerPointHp;
-        private float currentHpBarWidth;
+        private float _currentHpBarWidth;
 
-        private float _playerInitialExp;
+        // exp bar
+        private float _expToNextLevel;
         private float _fullExpWidth;
         public bool isFullExpWidthSet;
         private float _pxPerPointExp;
-        private float currentExpBarWidth;
+        private float _currentExpBarWidth;
 
         private int _killCount = 0;
         private int _killToWin = 0;
@@ -69,7 +68,7 @@ namespace Game.Scripts.UI.Menus.GamePlay
             isFullHpWidthSet = true;
             _fullHpWidth = width;
             _pxPerPointHp = _fullHpWidth / _playerInitialHealth;
-            currentHpBarWidth = _fullHpWidth;
+            _currentHpBarWidth = _fullHpWidth;
         }
 
         private void SetExpBarWidth(float width)
@@ -77,8 +76,9 @@ namespace Game.Scripts.UI.Menus.GamePlay
             if (isFullExpWidthSet) return;
             isFullExpWidthSet = true;
             _fullExpWidth = width;
-            _pxPerPointExp = _fullExpWidth / _playerInitialExp;
-            currentExpBarWidth = _fullExpWidth;
+            _pxPerPointExp = _fullExpWidth / _expToNextLevel;
+            _currentExpBarWidth = 0f;
+            UpdateExperienceBar(0f);
         }
 
         protected override void Init()
@@ -86,6 +86,7 @@ namespace Game.Scripts.UI.Menus.GamePlay
             _healthBar.RegisterCallback<GeometryChangedEvent>(_ => SetHpBarWidth(_healthBar.resolvedStyle.width));
             _expBar.RegisterCallback<GeometryChangedEvent>(_ => SetExpBarWidth(_expBar.resolvedStyle.width));
 
+            // Health
             ViewModel.PlayerInitialHealth
                 .Subscribe(initialHealth => _playerInitialHealth = initialHealth)
                 .AddTo(Disposables);
@@ -98,16 +99,17 @@ namespace Game.Scripts.UI.Menus.GamePlay
                     _healthBar
                         .experimental
                         .animation
-                        .Size(new Vector2(_pxPerPointHp * health, currentHpBarWidth), 500).Start();
-                    currentHpBarWidth = _pxPerPointHp * health;
+                        .Size(new Vector2(_pxPerPointHp * health, _currentHpBarWidth), 500).Start();
+                    _currentHpBarWidth = _pxPerPointHp * health;
                 })
                 .AddTo(Disposables);
 
+            // Kill count
             ViewModel.KillCount
                 .Subscribe(killCount =>
                 {
                     _killCount = killCount;
-                    UpdateKillCount();
+                    UpdateKillCountLabel();
                 })
                 .AddTo(Disposables);
 
@@ -115,26 +117,39 @@ namespace Game.Scripts.UI.Menus.GamePlay
                 .Subscribe(killToWin =>
                 {
                     _killToWin = killToWin;
-                    UpdateKillCount();
+                    UpdateKillCountLabel();
                 })
                 .AddTo(Disposables);
-
-            ExperienceManager.Experience
-                .Subscribe(SetExperience)
+            
+            // Level and experience
+            ViewModel.PlayerLevel
+                .Subscribe(UpdateLevelLabel)
                 .AddTo(Disposables);
 
-            ExperienceManager.Level
-                .Subscribe(SetLevel)
+            ViewModel.ExpToNextLevel
+                .Subscribe(expToNextLevel => _expToNextLevel = expToNextLevel)
+                .AddTo(Disposables);
+
+            ViewModel.PlayerExp
+                .Subscribe(UpdateExperienceBar)
                 .AddTo(Disposables);
         }
 
-        private void SetLevel(int level) => _lvlLabel.text = level.ToString();
+        private void UpdateLevelLabel(int level) => _lvlLabel.text = level.ToString();
 
-        private void SetExperience(int exp) => _expBarLabel.text = exp + " / " + _playerInitialExp;
+        private void UpdateExperienceBar(float exp)
+        {
+            _expBarLabel.text = exp + " / " + _expToNextLevel;
+            if (!isFullExpWidthSet) return;
 
+            _expBar
+                .experimental
+                .animation
+                .Size(new Vector2(_pxPerPointExp * exp, _currentExpBarWidth), 500).Start();
+            _currentExpBarWidth = _pxPerPointExp * exp;
+        }
 
-        private void UpdateKillCount() => _killCountLabel.text = _killCount + " / " + _killToWin;
-
+        private void UpdateKillCountLabel() => _killCountLabel.text = _killCount + " / " + _killToWin;
 
         protected override void InitCallbacksCache()
         {

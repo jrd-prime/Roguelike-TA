@@ -1,5 +1,4 @@
-﻿using Game.Scripts.Player;
-using Game.Scripts.Player.Interfaces;
+﻿using Game.Scripts.Player.Interfaces;
 using Game.Scripts.UI.Base;
 using R3;
 using VContainer;
@@ -10,9 +9,14 @@ namespace Game.Scripts.UI.Menus.GamePlay
     {
         public ReactiveProperty<float> PlayerHealth { get; } = new();
         public ReactiveProperty<float> PlayerInitialHealth { get; } = new();
-        public ReactiveProperty<int> KillCount => GamwManager.KillCount;
-        public ReactiveProperty<int> KillToWin => GamwManager.KillToWin;
+        public ReadOnlyReactiveProperty<int> KillCount => GameManager.KillCount;
+        public ReadOnlyReactiveProperty<int> KillToWin => GameManager.KillToWin;
+        public ReadOnlyReactiveProperty<int> EnemiesCount => GameManager.EnemiesCount;
 
+        public ReadOnlyReactiveProperty<float> CurrentExp => GameManager.PlayerExp;
+        public ReadOnlyReactiveProperty<float> ExpToNextLevel => GameManager.ExpToNextLevel;
+        public ReadOnlyReactiveProperty<int> PlayerLevel => GameManager.PlayerLevel;
+        
         private IPlayerModel _playerModel;
 
         public override void Initialize()
@@ -27,10 +31,6 @@ namespace Game.Scripts.UI.Menus.GamePlay
                 .AddTo(Disposables);
         }
 
-
-        public void MenuButtonClicked()
-        {
-            StateMachine.ChangeStateTo(StateType.Pause);
-        }
+        public void MenuButtonClicked() => StateMachine.ChangeStateTo(StateType.Pause);
     }
 }

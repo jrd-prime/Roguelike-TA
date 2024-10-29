@@ -1,11 +1,13 @@
-﻿using R3;
+﻿using Game.Scripts.Framework.Managers.Game;
+using R3;
 
-namespace Game.Scripts.Framework.Scopes
+namespace Game.Scripts.Framework.Managers.Experience
 {
     public interface IExperienceManager
     {
-        public ReactiveProperty<int> Experience { get; }
+        public ReactiveProperty<float> CurrentExp { get; }
+        public ReactiveProperty<float> ExpToNextLevel { get; }
         public ReactiveProperty<int> Level { get; }
-        public void AddExperience(int experience);
+        public void AddExperience(float experience);
     }
 }
