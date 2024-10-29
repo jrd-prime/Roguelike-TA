@@ -34,7 +34,7 @@ namespace Game.Scripts.Framework.Weapon
         private void PoolCallback(Projectile projectile) => _projectilePool.Return(projectile);
 
 
-        public async UniTask ShootAtTarget(GameObject nearestEnemy)
+        public async UniTask ShootAtTargetAsync(GameObject nearestEnemy)
         {
             if (!_isInitialized) throw new Exception("Weapon is not initialized!");
 

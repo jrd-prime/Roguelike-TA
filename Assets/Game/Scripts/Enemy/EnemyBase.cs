@@ -24,7 +24,7 @@ namespace Game.Scripts.Enemy
 
         protected IEnemiesManager EnemiesManager;
 
-        protected float CurrentHealth;
+        public float CurrentHealth { get; set; }
         protected bool IsInitialized;
         protected float LastAttackTime;
         protected bool IsAttacking;

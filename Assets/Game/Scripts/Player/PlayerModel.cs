@@ -81,7 +81,7 @@ namespace Game.Scripts.Player
         public void SetRotation(Quaternion rotation) => Rotation.Value = rotation;
         public void SetHealth(float health) => Health.Value = health;
         public void SetGameStarted(bool value) => IsGameStarted.Value = value;
-        public async void ShootToTargetAsync(GameObject nearestEnemy) => await _weapon.ShootAtTarget(nearestEnemy);
+        public async void ShootToTargetAsync(GameObject nearestEnemy) => await _weapon.ShootAtTargetAsync(nearestEnemy);
 
 
         public void TakeDamage(float damage)

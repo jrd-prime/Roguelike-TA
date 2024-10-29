@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
+  <metadata>
+    <id>Moq.AutoMock</id>
+    <version>3.5.0</version>
+    <authors>Tim Kellogg, Adam Hewitt, Kevin Bost</authors>
+    <license type="file">LICENSE</license>
+    <licenseUrl>https://aka.ms/deprecateLicenseUrl</licenseUrl>
+    <projectUrl>https://github.com/moq/Moq.AutoMocker</projectUrl>
+    <description>An auto-mocking container that generates mocks using Moq</description>
+    <copyright>Copyright Tim Kellogg 2023</copyright>
+    <repository type="git" url="https://github.com/moq/Moq.AutoMocker" commit="cc05196620308d9a1e14f84bfb66240d3a862049" />
+    <dependencies>
+      <group targetFramework=".NETFramework4.6.1">
+        <dependency id="Moq" version="4.18.4" exclude="Build,Analyzers" />
+        <dependency id="NonBlocking" version="2.1.1" exclude="Build,Analyzers" />
+        <dependency id="System.ValueTuple" version="4.5.0" exclude="Build,Analyzers" />
+      </group>
+      <group targetFramework=".NETStandard2.0">
+        <dependency id="Moq" version="4.18.4" exclude="Build,Analyzers" />
+        <dependency id="NonBlocking" version="2.1.1" exclude="Build,Analyzers" />
+      </group>
+    </dependencies>
+  </metadata>
+</package>
