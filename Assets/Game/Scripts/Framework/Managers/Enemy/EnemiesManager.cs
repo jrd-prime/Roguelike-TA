@@ -27,6 +27,7 @@ namespace Game.Scripts.Framework.Managers.Enemy
         public ReactiveProperty<int> KillToWin { get; } = new();
         public ReactiveProperty<int> EnemiesCount { get; } = new(0);
 
+        [SerializeField] private int enemyPoolSize = 10;
         private bool _isStarted;
 
         private ISettingsManager _settingsManager;
@@ -60,7 +61,8 @@ namespace Game.Scripts.Framework.Managers.Enemy
             _enemyManagerSettings = _settingsManager.GetConfig<EnemyManagerSettings>();
 
             _enemyPool =
-                new CustomPool<EnemyHolder>(_enemyManagerSettings.enemyHolderPrefab, 100, transform, _container, true);
+                new CustomPool<EnemyHolder>(_enemyManagerSettings.enemyHolderPrefab, enemyPoolSize, transform,
+                    _container, true);
         }
 
         private async void SpawnRandomEnemyAsync()

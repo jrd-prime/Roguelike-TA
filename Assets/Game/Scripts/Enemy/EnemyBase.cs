@@ -61,6 +61,7 @@ namespace Game.Scripts.Enemy
             IsAttacking = false;
             CurrentHealth = 0f;
             LastAttackTime = 0f;
+            enemyHUD.ResetHUD();
         }
 
         public abstract void OnTakeDamage();
