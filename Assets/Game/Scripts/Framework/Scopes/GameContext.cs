@@ -3,6 +3,7 @@ using Game.Scripts.Enemy;
 using Game.Scripts.Framework.GameStateMachine;
 using Game.Scripts.Framework.GameStateMachine.State;
 using Game.Scripts.Framework.Managers.Enemy;
+using Game.Scripts.Framework.Managers.Experience;
 using Game.Scripts.Framework.Managers.Game;
 using Game.Scripts.Framework.Managers.SpawnPoints;
 using Game.Scripts.Framework.Managers.Weapon;
@@ -23,6 +24,7 @@ namespace Game.Scripts.Framework.Scopes
         [SerializeField] private SpawnPointsManager spawnPointsManager;
         [SerializeField] private EnemiesManager enemiesManager;
         [SerializeField] private WeaponManager weaponManager;
+        [SerializeField] private ExperienceManager experienceManager; 
 
         protected override void Configure(IContainerBuilder builder)
         {
@@ -34,6 +36,7 @@ namespace Game.Scripts.Framework.Scopes
             builder.RegisterComponent(uiManager).AsSelf().AsImplementedInterfaces();
             builder.RegisterComponent(spawnPointsManager).AsSelf().AsImplementedInterfaces();
             builder.RegisterComponent(enemiesManager).As<IEnemiesManager>();
+            builder.RegisterComponent(experienceManager).As<IExperienceManager>();
 
             // Movement
             builder.Register<JoystickModel>(Lifetime.Singleton).AsSelf();

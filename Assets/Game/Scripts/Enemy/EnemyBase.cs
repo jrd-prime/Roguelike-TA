@@ -1,4 +1,5 @@
 ﻿using System;
+using Game.Scripts.Dto;
 using Game.Scripts.Framework.CommonModel;
 using Game.Scripts.Framework.Managers.Enemy;
 using UnityEngine;
@@ -13,7 +14,7 @@ namespace Game.Scripts.Enemy
         [SerializeField] protected EnemyHUD enemyHUD;
 
         protected Rigidbody Rb;
-        protected EnemySettingsDto Settings;
+        public EnemySettingsDto Settings { get; private set; }
         protected Vector3 TargetPosition = Vector3.zero;
         protected Vector3 RbPosition = Vector3.zero;
 

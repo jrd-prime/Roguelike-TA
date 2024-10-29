@@ -6,6 +6,7 @@ namespace Game.Scripts.Framework.Managers.Enemy
     {
         public ReactiveProperty<int> Kills { get; }
         public ReactiveProperty<int> KillToWin { get; }
+        public ReactiveProperty<int> EnemiesCount { get; }
         public void StartSpawnEnemiesAsync(int killToWin, int minOnMap, int maxOnMap, int spawnDelay);
         public void StopSpawn();
         public void EnemyDied(string enemyID);

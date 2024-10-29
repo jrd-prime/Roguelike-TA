@@ -6,7 +6,7 @@ using Random = UnityEngine.Random;
 
 namespace Game.Scripts.Framework.Helpers
 {
-    public static class SettingsHelper
+    public static class SettingsExtension
     {
         public static T GetRandomSettings<T>(this IEnumerable<T> settings) where T : ScriptableObject
         {

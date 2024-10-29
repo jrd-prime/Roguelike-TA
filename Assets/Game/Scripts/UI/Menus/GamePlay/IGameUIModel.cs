@@ -8,7 +8,11 @@ namespace Game.Scripts.UI.Menus.GamePlay
         public ReactiveProperty<float> PlayerHealth { get; }
         public void MenuButtonClicked();
         public ReactiveProperty<float> PlayerInitialHealth { get; }
-        public ReactiveProperty<int> KillCount { get; }
-        public ReactiveProperty<int> KillToWin { get; }
+        public ReadOnlyReactiveProperty<int> KillCount { get; }
+        public ReadOnlyReactiveProperty<int> KillToWin { get; }
+        public ReadOnlyReactiveProperty<int> EnemiesCount { get; }
+        public ReadOnlyReactiveProperty<float> CurrentExp { get; }
+        public ReadOnlyReactiveProperty<float> ExpToNextLevel { get; }
+        public ReadOnlyReactiveProperty<int> PlayerLevel { get; }
     }
 }

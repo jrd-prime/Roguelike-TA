@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using Cysharp.Threading.Tasks;
+using Game.Scripts.Dto;
 using Game.Scripts.Enemy;
-using Game.Scripts.Framework.CommonModel;
 using Game.Scripts.Framework.Configuration.SO.Enemy;
 using Game.Scripts.Framework.GameStateMachine;
 using Game.Scripts.Framework.Helpers;
+using Game.Scripts.Framework.Managers.Experience;
 using Game.Scripts.Framework.Managers.Settings;
 using Game.Scripts.Framework.Managers.SpawnPoints;
 using Game.Scripts.Framework.Providers.Pools;
@@ -24,6 +25,8 @@ namespace Game.Scripts.Framework.Managers.Enemy
     {
         public ReactiveProperty<int> Kills { get; } = new();
         public ReactiveProperty<int> KillToWin { get; } = new();
+        public ReactiveProperty<int> EnemiesCount { get; } = new(0);
+
         private bool _isStarted;
 
         private ISettingsManager _settingsManager;
@@ -34,7 +37,9 @@ namespace Game.Scripts.Framework.Managers.Enemy
         private IPlayerModel _target;
         private IObjectResolver _container;
         private IPlayerModel _followTargetModel;
+        private IExperienceManager _experienceManager;
 
+        private readonly Dictionary<string, EnemyHolder> _enemiesCache = new();
 
         [Inject]
         private void Construct(IObjectResolver container)
@@ -43,6 +48,7 @@ namespace Game.Scripts.Framework.Managers.Enemy
             _settingsManager = container.Resolve<ISettingsManager>();
             _spawnPointsManager = container.Resolve<SpawnPointsManager>();
             _followTargetModel = container.Resolve<IPlayerModel>();
+            _experienceManager = container.Resolve<IExperienceManager>();
         }
 
         private void Awake()
@@ -86,16 +92,20 @@ namespace Game.Scripts.Framework.Managers.Enemy
                 AttackDelayMs = enemySettings.attackDelay,
                 Damage = enemySettings.damage,
                 Health = enemySettings.health,
+                Experience = enemySettings.baseExperiencePoints
             };
 
             enemy.Initialize(settingsDto);
 
             _enemiesCache.Add(settingsDto.ID, enemy);
 
+            UpdateEnemiesCount();
+
             return enemy;
         }
 
-        private readonly Dictionary<string, EnemyHolder> _enemiesCache = new();
+        private void UpdateEnemiesCount() => EnemiesCount.Value = _enemiesCache.Count;
+
 
         private void RemoveEnemy(string enemyId)
         {
@@ -107,6 +117,8 @@ namespace Game.Scripts.Framework.Managers.Enemy
             _enemiesCache.Remove(enemyId);
             enemy.ResetEnemy();
             _enemyPool.Return(enemy);
+
+            UpdateEnemiesCount();
         }
 
         private void DespawnAllEnemies()
@@ -119,11 +131,13 @@ namespace Game.Scripts.Framework.Managers.Enemy
 
         public void EnemyDied(string enemyID)
         {
-            if (!_enemiesCache.ContainsKey(enemyID)) return;
+            if (!_enemiesCache.TryGetValue(enemyID, out EnemyHolder enemy)) return;
 
-            RemoveEnemy(enemyID);
             AddKill();
             CheckWin();
+            _experienceManager.AddExperience(enemy.Settings.Experience);
+
+            RemoveEnemy(enemyID);
         }
 
         private void CheckWin()
@@ -179,24 +193,5 @@ namespace Game.Scripts.Framework.Managers.Enemy
             _isStarted = false;
             DespawnAllEnemies();
         }
-
-        public void Dispose()
-        {
-            _container?.Dispose();
-            Kills?.Dispose();
-            KillToWin?.Dispose();
-            _enemiesCache.Clear();
-        }
-    }
-
-    public struct EnemySettingsDto
-    {
-        public string ID;
-        public Animator Animator;
-        public ITrackableModel Target;
-        public float Speed;
-        public float AttackDelayMs;
-        public float Damage;
-        public float Health;
     }
 }
