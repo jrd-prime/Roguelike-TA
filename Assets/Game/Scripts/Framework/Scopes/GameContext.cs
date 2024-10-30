@@ -1,6 +1,4 @@
-﻿using System;
-using Game.Scripts.Enemy;
-using Game.Scripts.Framework.GameStateMachine;
+﻿using Game.Scripts.Framework.GameStateMachine;
 using Game.Scripts.Framework.GameStateMachine.State;
 using Game.Scripts.Framework.Managers.Enemy;
 using Game.Scripts.Framework.Managers.Experience;
@@ -10,7 +8,7 @@ using Game.Scripts.Framework.Managers.Weapon;
 using Game.Scripts.Player;
 using Game.Scripts.Player.Interfaces;
 using Game.Scripts.UI;
-using Game.Scripts.UI.Joystick;
+using Game.Scripts.UI.MovementControl.FullScreen;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
@@ -24,7 +22,7 @@ namespace Game.Scripts.Framework.Scopes
         [SerializeField] private SpawnPointsManager spawnPointsManager;
         [SerializeField] private EnemiesManager enemiesManager;
         [SerializeField] private WeaponManager weaponManager;
-        [SerializeField] private ExperienceManager experienceManager; 
+        [SerializeField] private ExperienceManager experienceManager;
 
         protected override void Configure(IContainerBuilder builder)
         {
@@ -39,8 +37,14 @@ namespace Game.Scripts.Framework.Scopes
             builder.RegisterComponent(experienceManager).As<IExperienceManager>();
 
             // Movement
-            builder.Register<JoystickModel>(Lifetime.Singleton).AsSelf();
-            builder.Register<JoystickViewModel>(Lifetime.Singleton).AsSelf();
+            // Joystick
+            // builder.Register<JoystickModel>(Lifetime.Singleton).As<IJoystickModel>();
+            // builder.Register<JoystickViewModel>(Lifetime.Singleton).As<IJoystickViewModel>();
+            // FullScreen
+            builder.Register<FullScreenModel>(Lifetime.Singleton).As<IFullScreenModel>().As<IMovementControlModel>();
+            builder.Register<FullScreenViewModel>(Lifetime.Singleton).As<IFullScreenViewModel>()
+                .As<IMovementControlViewModel>();
+
 
             // Character
             builder.Register<PlayerViewModel>(Lifetime.Singleton).AsImplementedInterfaces();

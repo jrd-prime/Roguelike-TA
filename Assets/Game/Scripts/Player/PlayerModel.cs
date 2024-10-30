@@ -1,14 +1,11 @@
 ﻿using System;
-using Game.Scripts.Framework;
 using Game.Scripts.Framework.Configuration.SO.Character;
-using Game.Scripts.Framework.Configuration.SO.Weapon;
 using Game.Scripts.Framework.Helpers;
 using Game.Scripts.Framework.Managers.Settings;
 using Game.Scripts.Framework.Managers.Weapon;
 using Game.Scripts.Framework.Systems;
 using Game.Scripts.Framework.Weapon;
 using Game.Scripts.Player.Interfaces;
-using Game.Scripts.UI.Joystick;
 using R3;
 using UnityEngine;
 using VContainer;
@@ -35,7 +32,7 @@ namespace Game.Scripts.Player
         public Action<float> TrackableAction { get; private set; }
         public CharacterSettings characterSettings { get; private set; }
 
-        private JoystickModel _joystick;
+        private IMovementControlModel _joystick;
         private CameraFollowSystem _cameraFollowSystem;
         private WeaponManager _weaponManager;
         private WeaponBase _weapon;
@@ -48,7 +45,7 @@ namespace Game.Scripts.Player
 
         public async void Initialize()
         {
-            _joystick = Resolver.ResolveAndCheck<JoystickModel>(_container);
+            _joystick = Resolver.ResolveAndCheck<IMovementControlModel>(_container);
             _cameraFollowSystem = Resolver.ResolveAndCheck<CameraFollowSystem>(_container);
             _weaponManager = Resolver.ResolveAndCheck<WeaponManager>(_container);
             var settingsManager = Resolver.ResolveAndCheck<ISettingsManager>(_container);

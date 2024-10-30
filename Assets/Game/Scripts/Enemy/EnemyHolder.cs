@@ -21,7 +21,6 @@ namespace Game.Scripts.Enemy
         private void RotateToTarget()
         {
             var directionToTarget = (TargetPosition - Rb.position).normalized;
-
             Quaternion lookRotation = Quaternion.LookRotation(directionToTarget);
             Rb.rotation = Quaternion.Slerp(Rb.rotation, lookRotation, RotationSpeed * Time.fixedDeltaTime);
         }
@@ -46,7 +45,7 @@ namespace Game.Scripts.Enemy
             }
             else if (CanStopAttack()) IsAttacking = false;
 
-            // skip attack animation // TODO refactor anim blend
+            // skip attack animation // TODO refact anim blend
             if (Time.time - LastAttackTime >= 0.1f) Animator.SetBool(AnimConst.IsTargetReached, false);
         }
 
