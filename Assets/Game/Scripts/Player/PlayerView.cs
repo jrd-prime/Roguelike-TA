@@ -100,7 +100,10 @@ namespace Game.Scripts.Player
                 .AddTo(_disposables);
 
             _viewModel.IsShooting
-                .Subscribe(value => _isShooting = value)
+                .Subscribe(value =>
+                {
+                    _isShooting = value;
+                })
                 .AddTo(_disposables);
 
             _viewModel.IsGameStarted

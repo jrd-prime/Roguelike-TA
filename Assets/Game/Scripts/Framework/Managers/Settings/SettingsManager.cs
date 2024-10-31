@@ -24,6 +24,7 @@ namespace Game.Scripts.Framework.Managers.Settings
             AddToCache(_mainSettings.characterSettings);
             AddToCache(_mainSettings.enemiesMainSettings);
             AddToCache(_mainSettings.enemyManagerSettings);
+            AddToCache(_mainSettings.weaponSettings);
         }
 
         private void AddToCache(object config)

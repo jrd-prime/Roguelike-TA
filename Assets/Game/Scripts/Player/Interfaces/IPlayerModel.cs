@@ -13,7 +13,7 @@ namespace Game.Scripts.Player.Interfaces
         public void SetHealth(int health);
         public void TakeDamage(int damage);
         public void ResetPlayer();
-        public void ShootToTargetAsync(GameObject nearestEnemy);
+        public void ShootToTarget(GameObject nearestEnemy);
         public ReactiveProperty<bool> IsGameStarted { get; }
         public void SetGameStarted(bool value);
     }

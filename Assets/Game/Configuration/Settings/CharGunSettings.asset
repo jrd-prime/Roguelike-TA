@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: CharGunSettings
   m_EditorClassIdentifier: 
   projectileDamage: 20
-  attackDelayMS: 33333
+  attackDelayMS: 999
   attackRange: 5
   projectileSpeed: 10

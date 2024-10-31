@@ -28,7 +28,7 @@ namespace Game.Scripts.Player
 
         public void SetModelPosition(Vector3 value) => _model.SetPosition(value);
         public void SetModelRotation(Quaternion value) => _model.SetRotation(value);
-        public void ShootToTarget(GameObject nearestEnemy) => _model.ShootToTargetAsync(nearestEnemy);
+        public void ShootToTarget(GameObject nearestEnemy) => _model.ShootToTarget(nearestEnemy);
 
         public void Dispose() => _disposables.Dispose();
     }

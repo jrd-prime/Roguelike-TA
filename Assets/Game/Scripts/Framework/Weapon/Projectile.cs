@@ -1,8 +1,10 @@
 ﻿using System;
 using Game.Scripts.Enemy;
 using Game.Scripts.Framework.Configuration.SO.Weapon;
+using Game.Scripts.Framework.Managers.Settings;
 using UnityEngine;
 using UnityEngine.Assertions;
+using VContainer;
 
 namespace Game.Scripts.Framework.Weapon
 {
@@ -13,34 +15,36 @@ namespace Game.Scripts.Framework.Weapon
         public float damage = 10f;
         private Vector3 _targetPosition;
         private bool _isMoving;
-        private bool _isInitialized;
         private bool _hasHit;
 
         private WeaponSettings _weaponSettings;
         private Action<Projectile> _callback;
 
-        public void Initialize(WeaponSettings weaponSettings, Action<Projectile> poolCallback)
+        [Inject]
+        private void Construct(ISettingsManager settingsManager)
+        {
+            _weaponSettings = settingsManager.GetConfig<WeaponSettings>();
+            Assert.IsNotNull(_weaponSettings, "Weapon config is null.");
+
+            damage = _weaponSettings.projectileDamage;
+            speed = _weaponSettings.projectileSpeed;
+        }
+
+        public void SetPoolCallback(WeaponSettings weaponSettings, Action<Projectile> poolCallback)
         {
             Assert.IsNotNull(poolCallback, "ProjectilePool callback is not set");
-
             _callback = poolCallback;
-            _weaponSettings = weaponSettings;
-            SetDamage(_weaponSettings.projectileDamage);
-            SetSpeed(_weaponSettings.projectileSpeed);
-
-            _isInitialized = true;
         }
 
         private void FixedUpdate()
         {
             if (!_isMoving) return;
-
             MoveToTarget();
         }
 
         public void LaunchToTarget(Vector3 from, Vector3 to)
         {
-            Assert.IsTrue(_isInitialized, "Projectile must be initialized before launching.");
+            Assert.IsNotNull(_callback, "Pool callback must be set before launching.");
 
             _targetPosition = to;
             transform.position = from;
@@ -73,14 +77,11 @@ namespace Game.Scripts.Framework.Weapon
             enemy.TakeDamage(damage);
             _callback.Invoke(this);
         }
-
-        private void SetDamage(float value) => damage = value;
-        private void SetSpeed(float value) => speed = value;
     }
 
     public interface IProjectile
     {
         public void LaunchToTarget(Vector3 from, Vector3 to);
-        public void Initialize(WeaponSettings weaponSettings, Action<Projectile> poolCallback);
+        public void SetPoolCallback(WeaponSettings weaponSettings, Action<Projectile> poolCallback);
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Game.Scripts.Framework.Configuration.SO.Character;
 using Game.Scripts.Framework.Configuration.SO.Enemy;
+using Game.Scripts.Framework.Configuration.SO.Weapon;
 using Game.Scripts.Framework.Constants;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -16,7 +17,8 @@ namespace Game.Scripts.Framework.Configuration.SO
         [Title("Character Settings")] public CharacterSettings characterSettings;
         [Title("Enemy Manager Settings")] public EnemyManagerSettings enemyManagerSettings;
         [Title("Enemy Settings")] public EnemiesMainSettings enemiesMainSettings;
-
+        [Title("Weapon Settings")] public WeaponSettings weaponSettings;
+ 
 
         private void OnValidate()
         {

@@ -64,7 +64,7 @@ namespace Game.Scripts.Player
         private void Subscribe()
         {
             TrackableAction = TakeDamage;
-            _weapon.isShooting
+            _weapon.IsShooting
                 .Subscribe(value => IsShooting.Value = value)
                 .AddTo(_disposables);
 
@@ -78,7 +78,7 @@ namespace Game.Scripts.Player
         public void SetRotation(Quaternion rotation) => Rotation.Value = rotation;
         public void SetHealth(int health) => Health.Value = health;
         public void SetGameStarted(bool value) => IsGameStarted.Value = value;
-        public async void ShootToTargetAsync(GameObject nearestEnemy) => await _weapon.ShootAtTargetAsync(nearestEnemy);
+        public void ShootToTarget(GameObject nearestEnemy) => _weapon.ShootAtTarget(nearestEnemy);
 
 
         public void TakeDamage(int damage)
