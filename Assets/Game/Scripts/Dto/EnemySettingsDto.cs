@@ -9,9 +9,9 @@ namespace Game.Scripts.Dto
         public Animator Animator;
         public ITrackableModel Target;
         public float Speed;
-        public float AttackDelayMs;
-        public float Damage;
-        public float Health;
-        public float Experience;
+        public int AttackDelayMs;
+        public int Damage;
+        public int Health;
+        public int Experience;
     }
 }

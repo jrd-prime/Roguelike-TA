@@ -14,7 +14,7 @@ namespace Game.Scripts.Framework.Configuration.SO.Character
         [Range(0.1f, 100f)] public float moveSpeed = 5f;
 
         [Range(45f, 270f)] public float rotationSpeed = 180f;
-        [Range(30f, 1000f)] public float health = 30f;
+        [Range(30f, 1000f)] public int health = 30;
 
         public WeaponSettings weapon;
 

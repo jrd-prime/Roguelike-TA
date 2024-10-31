@@ -7,16 +7,15 @@ namespace Game.Scripts.UI.Menus.GamePlay
 {
     public class GameUIModel : UIModelBase, IGameUIModel
     {
-        public ReactiveProperty<float> PlayerHealth { get; } = new();
-        public ReactiveProperty<float> PlayerInitialHealth { get; } = new();
+        public ReactiveProperty<int> PlayerHealth { get; } = new();
+        public ReactiveProperty<int> PlayerInitialHealth { get; } = new();
         public ReadOnlyReactiveProperty<int> KillCount => GameManager.KillCount;
         public ReadOnlyReactiveProperty<int> KillToWin => GameManager.KillToWin;
         public ReadOnlyReactiveProperty<int> EnemiesCount => GameManager.EnemiesCount;
-
-        public ReadOnlyReactiveProperty<float> CurrentExp => GameManager.PlayerExp;
-        public ReadOnlyReactiveProperty<float> ExpToNextLevel => GameManager.ExpToNextLevel;
+        public ReadOnlyReactiveProperty<int> CurrentExp => GameManager.PlayerExp;
+        public ReadOnlyReactiveProperty<int> ExpToNextLevel => GameManager.ExpToNextLevel;
         public ReadOnlyReactiveProperty<int> PlayerLevel => GameManager.PlayerLevel;
-        
+
         private IPlayerModel _playerModel;
 
         public override void Initialize()

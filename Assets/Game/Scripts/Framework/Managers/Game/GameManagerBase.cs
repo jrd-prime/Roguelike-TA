@@ -23,8 +23,8 @@ namespace Game.Scripts.Framework.Managers.Game
         public ReadOnlyReactiveProperty<int> EnemiesCount => EnemiesManager.EnemiesCount;
 
         public ReadOnlyReactiveProperty<int> PlayerLevel => ExperienceManager.Level;
-        public ReadOnlyReactiveProperty<float> PlayerExp => ExperienceManager.CurrentExp;
-        public ReadOnlyReactiveProperty<float> ExpToNextLevel => ExperienceManager.ExpToNextLevel;
+        public ReadOnlyReactiveProperty<int> PlayerExp => ExperienceManager.CurrentExp;
+        public ReadOnlyReactiveProperty<int> ExpToNextLevel => ExperienceManager.ExpToNextLevel;
 
         [ReadOnly] public ReactiveProperty<bool> isGameStarted { get; } = new();
         protected IObjectResolver Resolver;

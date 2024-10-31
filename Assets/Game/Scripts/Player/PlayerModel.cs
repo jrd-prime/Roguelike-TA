@@ -23,13 +23,13 @@ namespace Game.Scripts.Player
         public ReactiveProperty<float> MoveSpeed { get; } = new();
         public ReactiveProperty<float> RotationSpeed { get; } = new();
         public ReactiveProperty<bool> IsMoving { get; } = new();
-        public ReactiveProperty<float> Health { get; } = new();
+        public ReactiveProperty<int> Health { get; } = new();
         public ReactiveProperty<bool> IsShooting { get; } = new();
         public ReactiveProperty<bool> IsGameStarted { get; } = new();
 
         #endregion
 
-        public Action<float> TrackableAction { get; private set; }
+        public Action<int> TrackableAction { get; private set; }
         public CharacterSettings characterSettings { get; private set; }
 
         private IMovementControlModel _joystick;
@@ -76,12 +76,12 @@ namespace Game.Scripts.Player
 
         public void SetPosition(Vector3 position) => Position.Value = position;
         public void SetRotation(Quaternion rotation) => Rotation.Value = rotation;
-        public void SetHealth(float health) => Health.Value = health;
+        public void SetHealth(int health) => Health.Value = health;
         public void SetGameStarted(bool value) => IsGameStarted.Value = value;
         public async void ShootToTargetAsync(GameObject nearestEnemy) => await _weapon.ShootAtTargetAsync(nearestEnemy);
 
 
-        public void TakeDamage(float damage)
+        public void TakeDamage(int damage)
         {
             if (damage > 0) SetHealth(Health.Value - damage);
         }

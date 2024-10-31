@@ -15,9 +15,9 @@ namespace Game.Scripts.Framework.Configuration.SO.Enemy
         [Title("Main")] public string enemyName = "Not Set";
         [FormerlySerializedAs("enemyPrefab")] public AssetReferenceGameObject enemySkinPrefab;
 
-        [Title("Life")] public float health = 100;
-        [Title("Attack")] public float damage = 10;
-        public float attackDelay = 3f;
+        [Title("Life")] public int health = 100;
+        [Title("Attack")] public int damage = 10;
+        public int attackDelayMs = 3000;
 
         [Title("Movement")] public float speed = 5f;
 

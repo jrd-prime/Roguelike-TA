@@ -5,9 +5,9 @@ namespace Game.Scripts.Framework.Managers.Experience
 {
     public interface IExperienceManager
     {
-        public ReactiveProperty<float> CurrentExp { get; }
-        public ReactiveProperty<float> ExpToNextLevel { get; }
+        public ReactiveProperty<int> CurrentExp { get; }
+        public ReactiveProperty<int> ExpToNextLevel { get; }
         public ReactiveProperty<int> Level { get; }
-        public void AddExperience(float experience);
+        public void AddExperience(int experience);
     }
 }

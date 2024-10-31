@@ -45,31 +45,15 @@ namespace Game.Scripts.Player
 
         private void FixedUpdate()
         {
-            Stopwatch stopwatch = new Stopwatch();
-            stopwatch.Start();
             if (!_isGameStarted) return;
             if (!_isShooting)
             {
-
                 _nearestEnemy =
                     FindTargetSystem.FindNearestInBox(transform, scanBoxHorizontal, scanBoxVertical, targetLayer);
-
-
                 if (_nearestEnemy is not null) _viewModel.ShootToTarget(_nearestEnemy);
             }
 
             CharacterMovement();
-
-            stopwatch.Stop();
-            TimeSpan elapsed = stopwatch.Elapsed;
-
-            // Выводим время в микросекундах
-            long elapsedMicroseconds = elapsed.Ticks / 10; // 1 Tick = 100 nanoseconds
-
-            if (elapsedMicroseconds > 200)
-            {
-                UnityEngine.Debug.Log($"FindNearestInBox execution time: {elapsedMicroseconds} µs");
-            }
         }
 
         private void Subscribe()

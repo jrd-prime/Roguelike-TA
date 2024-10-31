@@ -6,7 +6,7 @@ namespace Game.Scripts.Framework.CommonModel
 {
     public interface ITrackableModel
     {
-        public Action<float> TrackableAction { get; }
+        public Action<int> TrackableAction { get; }
         public ReactiveProperty<Vector3> Position { get; }
         public ReactiveProperty<Quaternion> Rotation { get; }
 

@@ -7,11 +7,11 @@ namespace Game.Scripts.Player.Interfaces
 {
     public interface IPlayerModel : IMovableModel, ITrackableModel
     {
-        public ReactiveProperty<float> Health { get; }
+        public ReactiveProperty<int> Health { get; }
         public CharacterSettings characterSettings { get; }
         public ReactiveProperty<bool> IsShooting { get; }
-        public void SetHealth(float health);
-        public void TakeDamage(float damage);
+        public void SetHealth(int health);
+        public void TakeDamage(int damage);
         public void ResetPlayer();
         public void ShootToTargetAsync(GameObject nearestEnemy);
         public ReactiveProperty<bool> IsGameStarted { get; }

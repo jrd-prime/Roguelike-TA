@@ -168,7 +168,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnDelay: 500
   minEnemiesOnMap: 5
-  maxEnemiesOnMap: 10
+  maxEnemiesOnMap: 20
   killsToWin: 999
 --- !u!1001 &396294687
 PrefabInstance:
@@ -674,6 +674,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: EnemyManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 6607117462282377307, guid: 3944857b01f273c4a8570953d5bdcee1,
+        type: 3}
+      propertyPath: enemyPoolSize
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 6964513777732580469, guid: 3944857b01f273c4a8570953d5bdcee1,
         type: 3}
