@@ -1,5 +1,4 @@
-﻿using DG.Tweening;
-using Game.Scripts.UI.Base;
+﻿using Game.Scripts.UI.Base;
 using R3;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -8,13 +7,19 @@ namespace Game.Scripts.UI.Menus.GamePlay
 {
     public class GameUIView : UIViewCustom<GameUIViewModel>
     {
+        // Buttons
         private Button _menuButton;
+
+        // Health
         private VisualElement _healthBarBg;
         private VisualElement _healthBar;
+
         private Label _healthBarLabel;
+
+        // Kill count
         private Label _killCountLabel;
 
-
+        // Experience
         private VisualElement _expBarBg;
         private VisualElement _expBar;
         private Label _expBarLabel;
@@ -67,8 +72,6 @@ namespace Game.Scripts.UI.Menus.GamePlay
         private void SetHpBarWidth(float width)
         {
             if (isFullHpWidthSet) return;
-            Debug.LogWarning(" SetHpBarWidth: " + width + " /// " + _playerInitialHealth);
-            Debug.LogWarning($"pl {ViewModel.PlayerInitialHealth.CurrentValue}");
             isFullHpWidthSet = true;
             _fullHpWidth = width;
             _pxPerPointHp = _fullHpWidth / _playerInitialHealth;
@@ -76,22 +79,10 @@ namespace Game.Scripts.UI.Menus.GamePlay
             UpdateHealthBar(_playerInitialHealth);
         }
 
-        private void UpdateHealthBar(int health)
-        {
-            Debug.LogWarning(" UpdateHealthBar: " + health); // TODO: remove();
-            _healthBarLabel.text = health + " / " + _playerInitialHealth;
-            if (!isFullHpWidthSet) return;
-            _healthBar
-                .experimental
-                .animation
-                .Size(new Vector2(_pxPerPointHp * health, _currentHpBarWidth), 500).Start();
-            _currentHpBarWidth = _pxPerPointHp * health;
-        }
 
         private void SetExpBarWidth(float width)
         {
             if (isFullExpWidthSet) return;
-            Debug.LogWarning(" SetExpBarWidth: " + width);
             isFullExpWidthSet = true;
             _fullExpWidth = width;
             _pxPerPointExp = _fullExpWidth / _expToNextLevel;
@@ -101,19 +92,17 @@ namespace Game.Scripts.UI.Menus.GamePlay
 
         protected override void Init()
         {
+            Debug.LogWarning("===== == == == =  Init GameUIView");
+
             _healthBar.RegisterCallback<GeometryChangedEvent>(_ => SetHpBarWidth(_healthBar.resolvedStyle.width));
             _expBar.RegisterCallback<GeometryChangedEvent>(_ => SetExpBarWidth(_expBar.resolvedStyle.width));
 
             // Health
             ViewModel.PlayerInitialHealth
-                .Subscribe(initialHealth => _playerInitialHealth = initialHealth)
+                .Subscribe(initialHealth => { _playerInitialHealth = initialHealth; })
                 .AddTo(Disposables);
 
-            ViewModel.PlayerHealth
-                .Subscribe(UpdateHealthBar)
-                .AddTo(Disposables);
-
-            // Kill count
+            ViewModel.PlayerHealth.Subscribe(UpdateHealthBar).AddTo(Disposables);
             ViewModel.KillCount
                 .Subscribe(killCount =>
                 {
@@ -131,15 +120,13 @@ namespace Game.Scripts.UI.Menus.GamePlay
                 .AddTo(Disposables);
 
             // Level and experience
-            ViewModel.PlayerLevel
-                .Subscribe(UpdateLevelLabel)
-                .AddTo(Disposables);
+            ViewModel.Level.Subscribe(UpdateLevelLabel).AddTo(Disposables);
 
             ViewModel.ExpToNextLevel
-                .Subscribe(expToNextLevel => _expToNextLevel = expToNextLevel)
+                .Subscribe(expToNextLevel => { _expToNextLevel = expToNextLevel; })
                 .AddTo(Disposables);
 
-            ViewModel.PlayerExp
+            ViewModel.Experience
                 .Subscribe(UpdateExperienceBar)
                 .AddTo(Disposables);
         }
@@ -148,6 +135,17 @@ namespace Game.Scripts.UI.Menus.GamePlay
         {
             _lvlLabel.text = currentLevel.ToString();
             currentLevel = level;
+        }
+
+        private void UpdateHealthBar(int health)
+        {
+            _healthBarLabel.text = health + " / " + _playerInitialHealth;
+            if (!isFullHpWidthSet) return;
+            _healthBar
+                .experimental
+                .animation
+                .Size(new Vector2(_pxPerPointHp * health, _currentHpBarWidth), 500).Start();
+            _currentHpBarWidth = _pxPerPointHp * health;
         }
 
         private void UpdateExperienceBar(int exp)

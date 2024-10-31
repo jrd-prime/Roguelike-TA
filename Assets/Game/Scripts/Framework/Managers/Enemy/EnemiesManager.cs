@@ -91,7 +91,7 @@ namespace Game.Scripts.Framework.Managers.Enemy
                 Animator = animator,
                 Target = _followTargetModel,
                 Speed = enemySettings.speed,
-                AttackDelayMs = enemySettings.attackDelayMs,
+                AttackDelayInSec = enemySettings.attackDelayInSec,
                 Damage = enemySettings.damage,
                 Health = enemySettings.health,
                 Experience = enemySettings.baseExperiencePoints

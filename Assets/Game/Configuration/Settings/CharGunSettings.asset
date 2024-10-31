@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d7b5fe975a444c1bdb23332fcab8968, type: 3}
   m_Name: CharGunSettings
   m_EditorClassIdentifier: 
-  projectileDamage: 100
-  attackDelayMS: 500
+  projectileDamage: 20
+  attackDelayMS: 33333
   attackRange: 5
   projectileSpeed: 10

@@ -20,6 +20,6 @@ MonoBehaviour:
     m_EditorAssetChanged: 0
   health: 55
   damage: 1
-  attackDelay: 3
+  attackDelayInSec: 5
   speed: 0.5
   baseExperiencePoints: 33

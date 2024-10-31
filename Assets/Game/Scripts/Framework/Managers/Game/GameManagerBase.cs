@@ -11,20 +11,22 @@ using VContainer;
 
 namespace Game.Scripts.Framework.Managers.Game
 {
-    public class GameManagerBase : MonoBehaviour, IDisposable
+    public class GameManagerBase : MonoBehaviour
     {
+        //TODO load from settings
         [SerializeField] protected int spawnDelay = 500;
         [SerializeField] protected int minEnemiesOnMap = 5;
         [SerializeField] protected int maxEnemiesOnMap = 10;
         [SerializeField] protected int killsToWin = 100;
 
+        public ReactiveProperty<int> PlayerInitialHealth { get; } = new();
+        public ReadOnlyReactiveProperty<int> PlayerHealth => PlayerModel.Health;
         public ReadOnlyReactiveProperty<int> KillCount => EnemiesManager.Kills;
         public ReadOnlyReactiveProperty<int> KillToWin => EnemiesManager.KillToWin;
         public ReadOnlyReactiveProperty<int> EnemiesCount => EnemiesManager.EnemiesCount;
-
-        public ReadOnlyReactiveProperty<int> PlayerLevel => ExperienceManager.Level;
-        public ReadOnlyReactiveProperty<int> PlayerExp => ExperienceManager.CurrentExp;
-        public ReadOnlyReactiveProperty<int> ExpToNextLevel => ExperienceManager.ExpToNextLevel;
+        public ReadOnlyReactiveProperty<int> Level => ExperienceManager.Level;
+        public ReadOnlyReactiveProperty<int> Experience => ExperienceManager.Experience;
+        public ReadOnlyReactiveProperty<int> ExperienceToNextLevel => ExperienceManager.ExperienceToNextLevel;
 
         [ReadOnly] public ReactiveProperty<bool> isGameStarted { get; } = new();
         protected IObjectResolver Resolver;
@@ -32,10 +34,7 @@ namespace Game.Scripts.Framework.Managers.Game
         protected IPlayerModel PlayerModel;
         protected UIManager UIManager;
         protected IExperienceManager ExperienceManager;
-
         protected bool IsGamePaused;
-        protected readonly CompositeDisposable Disposables = new();
-
 
         [Inject]
         private void Construct(IObjectResolver resolver)
@@ -53,10 +52,8 @@ namespace Game.Scripts.Framework.Managers.Game
             Assert.IsNotNull(PlayerModel, $"PlayerModel is null. {this}");
             Assert.IsNotNull(EnemiesManager, $"EnemiesManager is null. {this}");
             Assert.IsNotNull(UIManager, $"UIManager is null. {this}");
-        }
 
-        public void Dispose()
-        {
+            PlayerInitialHealth.Value = PlayerModel.CharSettings.health;
         }
     }
 }

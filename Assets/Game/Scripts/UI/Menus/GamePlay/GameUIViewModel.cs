@@ -11,9 +11,11 @@ namespace Game.Scripts.UI.Menus.GamePlay
         public ReadOnlyReactiveProperty<int> KillCount => Model.KillCount;
         public ReadOnlyReactiveProperty<int> KillToWin => Model.KillToWin;
         public ReadOnlyReactiveProperty<int> EnemiesCount => Model.EnemiesCount;
-        public ReadOnlyReactiveProperty<int> PlayerLevel => Model.PlayerLevel;
-        public ReadOnlyReactiveProperty<int> PlayerExp => Model.CurrentExp;
-        public ReadOnlyReactiveProperty<int> ExpToNextLevel => Model.ExpToNextLevel;
+
+
+        public ReadOnlyReactiveProperty<int> Experience => Model.Experience;
+        public ReadOnlyReactiveProperty<int> Level => Model.Level;
+        public ReadOnlyReactiveProperty<int> ExpToNextLevel => Model.ExperienceToNextLevel;
 
         public override void Initialize()
         {

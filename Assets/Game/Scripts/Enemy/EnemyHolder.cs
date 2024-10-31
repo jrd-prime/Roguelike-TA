@@ -49,9 +49,9 @@ namespace Game.Scripts.Enemy
             if (Time.time - LastAttackTime >= 0.1f) Animator.SetBool(AnimConst.IsTargetReached, false);
         }
 
-        private bool CanStopAttack() => IsAttacking && Time.time - LastAttackTime >= Settings.AttackDelayMs;
+        private bool CanStopAttack() => IsAttacking && Time.time - LastAttackTime >= Settings.AttackDelayInSec;
 
-        private bool CanStartAttack() => !IsAttacking && Time.time - LastAttackTime >= Settings.AttackDelayMs;
+        private bool CanStartAttack() => !IsAttacking && Time.time - LastAttackTime >= Settings.AttackDelayInSec;
 
         private bool CloseEnoughToAttack() => Vector3.Distance(RbPosition, TargetPosition) < DistanceToAttack;
 

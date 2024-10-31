@@ -30,9 +30,9 @@ namespace Game.Scripts.Player
         #endregion
 
         public Action<int> TrackableAction { get; private set; }
-        public CharacterSettings characterSettings { get; private set; }
+        public CharacterSettings CharSettings { get; private set; }
 
-        private IMovementControlModel _joystick;
+        private IMovementControlModel _movementControlModel;
         private CameraFollowSystem _cameraFollowSystem;
         private WeaponManager _weaponManager;
         private WeaponBase _weapon;
@@ -45,16 +45,16 @@ namespace Game.Scripts.Player
 
         public async void Initialize()
         {
-            _joystick = Resolver.ResolveAndCheck<IMovementControlModel>(_container);
+            _movementControlModel = Resolver.ResolveAndCheck<IMovementControlModel>(_container);
             _cameraFollowSystem = Resolver.ResolveAndCheck<CameraFollowSystem>(_container);
             _weaponManager = Resolver.ResolveAndCheck<WeaponManager>(_container);
             var settingsManager = Resolver.ResolveAndCheck<ISettingsManager>(_container);
-            characterSettings = settingsManager.GetConfig<CharacterSettings>();
+            CharSettings = settingsManager.GetConfig<CharacterSettings>();
 
             _cameraFollowSystem.SetTarget(this);
-            MoveSpeed.Value = characterSettings.moveSpeed;
-            RotationSpeed.Value = characterSettings.rotationSpeed;
-            SetHealth(characterSettings.health);
+            MoveSpeed.Value = CharSettings.moveSpeed;
+            RotationSpeed.Value = CharSettings.rotationSpeed;
+            SetHealth(CharSettings.health);
 
             _weapon = await _weaponManager.GetCharacterWeapon();
 
@@ -69,7 +69,7 @@ namespace Game.Scripts.Player
                 .AddTo(_disposables);
 
             //TODO on drop joystick slow speed down
-            _joystick.MoveDirection
+            _movementControlModel.MoveDirection
                 .Subscribe(SetMoveDirection)
                 .AddTo(_disposables);
         }
@@ -83,6 +83,7 @@ namespace Game.Scripts.Player
 
         public void TakeDamage(int damage)
         {
+            Debug.LogWarning("  take damage: " + damage);
             if (damage > 0) SetHealth(Health.Value - damage);
         }
 
@@ -95,7 +96,7 @@ namespace Game.Scripts.Player
         public void ResetPlayer()
         {
             SetPosition(Vector3.zero);
-            SetHealth(characterSettings.health);
+            SetHealth(CharSettings.health);
         }
 
 

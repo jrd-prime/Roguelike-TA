@@ -22,6 +22,7 @@ namespace Game.Scripts.Framework.Managers.Game
 
             isGameStarted.Value = true;
             PlayerModel.ResetPlayer();
+            ExperienceManager.ResetExperience();
 
             EnemiesManager.StartSpawnEnemiesAsync(killsToWin, minEnemiesOnMap, maxEnemiesOnMap, spawnDelay);
         }

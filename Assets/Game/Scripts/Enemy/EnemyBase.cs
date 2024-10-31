@@ -24,7 +24,7 @@ namespace Game.Scripts.Enemy
 
         protected IEnemiesManager EnemiesManager;
 
-        public float CurrentHealth { get; set; }
+        protected float CurrentHealth { get; set; }
         protected bool IsInitialized;
         protected float LastAttackTime;
         protected bool IsAttacking;
@@ -41,7 +41,7 @@ namespace Game.Scripts.Enemy
             if (!IsInitialized) throw new Exception("Enemy is not initialized!");
 
             Rb = gameObject.GetComponent<Rigidbody>();
-            Assert.IsNotNull(EnemiesManager, $"EnemiesManager is null");
+            Assert.IsNotNull(EnemiesManager, "EnemiesManager is null");
             Assert.IsNotNull(enemyHUD, $"HUDController is null. Add to {this}");
         }
 
@@ -53,7 +53,8 @@ namespace Game.Scripts.Enemy
             IsInitialized = true;
         }
 
-        public virtual void Attack() => Target.TrackableAction?.Invoke(Settings.Damage);
+        protected void Attack() => Target.TrackableAction?.Invoke(Settings.Damage);
+
 
         public void ResetEnemy()
         {

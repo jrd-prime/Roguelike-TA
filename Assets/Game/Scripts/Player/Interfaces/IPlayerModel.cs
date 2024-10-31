@@ -8,7 +8,7 @@ namespace Game.Scripts.Player.Interfaces
     public interface IPlayerModel : IMovableModel, ITrackableModel
     {
         public ReactiveProperty<int> Health { get; }
-        public CharacterSettings characterSettings { get; }
+        public CharacterSettings CharSettings { get; }
         public ReactiveProperty<bool> IsShooting { get; }
         public void SetHealth(int health);
         public void TakeDamage(int damage);

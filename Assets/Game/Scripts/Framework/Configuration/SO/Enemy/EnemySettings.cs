@@ -17,7 +17,7 @@ namespace Game.Scripts.Framework.Configuration.SO.Enemy
 
         [Title("Life")] public int health = 100;
         [Title("Attack")] public int damage = 10;
-        public int attackDelayMs = 3000;
+        [Range(0.1f, 10)] public float attackDelayInSec = 3;
 
         [Title("Movement")] public float speed = 5f;
 
