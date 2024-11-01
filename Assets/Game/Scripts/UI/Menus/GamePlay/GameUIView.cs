@@ -92,8 +92,6 @@ namespace Game.Scripts.UI.Menus.GamePlay
 
         protected override void Init()
         {
-            Debug.LogWarning("===== == == == =  Init GameUIView");
-
             _healthBar.RegisterCallback<GeometryChangedEvent>(_ => SetHpBarWidth(_healthBar.resolvedStyle.width));
             _expBar.RegisterCallback<GeometryChangedEvent>(_ => SetExpBarWidth(_expBar.resolvedStyle.width));
 

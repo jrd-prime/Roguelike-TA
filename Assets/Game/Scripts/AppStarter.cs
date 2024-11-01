@@ -30,9 +30,9 @@ namespace Game.Scripts
             _loader.AddServiceForInitialization(_assetProvider);
 
 
-            Debug.LogWarning("Starting services initialization...");
+            Debug.Log("Starting services initialization...");
             await _loader.StartServicesInitializationAsync();
-            Debug.LogWarning("Services initialization completed...");
+            Debug.Log("Services initialization completed...");
 
 
             var gameScene = await _assetProvider.LoadSceneAsync(AssetsConst.GameScene, LoadSceneMode.Additive);

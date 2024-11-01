@@ -37,8 +37,6 @@ namespace Game.Scripts.Framework.GameStateMachine
 
         public void PostStart()
         {
-            Debug.LogWarning("state machine post start");
-            Debug.LogWarning($"current state: {_currentState}");
             if (_currentState != null) return;
 
             ChangeState(_states[StateType.Menu]);
@@ -58,7 +56,7 @@ namespace Game.Scripts.Framework.GameStateMachine
 
         public void ChangeStateTo(StateType stateType)
         {
-            Debug.LogWarning($"change state to: {stateType}");
+            Debug.Log($"- StateMachine - / Change state to: {stateType} / Current state: {_currentState.GetType().Name}");
             if (!_states.TryGetValue(stateType, out IGameState state))
                 throw new KeyNotFoundException($"State: {stateType} not found!");
 

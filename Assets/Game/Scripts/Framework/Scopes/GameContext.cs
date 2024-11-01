@@ -8,6 +8,7 @@ using Game.Scripts.Framework.Managers.Weapon;
 using Game.Scripts.Player;
 using Game.Scripts.Player.Interfaces;
 using Game.Scripts.UI;
+using Game.Scripts.UI.MovementControl;
 using Game.Scripts.UI.MovementControl.FullScreen;
 using UnityEngine;
 using VContainer;
@@ -26,7 +27,7 @@ namespace Game.Scripts.Framework.Scopes
 
         protected override void Configure(IContainerBuilder builder)
         {
-            Debug.LogWarning("<color=cyan>GAME CONTEXT</color>");
+            Debug.Log("<color=cyan>GAME CONTEXT</color>");
 
 
             builder.RegisterComponent(gameManager).AsSelf().AsImplementedInterfaces();
@@ -41,8 +42,8 @@ namespace Game.Scripts.Framework.Scopes
             // builder.Register<JoystickModel>(Lifetime.Singleton).As<IJoystickModel>();
             // builder.Register<JoystickViewModel>(Lifetime.Singleton).As<IJoystickViewModel>();
             // FullScreen
-            builder.Register<FullScreenModel>(Lifetime.Singleton).As<IFullScreenModel>().As<IMovementControlModel>();
-            builder.Register<FullScreenViewModel>(Lifetime.Singleton).As<IFullScreenViewModel>()
+            builder.Register<FullScreenMovementModel>(Lifetime.Singleton).As<IFullScreenMovementModel>().As<IMovementControlModel>();
+            builder.Register<FullScreenMovementViewModel>(Lifetime.Singleton).As<IFullScreenMovementViewModel>()
                 .As<IMovementControlViewModel>();
 
 

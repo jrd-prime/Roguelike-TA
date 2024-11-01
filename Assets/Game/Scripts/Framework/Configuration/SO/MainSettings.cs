@@ -2,7 +2,6 @@
 using Game.Scripts.Framework.Configuration.SO.Enemy;
 using Game.Scripts.Framework.Configuration.SO.Weapon;
 using Game.Scripts.Framework.Constants;
-using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -14,11 +13,11 @@ namespace Game.Scripts.Framework.Configuration.SO
         order = 100)]
     public class MainSettings : ScriptableObject
     {
-        [Title("Character Settings")] public CharacterSettings characterSettings;
-        [Title("Enemy Manager Settings")] public EnemyManagerSettings enemyManagerSettings;
-        [Title("Enemy Settings")] public EnemiesMainSettings enemiesMainSettings;
-        [Title("Weapon Settings")] public WeaponSettings weaponSettings;
- 
+        public CharacterSettings characterSettings;
+        public EnemyManagerSettings enemyManagerSettings;
+        public EnemiesMainSettings enemiesMainSettings;
+        public WeaponSettings weaponSettings;
+        public MovementControlSettings movementControlSettings;
 
         private void OnValidate()
         {

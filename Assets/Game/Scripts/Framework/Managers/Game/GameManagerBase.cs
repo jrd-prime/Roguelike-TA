@@ -1,10 +1,8 @@
-﻿using System;
-using Game.Scripts.Framework.Managers.Enemy;
+﻿using Game.Scripts.Framework.Managers.Enemy;
 using Game.Scripts.Framework.Managers.Experience;
 using Game.Scripts.Player.Interfaces;
 using Game.Scripts.UI;
 using R3;
-using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Assertions;
 using VContainer;
@@ -28,7 +26,7 @@ namespace Game.Scripts.Framework.Managers.Game
         public ReadOnlyReactiveProperty<int> Experience => ExperienceManager.Experience;
         public ReadOnlyReactiveProperty<int> ExperienceToNextLevel => ExperienceManager.ExperienceToNextLevel;
 
-        [ReadOnly] public ReactiveProperty<bool> isGameStarted { get; } = new();
+        public ReactiveProperty<bool> isGameStarted { get; } = new();
         protected IObjectResolver Resolver;
         protected IEnemiesManager EnemiesManager;
         protected IPlayerModel PlayerModel;
@@ -39,7 +37,6 @@ namespace Game.Scripts.Framework.Managers.Game
         [Inject]
         private void Construct(IObjectResolver resolver)
         {
-            Debug.LogWarning("game manager construct");
             Resolver = resolver;
             EnemiesManager = Resolver.Resolve<IEnemiesManager>();
             PlayerModel = Resolver.Resolve<IPlayerModel>();

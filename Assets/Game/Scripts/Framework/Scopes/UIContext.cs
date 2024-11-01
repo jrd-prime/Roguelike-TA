@@ -22,7 +22,7 @@ namespace Game.Scripts.Framework.Scopes
 
         protected override void Configure(IContainerBuilder builder)
         {
-            Debug.LogWarning("<color=cyan>UI CONTEXT</color>");
+            Debug.Log("<color=cyan>UI CONTEXT</color>");
 
             // Models
             builder.Register<IMenuUIModel, MenuUIModel>(Lifetime.Singleton);

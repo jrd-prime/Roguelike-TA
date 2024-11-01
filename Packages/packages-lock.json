@@ -55,6 +55,15 @@
       },
       "url": "https://packages.unity.com"
     },
+    "com.unity.addressables.android": {
+      "version": "1.0.4",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.addressables": "1.21.20"
+      },
+      "url": "https://packages.unity.com"
+    },
     "com.unity.burst": {
       "version": "1.8.18",
       "depth": 2,

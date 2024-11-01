@@ -21,7 +21,7 @@ namespace Game.Scripts.Framework.Scopes
 
         protected override void Configure(IContainerBuilder builder)
         {
-            Debug.LogWarning("<color=cyan>ROOT CONTEXT</color>");
+            Debug.Log("<color=cyan>ROOT CONTEXT</color>");
             Check(cameraManager);
 
 

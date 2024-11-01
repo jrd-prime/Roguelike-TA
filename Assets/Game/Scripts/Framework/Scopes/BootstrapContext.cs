@@ -12,7 +12,7 @@ namespace Game.Scripts.Framework.Scopes
 
         protected override void Configure(IContainerBuilder builder)
         {
-            Debug.LogWarning("<color=cyan>BOOSTRAP CONTEXT</color>");
+            Debug.Log("<color=cyan>BOOSTRAP CONTEXT</color>");
 
             builder.Register<ILoadingScreenModel, LoadingScreenModel>(Lifetime.Singleton);
             builder.Register<ILoadingScreenViewModel, LoadingScreenViewModel>(Lifetime.Singleton);

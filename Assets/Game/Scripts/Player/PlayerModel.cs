@@ -6,6 +6,7 @@ using Game.Scripts.Framework.Managers.Weapon;
 using Game.Scripts.Framework.Systems;
 using Game.Scripts.Framework.Weapon;
 using Game.Scripts.Player.Interfaces;
+using Game.Scripts.UI.MovementControl;
 using R3;
 using UnityEngine;
 using VContainer;

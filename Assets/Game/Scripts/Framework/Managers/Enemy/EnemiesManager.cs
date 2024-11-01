@@ -54,7 +54,6 @@ namespace Game.Scripts.Framework.Managers.Enemy
 
         private void Awake()
         {
-            Debug.LogWarning($"Enemies manager awake");
             Assert.IsNotNull(_settingsManager, $"Config manager is null. Add to auto inject!");
             Assert.IsNotNull(_spawnPointsManager, $"Spawn points manager is null. Add to auto inject!");
             _enemiesSettingsList = _settingsManager.GetConfig<EnemiesMainSettings>().enemies;
