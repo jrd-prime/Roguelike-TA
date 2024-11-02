@@ -28,6 +28,7 @@
     padding-top: 2px;
     padding-right: 0;
     padding-left: 0;
+    -unity-font-definition: resource('Font/Dosis/Dosis-Light');
 }
 
 .ui-header {

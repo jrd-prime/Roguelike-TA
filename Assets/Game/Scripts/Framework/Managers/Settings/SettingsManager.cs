@@ -1,7 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using Game.Scripts.Framework.Configuration.SO;
+using Game.Scripts.Framework.Configuration.SO.Character;
+using Game.Scripts.Framework.Configuration.SO.Enemy;
+using Game.Scripts.Framework.Configuration.SO.Weapon;
 using UnityEngine;
+using UnityEngine.Assertions;
 using VContainer;
 
 namespace Game.Scripts.Framework.Managers.Settings
@@ -9,29 +13,29 @@ namespace Game.Scripts.Framework.Managers.Settings
     public class SettingsManager : ISettingsManager
     {
         public string Description => "Config Manager";
-        public Dictionary<Type, object> ConfigsCache { get; private set; }
+        public Dictionary<Type, object> ConfigsCache { get; } = new();
 
         private MainSettings _mainSettings;
 
         [Inject]
-        private void Construct(MainSettings mainSettings) =>
-            _mainSettings = mainSettings;
+        private void Construct(MainSettings mainSettings) => _mainSettings = mainSettings;
 
         public void LoaderServiceInitialization()
         {
-            ConfigsCache = new Dictionary<Type, object>();
+            if (_mainSettings == null) throw new NullReferenceException("Main Settings is null");
 
-            AddToCache(_mainSettings.characterSettings);
-            AddToCache(_mainSettings.enemiesMainSettings);
-            AddToCache(_mainSettings.enemyManagerSettings);
-            AddToCache(_mainSettings.weaponSettings);
-            AddToCache(_mainSettings.movementControlSettings);
+            CheckAndAddToCache(_mainSettings.character);
+            CheckAndAddToCache(_mainSettings.enemies);
+            CheckAndAddToCache(_mainSettings.enemyManager);
+            CheckAndAddToCache(_mainSettings.weapon);
+            CheckAndAddToCache(_mainSettings.movementControl);
         }
 
-        private void AddToCache(object config)
+        private void CheckAndAddToCache<T>(T settings) where T : SettingsBase
         {
-            if (!ConfigsCache.TryAdd(config.GetType(), config))
-                Debug.Log($"Error. When adding to cache {config.GetType()}");
+            if (settings == null) throw new ArgumentNullException(nameof(settings));
+            if (!ConfigsCache.TryAdd(typeof(T), settings))
+                Debug.Log($"Error. When adding to cache {typeof(T)}");
         }
 
         public T GetConfig<T>() where T : ScriptableObject => ConfigsCache[typeof(T)] as T;

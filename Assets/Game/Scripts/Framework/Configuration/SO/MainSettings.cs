@@ -2,6 +2,7 @@
 using Game.Scripts.Framework.Configuration.SO.Enemy;
 using Game.Scripts.Framework.Configuration.SO.Weapon;
 using Game.Scripts.Framework.Constants;
+using Game.Scripts.Framework.Managers.Settings;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -11,19 +12,22 @@ namespace Game.Scripts.Framework.Configuration.SO
         fileName = "MainSettings",
         menuName = SOPathConst.ConfigPath + "Main Settings",
         order = 100)]
-    public class MainSettings : ScriptableObject
+    public class MainSettings : SettingsBase
     {
-        public CharacterSettings characterSettings;
-        public EnemyManagerSettings enemyManagerSettings;
-        public EnemiesMainSettings enemiesMainSettings;
-        public WeaponSettings weaponSettings;
-        public MovementControlSettings movementControlSettings;
+        public override string Description => "Main Settings";
+        public CharacterSettings character;
+        public EnemyManagerSettings enemyManager;
+        public EnemiesMainSettings enemies;
+        public WeaponSettings weapon;
+        public MovementControlSettings movementControl;
 
         private void OnValidate()
         {
-            Assert.IsNotNull(characterSettings, "Main Configurations: Character config is null!");
-            Assert.IsNotNull(enemyManagerSettings, "Main Configurations: Enemy Manager config is null!");
-            Assert.IsNotNull(enemiesMainSettings, "Main Configurations: Enemy config is null!");
+            Assert.IsNotNull(character, "Main Configurations: Character config is null!");
+            Assert.IsNotNull(enemyManager, "Main Configurations: Enemy Manager config is null!");
+            Assert.IsNotNull(enemies, "Main Configurations: Enemy config is null!");
+            Assert.IsNotNull(weapon, "Main Configurations: Weapon config is null!");
+            Assert.IsNotNull(movementControl, "Main Configurations: Movement Control config is null!");
         }
     }
 }

@@ -38,7 +38,7 @@ namespace Game.Scripts.Player
         private WeaponManager _weaponManager;
         private WeaponBase _weapon;
         private IObjectResolver _container;
-        private readonly CompositeDisposable _disposables = new();
+        private readonly CompositeDisposable _disposables = new(); 
 
         [Inject]
         private void Construct(IObjectResolver container) => _container = container;
