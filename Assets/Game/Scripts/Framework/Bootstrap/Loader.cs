@@ -30,11 +30,11 @@ namespace Game.Scripts.Framework.Bootstrap
             {
                 try
                 {
-                    _loadingScreenModel.SetLoadingText($"(+ fake delayed) Loading: {service.Description}..");
+                    _loadingScreenModel.SetLoadingText($"Loading: {service.Description}..");
                     service.LoaderServiceInitialization();
 
                     // fake delay per service
-                    await UniTask.Delay(100);
+                    await UniTask.Delay(500);
                 }
                 catch (Exception ex)
                 {
