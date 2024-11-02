@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using Game.Scripts.Framework.Bootstrap.UI;
-using UnityEngine.Assertions;
 using VContainer;
+using VContainer.Unity;
 
 namespace Game.Scripts.Framework.Bootstrap
 {
-    public class Loader : ILoader
+    public class Loader : ILoader, IInitializable
     {
         private readonly Queue<ILoadingOperation> _loadingQueue = new();
         private ILoadingScreenModel _loadingScreenModel;
@@ -15,10 +15,9 @@ namespace Game.Scripts.Framework.Bootstrap
         [Inject]
         private void Construct(ILoadingScreenModel loadingScreenModel) => _loadingScreenModel = loadingScreenModel;
 
-
         public void AddServiceForInitialization(ILoadingOperation service)
         {
-            Assert.IsNotNull(service, "Service is null!");
+            if (service == null) throw new ArgumentNullException(nameof(service));
             _loadingQueue.Enqueue(service);
         }
 
@@ -31,11 +30,11 @@ namespace Game.Scripts.Framework.Bootstrap
             {
                 try
                 {
-                    _loadingScreenModel.SetLoadingText($"(+ fake delayed) Loading: {service.Description}..");
+                    _loadingScreenModel.SetLoadingText($"Loading: {service.Description}..");
                     service.LoaderServiceInitialization();
 
                     // fake delay per service
-                    await UniTask.Delay(100);
+                    await UniTask.Delay(500);
                 }
                 catch (Exception ex)
                 {
@@ -44,6 +43,11 @@ namespace Game.Scripts.Framework.Bootstrap
             }
 
             await UniTask.CompletedTask;
+        }
+
+        public void Initialize()
+        {
+            if (_loadingScreenModel == null) throw new NullReferenceException($"LoadingScreenModel is null. {this}");
         }
     }
 }

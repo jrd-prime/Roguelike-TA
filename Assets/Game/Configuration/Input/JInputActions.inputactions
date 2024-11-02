@@ -18,7 +18,7 @@
                     "name": "Click",
                     "type": "Button",
                     "id": "2f065022-4992-4746-a7d4-26779bfa0f53",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false

@@ -27,6 +27,7 @@ namespace Game.Scripts.Framework.Managers.Enemy
         public ReactiveProperty<int> KillToWin { get; } = new();
         public ReactiveProperty<int> EnemiesCount { get; } = new(0);
 
+        [SerializeField] private int enemyPoolSize = 10;
         private bool _isStarted;
 
         private ISettingsManager _settingsManager;
@@ -53,14 +54,14 @@ namespace Game.Scripts.Framework.Managers.Enemy
 
         private void Awake()
         {
-            Debug.LogWarning($"Enemies manager awake");
             Assert.IsNotNull(_settingsManager, $"Config manager is null. Add to auto inject!");
             Assert.IsNotNull(_spawnPointsManager, $"Spawn points manager is null. Add to auto inject!");
             _enemiesSettingsList = _settingsManager.GetConfig<EnemiesMainSettings>().enemies;
             _enemyManagerSettings = _settingsManager.GetConfig<EnemyManagerSettings>();
 
             _enemyPool =
-                new CustomPool<EnemyHolder>(_enemyManagerSettings.enemyHolderPrefab, 100, transform, _container, true);
+                new CustomPool<EnemyHolder>(_enemyManagerSettings.enemyHolderPrefab, enemyPoolSize, transform,
+                    _container, true);
         }
 
         private async void SpawnRandomEnemyAsync()
@@ -89,7 +90,7 @@ namespace Game.Scripts.Framework.Managers.Enemy
                 Animator = animator,
                 Target = _followTargetModel,
                 Speed = enemySettings.speed,
-                AttackDelayMs = enemySettings.attackDelay,
+                AttackDelayInSec = enemySettings.attackDelayInSec,
                 Damage = enemySettings.damage,
                 Health = enemySettings.health,
                 Experience = enemySettings.baseExperiencePoints

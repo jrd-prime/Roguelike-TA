@@ -1,5 +1,4 @@
 ﻿using Game.Scripts.UI;
-using UnityEngine;
 
 namespace Game.Scripts.Framework.GameStateMachine.State
 {
@@ -7,7 +6,6 @@ namespace Game.Scripts.Framework.GameStateMachine.State
     {
         public void Enter()
         {
-            Debug.LogWarning("menu state enter");
             if (GameManager.isGameStarted.CurrentValue) GameManager.GameOver();
 
             UIManager.ShowView(StateType.Menu);

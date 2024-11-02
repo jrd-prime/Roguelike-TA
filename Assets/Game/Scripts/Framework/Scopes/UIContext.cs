@@ -22,7 +22,7 @@ namespace Game.Scripts.Framework.Scopes
 
         protected override void Configure(IContainerBuilder builder)
         {
-            Debug.LogWarning("<color=cyan>UI CONTEXT</color>");
+            Debug.Log("<color=cyan>UI CONTEXT</color>");
 
             // Models
             builder.Register<IMenuUIModel, MenuUIModel>(Lifetime.Singleton);
@@ -31,7 +31,7 @@ namespace Game.Scripts.Framework.Scopes
             builder.Register<PauseUIModel>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
             builder.Register<GameUIModel>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
             builder.Register<WinUIModel>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
-            
+
             // ViewModels
             builder.Register<MenuUIViewModel>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
             builder.Register<SettingsUIViewModel>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();

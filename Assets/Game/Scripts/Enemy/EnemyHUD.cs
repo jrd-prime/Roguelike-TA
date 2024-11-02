@@ -29,5 +29,10 @@ namespace Game.Scripts.Enemy
             var newWidth = _hpBarWidth * hpPercentage;
             hpBarRect.DOSizeDelta(new Vector2(newWidth, _hpBarHeight), .3f);
         }
+
+        public void ResetHUD()
+        {
+            hpBarRect.sizeDelta = new Vector2(_hpBarWidth, _hpBarHeight);
+        }
     }
 }

@@ -45,8 +45,9 @@ namespace Game.Scripts.Player
             if (!_isGameStarted) return;
             if (!_isShooting)
             {
-                _nearestEnemy =
-                    FindTargetSystem.FindNearestInBox(transform, scanBoxHorizontal, scanBoxVertical, targetLayer);
+                _nearestEnemy = FindTargetSystem.FindNearestInBox(transform, scanBoxHorizontal, scanBoxVertical,
+                    targetLayer);
+
                 if (_nearestEnemy is not null) _viewModel.ShootToTarget(_nearestEnemy);
             }
 
@@ -99,7 +100,10 @@ namespace Game.Scripts.Player
                 .AddTo(_disposables);
 
             _viewModel.IsShooting
-                .Subscribe(value => _isShooting = value)
+                .Subscribe(value =>
+                {
+                    _isShooting = value;
+                })
                 .AddTo(_disposables);
 
             _viewModel.IsGameStarted
@@ -147,7 +151,7 @@ namespace Game.Scripts.Player
         private void OnDrawGizmos()
         {
             Gizmos.color = Color.yellow;
-            Gizmos.DrawWireCube(transform.position, new Vector3(scanBoxHorizontal / 2f, 1f, scanBoxVertical / 2f));
+            Gizmos.DrawWireCube(transform.position, new Vector3(scanBoxHorizontal, 1f, scanBoxVertical));
         }
 #endif
     }

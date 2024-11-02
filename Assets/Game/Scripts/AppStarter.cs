@@ -1,9 +1,10 @@
-﻿using Cysharp.Threading.Tasks;
+﻿using System;
 using Game.Scripts.Framework.Bootstrap;
 using Game.Scripts.Framework.Constants;
 using Game.Scripts.Framework.Managers.Settings;
 using Game.Scripts.Framework.Providers.AssetProvider;
 using UnityEngine;
+using UnityEngine.ResourceManagement.ResourceProviders;
 using UnityEngine.SceneManagement;
 using VContainer;
 using VContainer.Unity;
@@ -26,19 +27,29 @@ namespace Game.Scripts
 
         public async void Initialize()
         {
+            if (_loader == null) throw new NullReferenceException("Loader is null.");
+            if (_assetProvider == null) throw new NullReferenceException("AssetProvider is null.");
+            if (_settingsManager == null) throw new NullReferenceException("SettingsManager is null.");
+
             _loader.AddServiceForInitialization(_settingsManager);
             _loader.AddServiceForInitialization(_assetProvider);
 
 
-            Debug.LogWarning("Starting services initialization...");
+            Debug.Log("Starting services initialization...");
             await _loader.StartServicesInitializationAsync();
-            Debug.LogWarning("Services initialization completed...");
+            Debug.Log("Services initialization completed...");
 
-
-            var gameScene = await _assetProvider.LoadSceneAsync(AssetsConst.GameScene, LoadSceneMode.Additive);
+            SceneInstance gameScene;
+            try
+            {
+                gameScene = await _assetProvider.LoadSceneAsync(AssetsConst.GameScene, LoadSceneMode.Additive);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Failed to load game scene: {ex.Message}");
+            }
 
             // TODO FadeOut loading screen view 
-            // Unloading current scene
             var currentScene = SceneManager.GetActiveScene();
             SceneManager.SetActiveScene(gameScene.Scene);
             await SceneManager.UnloadSceneAsync(currentScene);
