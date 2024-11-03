@@ -28,7 +28,7 @@ namespace Game.Scripts.Framework.Managers.Weapon
 
         public void Initialize()
         {
-            _assetProvider = Resolver.ResolveAndCheck<IAssetProvider>(_resolver);
+            _assetProvider = ResolverHelp.ResolveAndCheck<IAssetProvider>(_resolver);
             Assert.IsNotNull(charWeaponSettings, "charWeaponSettings is null");
             Assert.IsNotNull(projectileAssetReference, "projectileAssetReference is null");
             Assert.IsNotNull(characterWeapon, "charWeapon is null");
@@ -44,7 +44,7 @@ namespace Game.Scripts.Framework.Managers.Weapon
         public async UniTask<WeaponBase> GetCharacterWeapon()
         {
             var projectile = await GetProjectile();
-            _projectilePool = new CustomPool<ProjectileHolder>(projectile, 100, null, _resolver);
+            _projectilePool = new CustomPool<ProjectileHolder>(projectile, 10, null, _resolver);
             characterWeapon.InitializeWeapon(charWeaponSettings, _projectilePool);
 
             return characterWeapon;

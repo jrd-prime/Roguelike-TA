@@ -83,10 +83,15 @@ namespace Game.Scripts.Framework.Weapon
             var enemy = other.GetComponent<EnemyHolder>();
 
             if (enemy == null) return;
-            _sphereCollider.enabled = false;
-            projectilePrefab.gameObject.SetActive(false);
+            DeactivateProjectile();
             StartCoroutine(ExplosionDelay());
             enemy.TakeDamage(damage);
+        }
+
+        private void DeactivateProjectile()
+        {
+            _sphereCollider.enabled = false;
+            projectilePrefab.gameObject.SetActive(false);
         }
 
         private IEnumerator ExplosionDelay()
@@ -95,7 +100,14 @@ namespace Game.Scripts.Framework.Weapon
             explosion.Play();
             yield return new WaitForSeconds(1f);
             explosion.Stop();
+            ActivateProjectile();
             _callback.Invoke(this);
+        }
+
+        private void ActivateProjectile()
+        {
+            _sphereCollider.enabled = true;
+            projectilePrefab.gameObject.SetActive(true);
         }
     }
 

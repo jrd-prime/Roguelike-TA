@@ -7,24 +7,24 @@ namespace Game.Scripts.Framework.Managers.Game
         public void GameOver()
         {
             EnemiesManager.StopSpawn();
-            isGameStarted.Value = false;
+            IsGameStarted.Value = false;
         }
 
         public void StopTheGame()
         {
             EnemiesManager.StopSpawn();
-            isGameStarted.Value = false;
+            IsGameStarted.Value = false;
         }
 
         public void StartNewGame()
         {
-            if (isGameStarted.CurrentValue) return;
+            if (IsGameStarted.CurrentValue) return;
 
-            isGameStarted.Value = true;
+            IsGameStarted.Value = true;
             PlayerModel.ResetPlayer();
             ExperienceManager.ResetExperience();
 
-            EnemiesManager.StartSpawnEnemiesAsync(killsToWin, minEnemiesOnMap, maxEnemiesOnMap, spawnDelay);
+            EnemiesManager.StartSpawnEnemiesAsync(KillsToWin, MinEnemiesOnMap, MaxEnemiesOnMap, SpawnDelay);
         }
 
         public void Pause()

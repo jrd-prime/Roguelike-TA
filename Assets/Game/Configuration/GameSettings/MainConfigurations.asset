@@ -17,3 +17,4 @@ MonoBehaviour:
   enemies: {fileID: 11400000, guid: 984f39bed1341374dae37a998029c4ab, type: 2}
   weapon: {fileID: 11400000, guid: 29cdf7964ab6ebd43b1efd1047f2940c, type: 2}
   movementControl: {fileID: 11400000, guid: 6ee6dc338fb866b46b05f68b1a2d0f37, type: 2}
+  gameSettings: {fileID: 11400000, guid: df8806dc23cca8b47b343dfc66e28390, type: 2}

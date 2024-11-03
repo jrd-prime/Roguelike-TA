@@ -102,15 +102,12 @@ namespace Game.Scripts.Framework.Managers.Enemy
 
         private void RemoveEnemy(string enemyId)
         {
-            if (!_enemiesCache.ContainsKey(enemyId)) return;
-
-            var enemy = _enemiesCache[enemyId];
+            if (!_enemiesCache.TryGetValue(enemyId, out var enemy)) return;
 
             enemy.gameObject.SetActive(false);
             _enemiesCache.Remove(enemyId);
             enemy.ResetEnemy();
             _enemyPool.Return(enemy);
-
             UpdateEnemiesCount();
         }
 
@@ -122,13 +119,13 @@ namespace Game.Scripts.Framework.Managers.Enemy
             _enemiesCache.Clear();
         }
 
-        public async void EnemyDiedAsync(string enemyID)
+        public async void OnEnemyDiedAsync(string enemyID)
         {
             if (!_enemiesCache.TryGetValue(enemyID, out EnemyHolder enemy)) return;
 
             AddKill();
             CheckWin();
-            _experienceManager.AddExperience(enemy.EnemySettingsDto.Experience);
+            _experienceManager.AddExperience(enemy.SettingsDto.Experience);
 
             enemy.enemyHUD.Hide();
             // remove from possible targets when searching for the nearest enemy
@@ -136,7 +133,7 @@ namespace Game.Scripts.Framework.Managers.Enemy
 
             var enemyPosition = enemy.transform.position;
             var disappearPosition = new Vector3(enemyPosition.x, enemyPosition.y - 2, enemyPosition.z);
-            var disappearDuration = enemy.EnemySettingsDto.DisappearanceDuration;
+            var disappearDuration = enemy.SettingsDto.DisappearanceDuration;
 
             // wait for death animation end
             await UniTask.Delay(AnimConst.DeathAnimationLengthMs);
@@ -145,7 +142,7 @@ namespace Game.Scripts.Framework.Managers.Enemy
                 .SetEase(Ease.InOutQuad);
 
             // wait for enemy disappear
-            await UniTask.Delay((int)(enemy.EnemySettingsDto.DisappearanceDuration * 1000));
+            await UniTask.Delay((int)(enemy.SettingsDto.DisappearanceDuration * 1000));
             enemy.tag = TagsConst.EnemyTag;
 
             RemoveEnemy(enemyID);
@@ -171,7 +168,6 @@ namespace Game.Scripts.Framework.Managers.Enemy
 
             _isStarted = true;
 
-            // TODO fix
             while (_isStarted)
             {
                 var enemyCount = _enemiesCache.Count;
@@ -207,9 +203,7 @@ namespace Game.Scripts.Framework.Managers.Enemy
 
         public void StopSpawn()
         {
-            Debug.LogWarning("Stop spawn enemies " + _isStarted);
             if (!_isStarted) return;
-
             _isStarted = false;
             DespawnAllEnemies();
         }

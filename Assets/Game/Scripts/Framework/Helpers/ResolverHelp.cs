@@ -4,7 +4,7 @@ using VContainer;
 namespace Game.Scripts.Framework.Helpers
 {
     // TODO inject container
-    public static class Resolver
+    public static class ResolverHelp
     {
         public static T ResolveAndCheck<T>(IObjectResolver container) where T : class
         {

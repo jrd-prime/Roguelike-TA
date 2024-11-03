@@ -10,16 +10,16 @@ namespace Game.Scripts.Enemy
     public abstract class EnemyBase : MonoBehaviour
     {
         [SerializeField] public EnemyHUD enemyHUD;
-        public EnemySettingsDto EnemySettingsDto { get; private set; }
+
+        public EnemySettingsDto SettingsDto { get; private set; }
 
         protected Vector3 TargetPosition = Vector3.zero;
         protected Vector3 RbPosition = Vector3.zero;
         protected EnemyAnimator EnemyAnimator;
-        protected bool IsDead = false;
         protected IEnemiesManager EnemiesManager;
-        protected float CurrentHealth;
         protected Rigidbody Rb;
-
+        protected float CurrentHealth;
+        protected bool IsDead = false;
 
         private bool _isInitialized;
 
@@ -32,20 +32,19 @@ namespace Game.Scripts.Enemy
             if (EnemiesManager == null) throw new NullReferenceException("EnemiesManager is null");
             if (enemyHUD == null) throw new NullReferenceException("HUDController is null. Add to " + this);
 
-            EnemyAnimator = new EnemyAnimator(EnemySettingsDto.Animator);
+            EnemyAnimator = new EnemyAnimator(SettingsDto.Animator);
 
             Rb = gameObject.GetComponent<Rigidbody>();
         }
 
         public void Initialize(EnemySettingsDto settings)
         {
-            EnemySettingsDto = settings;
+            SettingsDto = settings;
             CurrentHealth = settings.Health;
             _isInitialized = true;
         }
 
-        protected void OnAttack() => EnemySettingsDto.Target.TrackableAction?.Invoke(EnemySettingsDto.Damage);
-
+        protected void OnAttack() => SettingsDto.Target.TrackableAction?.Invoke(SettingsDto.Damage);
 
         public void ResetEnemy()
         {
@@ -53,9 +52,11 @@ namespace Game.Scripts.Enemy
             CurrentHealth = 0f;
             enemyHUD.ResetHUD();
             Rb.isKinematic = false;
+            var skin = GetComponentInChildren<EnemySkin>();
+            Destroy(skin.gameObject);
         }
 
-        public abstract void OnTakeDamage();
-        public abstract void OnDie();
+        protected abstract void OnTakeDamage();
+        protected abstract void OnDie();
     }
 }

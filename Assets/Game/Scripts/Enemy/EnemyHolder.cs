@@ -15,7 +15,7 @@ namespace Game.Scripts.Enemy
             if (IsDead) return;
 
             _fixedDT = Time.fixedDeltaTime;
-            TargetPosition = EnemySettingsDto.Target.Position.CurrentValue;
+            TargetPosition = SettingsDto.Target.Position.CurrentValue;
             RbPosition = Rb.position;
 
             RotateToTarget();
@@ -32,6 +32,23 @@ namespace Game.Scripts.Enemy
             }
         }
 
+        public void TakeDamage(float damage)
+        {
+            if (damage <= 0) return;
+
+            CurrentHealth -= damage;
+
+            if (CurrentHealth > 0)
+                OnTakeDamage();
+            else
+                OnDie();
+        }
+
+        protected override void OnTakeDamage()
+        {
+            var hpPercent = CurrentHealth / SettingsDto.Health;
+            enemyHUD.SetHp(hpPercent);
+        }
 
         private void Attack()
         {
@@ -51,51 +68,37 @@ namespace Game.Scripts.Enemy
             EnemyAnimator.SetToIdle();
         }
 
+        protected override void OnDie()
+        {
+            if (IsDead) return;
+
+            IsDead = true;
+            Rb.isKinematic = true;
+            EnemyAnimator.SetToDeath();
+            EnemiesManager.OnEnemyDiedAsync(SettingsDto.ID);
+        }
+
+
+        #region Movement
+
         private void RotateToTarget()
         {
             var directionToTarget = (TargetPosition - Rb.position).normalized;
             var lookRotation = Quaternion.LookRotation(directionToTarget);
-            Rb.rotation = Quaternion.Slerp(Rb.rotation, lookRotation, EnemySettingsDto.RotationSpeed * _fixedDT);
+            Rb.rotation = Quaternion.Slerp(Rb.rotation, lookRotation, SettingsDto.RotationSpeed * _fixedDT);
         }
 
-        private void MoveToTarget()
-        {
-            Rb.position = Vector3.MoveTowards(RbPosition, TargetPosition, EnemySettingsDto.Speed * _fixedDT);
-        }
+        private void MoveToTarget() =>
+            Rb.position = Vector3.MoveTowards(RbPosition, TargetPosition, SettingsDto.Speed * _fixedDT);
 
-        public void TakeDamage(float damage)
-        {
-            if (damage <= 0) return;
-
-            CurrentHealth -= damage;
-
-            if (CurrentHealth > 0)
-                OnTakeDamage();
-            else
-                OnDie();
-        }
-
-        public override void OnDie()
-        {
-            if (IsDead) return;
-            IsDead = true;
-            Rb.isKinematic = true;
-            EnemyAnimator.SetToDeath();
-            EnemiesManager.EnemyDiedAsync(EnemySettingsDto.ID);
-        }
-
-        public override void OnTakeDamage()
-        {
-            var hpPercent = CurrentHealth / EnemySettingsDto.Health;
-            enemyHUD.SetHp(hpPercent);
-        }
+        #endregion
 
         #region Conditions
 
-        private bool CanAttack() => !_isAttacking && Time.time - _lastAttackTime > EnemySettingsDto.AttackDelayInSec;
+        private bool CanAttack() => !_isAttacking && Time.time - _lastAttackTime > SettingsDto.AttackDelayInSec;
 
         private bool CloseEnoughToAttack() =>
-            Vector3.Distance(RbPosition, TargetPosition) <= EnemySettingsDto.AttackDistance;
+            Vector3.Distance(RbPosition, TargetPosition) <= SettingsDto.AttackDistance;
 
         #endregion
     }
