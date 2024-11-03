@@ -1,80 +1,102 @@
-﻿using Game.Scripts.Framework.Constants;
+﻿using System.Collections;
+using Game.Scripts.Framework.Constants;
 using UnityEngine;
 
 namespace Game.Scripts.Enemy
 {
     public class EnemyHolder : EnemyBase
     {
+        private float _lastAttackTime;
+        private bool _isAttacking;
+        private float _fixedDT;
+
         private void FixedUpdate()
         {
-            if (!IsInitialized) return;
+            if (IsDead) return;
 
-            TargetPosition = Target.Position.CurrentValue;
+            _fixedDT = Time.fixedDeltaTime;
+            TargetPosition = EnemySettingsDto.Target.Position.CurrentValue;
             RbPosition = Rb.position;
 
-            if (!CloseEnoughToAttack()) MoveToTarget();
-            else PerformAttack();
-
             RotateToTarget();
+
+            if (CloseEnoughToAttack())
+            {
+                if (CanAttack()) Attack();
+            }
+            else
+            {
+                EnemyAnimator.SetToRunning();
+                _isAttacking = false;
+                MoveToTarget();
+            }
+        }
+
+
+        private void Attack()
+        {
+            _isAttacking = true;
+            _lastAttackTime = Time.time;
+            EnemyAnimator.SetToAttacking();
+
+            OnAttack();
+
+            StartCoroutine(AttackAnimationDelay());
+        }
+
+        private IEnumerator AttackAnimationDelay()
+        {
+            yield return new WaitForSeconds(AnimConst.AttackAnimationLengthMs / 1000f);
+            _isAttacking = false;
+            EnemyAnimator.SetToIdle();
         }
 
         private void RotateToTarget()
         {
             var directionToTarget = (TargetPosition - Rb.position).normalized;
-            Quaternion lookRotation = Quaternion.LookRotation(directionToTarget);
-            Rb.rotation = Quaternion.Slerp(Rb.rotation, lookRotation, RotationSpeed * Time.fixedDeltaTime);
+            var lookRotation = Quaternion.LookRotation(directionToTarget);
+            Rb.rotation = Quaternion.Slerp(Rb.rotation, lookRotation, EnemySettingsDto.RotationSpeed * _fixedDT);
         }
 
         private void MoveToTarget()
         {
-            Rb.position =
-                Vector3.MoveTowards(RbPosition, TargetPosition, Settings.Speed * Time.fixedDeltaTime);
-
-            Animator.SetBool(AnimConst.IsTargetReached, false);
-            IsAttacking = false;
+            Rb.position = Vector3.MoveTowards(RbPosition, TargetPosition, EnemySettingsDto.Speed * _fixedDT);
         }
-
-        private void PerformAttack()
-        {
-            if (CanStartAttack())
-            {
-                Animator.SetBool(AnimConst.IsTargetReached, true);
-                Attack();
-                LastAttackTime = Time.time;
-                IsAttacking = true;
-            }
-            else if (CanStopAttack()) IsAttacking = false;
-
-            // skip attack animation // TODO refact anim blend
-            if (Time.time - LastAttackTime >= 0.1f) Animator.SetBool(AnimConst.IsTargetReached, false);
-        }
-
-        private bool CanStopAttack() => IsAttacking && Time.time - LastAttackTime >= Settings.AttackDelayInSec;
-
-        private bool CanStartAttack() => !IsAttacking && Time.time - LastAttackTime >= Settings.AttackDelayInSec;
-
-        private bool CloseEnoughToAttack() => Vector3.Distance(RbPosition, TargetPosition) < DistanceToAttack;
-
 
         public void TakeDamage(float damage)
         {
+            if (damage <= 0) return;
+
             CurrentHealth -= damage;
 
             if (CurrentHealth > 0)
-            {
                 OnTakeDamage();
-                return;
-            }
-
-            OnDie();
+            else
+                OnDie();
         }
 
-        public override void OnDie() => EnemiesManager.EnemyDied(Settings.ID);
+        public override void OnDie()
+        {
+            if (IsDead) return;
+            IsDead = true;
+            Rb.isKinematic = true;
+            EnemyAnimator.SetToDeath();
+            EnemiesManager.EnemyDiedAsync(EnemySettingsDto.ID);
+        }
 
         public override void OnTakeDamage()
         {
-            var hpPercent = CurrentHealth / Settings.Health;
+            var hpPercent = CurrentHealth / EnemySettingsDto.Health;
             enemyHUD.SetHp(hpPercent);
         }
+
+        #region Conditions
+
+        private bool CanAttack() => !_isAttacking && Time.time - _lastAttackTime > EnemySettingsDto.AttackDelayInSec;
+
+        private bool CloseEnoughToAttack() =>
+            Vector3.Distance(RbPosition, TargetPosition) <= EnemySettingsDto.AttackDistance;
+
+        #endregion
     }
 }

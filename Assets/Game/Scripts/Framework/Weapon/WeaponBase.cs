@@ -13,18 +13,18 @@ namespace Game.Scripts.Framework.Weapon
         public ReactiveProperty<bool> IsShooting { get; } = new(false);
 
         private WeaponSettings _weaponSettings;
-        private CustomPool<Projectile> _projectilePool;
+        private CustomPool<ProjectileHolder> _projectilePool;
         private const float ShootHeightOffset = .3f;
         private bool _isInitialized;
 
-        public void InitializeWeapon(WeaponSettings weaponSettings, CustomPool<Projectile> projectilePool)
+        public void InitializeWeapon(WeaponSettings weaponSettings, CustomPool<ProjectileHolder> projectilePool)
         {
             _weaponSettings = weaponSettings;
             _projectilePool = projectilePool;
             _isInitialized = true;
         }
 
-        private void PoolCallback(Projectile projectile) => _projectilePool.Return(projectile);
+        private void PoolCallback(ProjectileHolder projectileHolder) => _projectilePool.Return(projectileHolder);
 
         public void ShootAtTarget(GameObject nearestEnemy)
         {
@@ -36,11 +36,11 @@ namespace Game.Scripts.Framework.Weapon
             Shoot(nearestEnemy.transform.position, projectile);
         }
 
-        private void Shoot(Vector3 targetPosition, Projectile projectile)
+        private void Shoot(Vector3 targetPosition, ProjectileHolder projectileHolder)
         {
             Shoot(true);
-            projectile.gameObject.SetActive(true);
-            projectile.LaunchToTarget(muzzlePosition.position,
+            projectileHolder.gameObject.SetActive(true);
+            projectileHolder.LaunchToTarget(muzzlePosition.position,
                 new Vector3(targetPosition.x, ShootHeightOffset, targetPosition.z));
             StartCoroutine(ShootingDelay());
         }

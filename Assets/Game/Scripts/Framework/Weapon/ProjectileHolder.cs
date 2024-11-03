@@ -1,24 +1,29 @@
 ﻿using System;
+using System.Collections;
 using Game.Scripts.Enemy;
 using Game.Scripts.Framework.Configuration.SO.Weapon;
 using Game.Scripts.Framework.Managers.Settings;
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.Serialization;
 using VContainer;
 
 namespace Game.Scripts.Framework.Weapon
 {
     [RequireComponent(typeof(SphereCollider))]
-    public class Projectile : MonoBehaviour, IProjectile
+    public class ProjectileHolder : MonoBehaviour, IProjectile
     {
         public float speed = 100f;
         public float damage = 10f;
+        public ParticleSystem explosion;
+        public GameObject projectilePrefab;
         private Vector3 _targetPosition;
         private bool _isMoving;
         private bool _hasHit;
+        private SphereCollider _sphereCollider;
 
         private WeaponSettings _weaponSettings;
-        private Action<Projectile> _callback;
+        private Action<ProjectileHolder> _callback;
 
         [Inject]
         private void Construct(ISettingsManager settingsManager)
@@ -28,9 +33,11 @@ namespace Game.Scripts.Framework.Weapon
 
             damage = _weaponSettings.projectileDamage;
             speed = _weaponSettings.projectileSpeed;
+
+            _sphereCollider = GetComponent<SphereCollider>();
         }
 
-        public void SetPoolCallback(WeaponSettings weaponSettings, Action<Projectile> poolCallback)
+        public void SetPoolCallback(WeaponSettings weaponSettings, Action<ProjectileHolder> poolCallback)
         {
             Assert.IsNotNull(poolCallback, "ProjectilePool callback is not set");
             _callback = poolCallback;
@@ -59,22 +66,35 @@ namespace Game.Scripts.Framework.Weapon
 
             if (transform.position != _targetPosition || _hasHit) return;
             _hasHit = true;
-            _callback?.Invoke(this);
+
+
+            _sphereCollider.enabled = false;
+            projectilePrefab.gameObject.SetActive(false);
+            StartCoroutine(ExplosionDelay());
             _isMoving = false;
         }
 
         private void OnTriggerEnter(Collider other)
         {
             if (!other.CompareTag("Enemy")) return;
-
             _isMoving = false;
             _hasHit = true;
 
             var enemy = other.GetComponent<EnemyHolder>();
 
             if (enemy == null) return;
-
+            _sphereCollider.enabled = false;
+            projectilePrefab.gameObject.SetActive(false);
+            StartCoroutine(ExplosionDelay());
             enemy.TakeDamage(damage);
+        }
+
+        private IEnumerator ExplosionDelay()
+        {
+            explosion.Clear();
+            explosion.Play();
+            yield return new WaitForSeconds(1f);
+            explosion.Stop();
             _callback.Invoke(this);
         }
     }
@@ -82,6 +102,6 @@ namespace Game.Scripts.Framework.Weapon
     public interface IProjectile
     {
         public void LaunchToTarget(Vector3 from, Vector3 to);
-        public void SetPoolCallback(WeaponSettings weaponSettings, Action<Projectile> poolCallback);
+        public void SetPoolCallback(WeaponSettings weaponSettings, Action<ProjectileHolder> poolCallback);
     }
 }

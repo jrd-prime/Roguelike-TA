@@ -14,8 +14,8 @@ namespace Game.Scripts.Framework.Managers.Game
         //TODO load from settings
         [SerializeField] protected int spawnDelay = 500;
         [SerializeField] protected int minEnemiesOnMap = 5;
-        [SerializeField] protected int maxEnemiesOnMap = 10;
-        [SerializeField] protected int killsToWin = 100;
+        [SerializeField] protected int maxEnemiesOnMap = 30;
+        [SerializeField] protected int killsToWin = 999;
 
         public ReactiveProperty<int> PlayerInitialHealth { get; } = new();
         public ReadOnlyReactiveProperty<int> PlayerHealth => PlayerModel.Health;

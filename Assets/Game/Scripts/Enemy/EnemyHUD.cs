@@ -33,6 +33,12 @@ namespace Game.Scripts.Enemy
         public void ResetHUD()
         {
             hpBarRect.sizeDelta = new Vector2(_hpBarWidth, _hpBarHeight);
+            hpBarBackground.gameObject.SetActive(true);
+        }
+
+        public void Hide()
+        {
+            hpBarBackground.gameObject.SetActive(false);
         }
     }
 }
