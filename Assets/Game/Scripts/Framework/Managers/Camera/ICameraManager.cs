@@ -6,5 +6,6 @@ namespace Game.Scripts.Framework.Managers.Camera
     {
         public void SetTarget(ITrackableModel target);
         public void RemoveTarget();
+        public UnityEngine.Camera MainCamera { get; }
     }
 }

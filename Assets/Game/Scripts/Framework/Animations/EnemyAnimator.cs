@@ -1,7 +1,7 @@
 ﻿using Game.Scripts.Framework.Constants;
 using UnityEngine;
 
-namespace Game.Scripts.Enemy
+namespace Game.Scripts.Framework.Animations
 {
     public sealed class EnemyAnimator : AnimatorBase
     {

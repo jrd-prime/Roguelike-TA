@@ -10,6 +10,7 @@ using Game.Scripts.Player.Interfaces;
 using Game.Scripts.UI;
 using Game.Scripts.UI.MovementControl;
 using Game.Scripts.UI.MovementControl.FullScreen;
+using Game.Scripts.UI.PopUpText;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
@@ -24,6 +25,7 @@ namespace Game.Scripts.Framework.Scopes
         [SerializeField] private EnemiesManager enemiesManager;
         [SerializeField] private WeaponManager weaponManager;
         [SerializeField] private ExperienceManager experienceManager;
+        [SerializeField] private PopUpTextManager popUpTextManager;
 
         protected override void Configure(IContainerBuilder builder)
         {
@@ -36,13 +38,15 @@ namespace Game.Scripts.Framework.Scopes
             builder.RegisterComponent(spawnPointsManager).AsSelf().AsImplementedInterfaces();
             builder.RegisterComponent(enemiesManager).As<IEnemiesManager>();
             builder.RegisterComponent(experienceManager).As<IExperienceManager>();
+            builder.RegisterComponent(popUpTextManager).AsSelf().AsImplementedInterfaces();
 
             // Movement
             // Joystick
             // builder.Register<JoystickModel>(Lifetime.Singleton).As<IJoystickModel>();
             // builder.Register<JoystickViewModel>(Lifetime.Singleton).As<IJoystickViewModel>();
             // FullScreen
-            builder.Register<FullScreenMovementModel>(Lifetime.Singleton).As<IFullScreenMovementModel>().As<IMovementControlModel>();
+            builder.Register<FullScreenMovementModel>(Lifetime.Singleton).As<IFullScreenMovementModel>()
+                .As<IMovementControlModel>();
             builder.Register<FullScreenMovementViewModel>(Lifetime.Singleton).As<IFullScreenMovementViewModel>()
                 .As<IMovementControlViewModel>();
 

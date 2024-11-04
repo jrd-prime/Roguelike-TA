@@ -5,23 +5,29 @@ using UnityEngine;
 
 namespace Game.Scripts.Framework.Managers.Camera
 {
+    [RequireComponent(typeof(UnityEngine.Camera), typeof(AudioListener))]
     public class CameraManager : MonoBehaviour, ICameraManager
     {
-        [SerializeField] private UnityEngine.Camera mainCamera;
+        public UnityEngine.Camera MainCamera { get; private set; }
 
         private ITrackableModel _targetModel;
         private readonly CompositeDisposable _disposables = new();
+        private Vector3 _offset;
 
         private void Awake()
         {
-            if (mainCamera == null) throw new NullReferenceException($"MainCamera is null. {this}");
+            MainCamera = GetComponent<UnityEngine.Camera>();
+            if (MainCamera == null) throw new NullReferenceException($"MainCamera is null. {this}");
+            
+            _offset = transform.position;
+            Debug.LogWarning(_offset);
         }
 
         public void SetTarget(ITrackableModel target)
         {
             if (target == null) throw new ArgumentNullException($"Target is null. {this}");
 
-            transform.position = target.Position.CurrentValue;
+            transform.position = target.Position.CurrentValue + _offset;
 
             if (_targetModel != null) _disposables?.Dispose();
             SubscribeToTargetPosition(target);
@@ -37,7 +43,7 @@ namespace Game.Scripts.Framework.Managers.Camera
         {
             _targetModel = target;
             _targetModel.Position
-                .Subscribe(position => transform.position = position)
+                .Subscribe(position => transform.position = position + _offset)
                 .AddTo(_disposables);
         }
     }

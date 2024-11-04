@@ -88,11 +88,6 @@ namespace Game.Scripts.Framework.Weapon
             enemy.TakeDamage(damage);
         }
 
-        private void DeactivateProjectile()
-        {
-            _sphereCollider.enabled = false;
-            projectilePrefab.gameObject.SetActive(false);
-        }
 
         private IEnumerator ExplosionDelay()
         {
@@ -108,6 +103,12 @@ namespace Game.Scripts.Framework.Weapon
         {
             _sphereCollider.enabled = true;
             projectilePrefab.gameObject.SetActive(true);
+        }
+
+        private void DeactivateProjectile()
+        {
+            _sphereCollider.enabled = false;
+            projectilePrefab.gameObject.SetActive(false);
         }
     }
 

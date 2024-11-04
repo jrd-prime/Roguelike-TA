@@ -38,15 +38,21 @@ namespace Game.Scripts.Enemy
 
             CurrentHealth -= damage;
 
+            var crit = Random.value > 0.5f;
+            
+            
+            PopUpTextManager.ShowPopUpText($"{damage}", transform.position, 1f, crit);
+
             if (CurrentHealth > 0)
-                OnTakeDamage();
+                OnTakeDamage(damage);
             else
                 OnDie();
         }
 
-        protected override void OnTakeDamage()
+        protected override void OnTakeDamage(float damage)
         {
             var hpPercent = CurrentHealth / SettingsDto.Health;
+
             enemyHUD.SetHp(hpPercent);
         }
 
