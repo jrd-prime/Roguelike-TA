@@ -36,11 +36,18 @@ namespace Game.Scripts.Enemy
         {
             if (damage <= 0) return;
 
+            var crit = Random.value > 0.5f;
+
+            if (crit)
+            {
+                damage *= Random.Range(1.8f, 2f);
+                damage = Mathf.RoundToInt(damage);
+            }
+
+
             CurrentHealth -= damage;
 
-            var crit = Random.value > 0.5f;
-            
-            
+
             PopUpTextManager.ShowPopUpText($"{damage}", transform.position, 1f, crit);
 
             if (CurrentHealth > 0)

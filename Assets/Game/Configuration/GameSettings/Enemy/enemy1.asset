@@ -22,7 +22,7 @@ MonoBehaviour:
   health: 55
   damage: 3
   attackDelayInSec: 5
-  speed: 3
+  speed: 2
   baseExperiencePoints: 33
   disappearanceDuration: 1.5
   attackDistance: 1
