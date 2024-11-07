@@ -1034,8 +1034,8 @@
     "m_ObjectId": "05ac65edd7e443e1b4d60b3c5d14004f",
     "m_Title": "BorderMask",
     "m_Position": {
-        "x": -1834.0,
-        "y": -2545.0
+        "x": -1834.000244140625,
+        "y": -2545.000244140625
     }
 }
 
@@ -1044,10 +1044,10 @@
     "m_Type": "UnityEditor.ShaderGraph.Vector2MaterialSlot",
     "m_ObjectId": "06944390b08243c0876fac83a568bee9",
     "m_Id": -669225675,
-    "m_DisplayName": "Vector2",
+    "m_DisplayName": "From",
     "m_SlotType": 0,
     "m_Hidden": false,
-    "m_ShaderOutputName": "_Vector2",
+    "m_ShaderOutputName": "_From",
     "m_StageCapability": 3,
     "m_Value": {
         "x": 0.0,
@@ -1677,8 +1677,8 @@
     "m_ObjectId": "2460a0fc343b4e03bc27c5ad45351be8",
     "m_Title": "Alpha Clip",
     "m_Position": {
-        "x": -3000.0,
-        "y": -2396.0
+        "x": -3000.000244140625,
+        "y": -2396.000244140625
     }
 }
 
@@ -1919,8 +1919,8 @@
     "m_ObjectId": "2ede60f4709246489ee43f4c863d94d3",
     "m_Title": "HealthBarColor",
     "m_Position": {
-        "x": -2768.0,
-        "y": -623.999755859375
+        "x": -2768.000244140625,
+        "y": -624.0001220703125
     }
 }
 
@@ -2903,8 +2903,8 @@
     "m_ObjectId": "629cb10d62f94ee587fae5d7458a3907",
     "m_Title": "Coords",
     "m_Position": {
-        "x": -6308.0,
-        "y": -2306.0
+        "x": -6308.00048828125,
+        "y": -2306.000244140625
     }
 }
 
@@ -3596,8 +3596,8 @@
     "m_ObjectId": "874c66ebe692416ba2829343b891b7f2",
     "m_Title": "Clip",
     "m_Position": {
-        "x": -3404.0,
-        "y": -1827.9998779296875
+        "x": -3404.00048828125,
+        "y": -1828.000244140625
     }
 }
 
@@ -3904,8 +3904,8 @@
     "m_ObjectId": "9209ad386b9f4d0f82ede126a8c61171",
     "m_Title": "HealthValue",
     "m_Position": {
-        "x": -2824.0,
-        "y": -892.0
+        "x": -2824.000244140625,
+        "y": -892.000244140625
     }
 }
 
@@ -4657,8 +4657,8 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -2191.999755859375,
-            "y": -1099.0,
+            "x": -2199.000244140625,
+            "y": -992.0,
             "width": 145.0,
             "height": 136.0
         }
@@ -4807,10 +4807,10 @@
     "m_Type": "UnityEditor.ShaderGraph.Vector2MaterialSlot",
     "m_ObjectId": "cb0c84e5614044b380a2cf1c3eb76480",
     "m_Id": -1610334755,
-    "m_DisplayName": "Vector2 (1)",
+    "m_DisplayName": "To",
     "m_SlotType": 0,
     "m_Hidden": false,
-    "m_ShaderOutputName": "_Vector2_1",
+    "m_ShaderOutputName": "_To",
     "m_StageCapability": 3,
     "m_Value": {
         "x": 0.0,
@@ -4959,8 +4959,8 @@
     "m_ObjectId": "d23ef70046394b97836d39acf5658df8",
     "m_Title": "BorderSDF",
     "m_Position": {
-        "x": -2910.0,
-        "y": -2784.0
+        "x": -2910.000244140625,
+        "y": -2784.000244140625
     }
 }
 
@@ -5269,8 +5269,8 @@
     "m_ObjectId": "eed28d1c18174b55b5f21816017e99de",
     "m_Title": "SDF",
     "m_Position": {
-        "x": -3768.999755859375,
-        "y": -2245.0
+        "x": -3769.000244140625,
+        "y": -2245.000244140625
     }
 }
 
@@ -5328,8 +5328,8 @@
     "m_ObjectId": "f2266290eaa5468b856ec22ea751bb23",
     "m_Title": "Point on line segment",
     "m_Position": {
-        "x": -4552.0,
-        "y": -2305.0
+        "x": -4552.00048828125,
+        "y": -2305.000244140625
     }
 }
 

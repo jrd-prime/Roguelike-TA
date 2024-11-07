@@ -60,12 +60,12 @@ Shader "Unlit/HealthBar"
                 float2 coords = i.uv.xy;
 
                 coords.x *= 8;
-                // return float4(coords, 0, 1);
                 
                 float2 poitOnLineSeg = float2(clamp(coords.x, .5, 7.5), .5);
 
 
                 float sdf = distance(coords, poitOnLineSeg) * 2 - 1;
+                 return float4(sdf,0, 0, 1);
                 
 
                 
