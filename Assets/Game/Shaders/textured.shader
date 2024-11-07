@@ -22,6 +22,7 @@ Shader "Unlit/textured"
             #include "UnityCG.cginc"
 
             #define  TAU 6.2831
+
             struct MeshData
             {
                 float4 vertex : POSITION;
@@ -60,9 +61,12 @@ Shader "Unlit/textured"
             {
                 float2 topDownProjection = i.worldPos.xz;
                 float4 moss = tex2D(_MainTex, topDownProjection);
+
+                // return float4(i.worldPos, 1);
+
                 float4 rock = tex2D(_Rock, topDownProjection);
 
-                float pattern = 1-tex2D(_Pattern, i.uv).x;
+                float pattern = 1 - tex2D(_Pattern, i.uv).x;
                 // float p = GetWave(pattern);
 
                 float4 finalColor = lerp(rock, moss, pattern);

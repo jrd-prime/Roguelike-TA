@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Unlit_HealthBar
-  m_Shader: {fileID: 4800000, guid: 251521d06c3732247b19dc8abfa986b4, type: 3}
+  m_Name: Unlit_LightningTest
+  m_Shader: {fileID: 4800000, guid: 59e6e7c97d0ced6478850eef8dfbfe17, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -24,15 +24,13 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _MainTex:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 1f89320288ff7044baf50b625e75e497, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Health: 0.31
+    - _Gloss: 0.703
     m_Colors:
-    - _ColorBg: {r: 0.177, g: 0.177, b: 0.177, a: 1}
-    - _ColorMax: {r: 0.09710693, g: 1, b: 0, a: 1}
-    - _ColorMin: {r: 1, g: 0, b: 0.06987047, a: 1}
+    - _Color: {r: 0.7735849, g: 0.12771447, b: 0.12771447, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
