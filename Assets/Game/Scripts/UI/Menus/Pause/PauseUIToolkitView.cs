@@ -4,7 +4,7 @@ using UnityEngine.UIElements;
 
 namespace Game.Scripts.UI.Menus.Pause
 {
-    public class PauseUIView : UIViewCustom<PauseUIViewModel>
+    public class PauseUIToolkitView : UIToolkitViewCustom<PauseUIViewModel>
     {
         private Button _continueButton;
         private Button _settingsButton;

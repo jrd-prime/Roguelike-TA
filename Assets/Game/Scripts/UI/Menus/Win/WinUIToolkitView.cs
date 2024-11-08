@@ -4,7 +4,7 @@ using UnityEngine.UIElements;
 
 namespace Game.Scripts.UI.Menus.Win
 {
-    public class WinUIView : UIViewCustom<WinUIViewModel>
+    public class WinUIToolkitView : UIToolkitViewCustom<WinUIViewModel>
     {
         private Button _menuButton;
         private Button _startButton;

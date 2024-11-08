@@ -4,7 +4,7 @@ using UnityEngine.UIElements;
 
 namespace Game.Scripts.UI.Menus.Settings
 {
-    public class SettingsUIView : UIViewCustom<SettingsUIViewModel>
+    public class SettingsUIToolkitView : UIToolkitViewCustom<SettingsUIViewModel>
     {
         private Button _menuButton;
         private Button _musicButton;

@@ -39,11 +39,11 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Health: 0.183
+    - _Health: 0.464
     - _QueueControl: 0
     - _QueueOffset: 0
     - _XEdgeOffsets: 0.5
-    - _XScale: 20
+    - _XScale: 10
     m_Colors: []
   m_BuildTextureStacks: []
   m_AllowLocking: 1

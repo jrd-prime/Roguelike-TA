@@ -6,7 +6,7 @@ using VContainer;
 
 namespace Game.Scripts.UI.Base
 {
-    public abstract class UIViewCustom<T> : UIViewBase where T : IUIViewModel
+    public abstract class UIToolkitViewCustom<T> : UIToolkitView where T : IUIViewModel
     {
         protected T ViewModel;
 

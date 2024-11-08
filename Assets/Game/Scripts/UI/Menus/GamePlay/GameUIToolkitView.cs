@@ -5,7 +5,7 @@ using UnityEngine.UIElements;
 
 namespace Game.Scripts.UI.Menus.GamePlay
 {
-    public class GameUIView : UIViewCustom<GameUIViewModel>
+    public class GameUIToolkitView : UIToolkitViewCustom<GameUIViewModel>
     {
         // Buttons
         private Button _menuButton;

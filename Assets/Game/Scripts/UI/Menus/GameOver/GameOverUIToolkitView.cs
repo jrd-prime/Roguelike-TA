@@ -4,7 +4,7 @@ using UnityEngine.UIElements;
 
 namespace Game.Scripts.UI.Menus.GameOver
 {
-    public class GameOverUIView : UIViewCustom<GameOverUIViewModel>
+    public class GameOverUIToolkitView : UIToolkitViewCustom<GameOverUIViewModel>
     {
         private Button _newGameButton;
         private Button _settingsButton;
