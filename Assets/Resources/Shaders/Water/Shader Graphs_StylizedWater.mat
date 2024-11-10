@@ -26,7 +26,9 @@ Material:
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
-  m_InvalidKeywords: []
+  m_InvalidKeywords:
+  - _RECEIVE_SHADOWS_OFF
+  - _SURFACE_TYPE_TRANSPARENT
   m_LightmapFlags: 1
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -56,19 +58,38 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Depth: 1.2
-    - _FoamAmount: 0.19
-    - _FoamCutoff: 1.24
+    - _AlphaClip: 0
+    - _AlphaToMask: 0
+    - _Blend: 0
+    - _BlendModePreserveSpecular: 0
+    - _CastShadows: 0
+    - _Cull: 2
+    - _Depth: 0.93
+    - _DstBlend: 10
+    - _FoamAmount: 0.37
+    - _FoamCutoff: 1.57
     - _FoamSpeed: 0.1
+    - _NormalStrength: 0.2
     - _QueueControl: 0
     - _QueueOffset: 0
+    - _ReceiveShadows: 0
     - _RefractionScale: 1
     - _RefractionSpeed: 0.01
-    - _RefractionStrength: 0.77
+    - _RefractionStrength: 0.08
+    - _Smoothness: 0.889
+    - _SrcBlend: 5
+    - _Surface: 1
+    - _WaveAmp: 0.01
+    - _WaveFreq: 1
+    - _WaveSpeed: 1
+    - _WorkflowMode: 1
+    - _ZTest: 4
+    - _ZWrite: 0
+    - _ZWriteControl: 0
     m_Colors:
-    - _DeepColor: {r: 0.10212705, g: 0.19848421, b: 0.4811321, a: 0.7607843}
+    - _DeepColor: {r: 0.10239409, g: 0.26063463, b: 0.3679245, a: 0.92156863}
     - _FoamColor: {r: 1, g: 1, b: 1, a: 0.85882354}
-    - _FoamScale: {r: 13, g: 13, b: 0, a: 0}
-    - _SurfaceColor: {r: 0.1013261, g: 0.6509434, b: 0.63392705, a: 0.5372549}
+    - _FoamScale: {r: 4, g: 4, b: 0, a: 0}
+    - _SurfaceColor: {r: 0, g: 0.95694965, b: 1, a: 0.44705883}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
