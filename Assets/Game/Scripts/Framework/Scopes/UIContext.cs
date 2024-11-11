@@ -1,4 +1,5 @@
 ﻿using Game.Scripts.UI.Base;
+using Game.Scripts.UI.Gameplay;
 using Game.Scripts.UI.Menus.GameOver;
 using Game.Scripts.UI.Menus.GamePlay;
 using Game.Scripts.UI.Menus.MainMenu;
@@ -19,6 +20,7 @@ namespace Game.Scripts.Framework.Scopes
         [SerializeField] private UIViewBase gameOver;
         [SerializeField] private UIViewBase settings;
         [SerializeField] private UIViewBase win;
+        [SerializeField] private UIViewBase gameplayUIView;
 
         protected override void Configure(IContainerBuilder builder)
         {
@@ -42,12 +44,13 @@ namespace Game.Scripts.Framework.Scopes
 
 
             // Views
-            builder.RegisterComponent(menu).As<MenuUIView>();
-            builder.RegisterComponent(game).As<GameUIView>();
-            builder.RegisterComponent(pause).As<PauseUIView>();
-            builder.RegisterComponent(gameOver).As<GameOverUIView>();
-            builder.RegisterComponent(settings).As<SettingsUIView>();
-            builder.RegisterComponent(win).As<WinUIView>();
+            builder.RegisterComponent(menu).As<MenuUIToolkitView>();
+            builder.RegisterComponent(game).As<GameUIToolkitView>();
+            builder.RegisterComponent(pause).As<PauseUIToolkitView>();
+            builder.RegisterComponent(gameOver).As<GameOverUIToolkitView>();
+            builder.RegisterComponent(settings).As<SettingsUIToolkitView>();
+            builder.RegisterComponent(win).As<WinUIToolkitView>();
+            builder.RegisterComponent(gameplayUIView).As<GameplayUIView>();
         }
     }
 }

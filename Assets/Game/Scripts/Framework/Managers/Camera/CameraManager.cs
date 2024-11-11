@@ -17,10 +17,12 @@ namespace Game.Scripts.Framework.Managers.Camera
         private void Awake()
         {
             MainCamera = GetComponent<UnityEngine.Camera>();
+            
+            Debug.LogWarning($"MainCamera: {MainCamera}");
+            
             if (MainCamera == null) throw new NullReferenceException($"MainCamera is null. {this}");
             
             _offset = transform.position;
-            Debug.LogWarning(_offset);
         }
 
         public void SetTarget(ITrackableModel target)

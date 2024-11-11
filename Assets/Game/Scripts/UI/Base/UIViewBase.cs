@@ -8,37 +8,14 @@ using UnityEngine.UIElements;
 
 namespace Game.Scripts.UI.Base
 {
-    [RequireComponent(typeof(UIDocument))]
     public abstract class UIViewBase : MonoBehaviour, IUIView, IDisposable
     {
-        protected VisualElement RootVisualElement;
         protected readonly Dictionary<Button, EventCallback<ClickEvent>> CallbacksCache = new();
         protected readonly CompositeDisposable Disposables = new();
 
-        public void Awake()
-        {
-            var document = gameObject.GetComponent<UIDocument>();
 
-            RootVisualElement = document.visualTreeAsset != null
-                ? document.rootVisualElement
-                : throw new NullReferenceException("VisualTreeAsset is not set to " + name + " prefab!");
-
-            InitElements();
-            Init();
-            InitCallbacksCache();
-        }
-
-        public void Show()
-        {
-            RegisterCallbacks();
-            RootVisualElement.style.display = DisplayStyle.Flex;
-        }
-
-        public void Hide()
-        {
-            RootVisualElement.style.display = DisplayStyle.None;
-            UnregisterCallbacks();
-        }
+        public abstract void Show();
+        public abstract void Hide();
 
         protected abstract void Init();
 
@@ -52,12 +29,12 @@ namespace Game.Scripts.UI.Base
         /// </summary>
         protected abstract void InitCallbacksCache();
 
-        private void RegisterCallbacks()
+        protected void RegisterCallbacks()
         {
             foreach (var (button, callback) in CallbacksCache) button.RegisterCallback(callback);
         }
 
-        private void UnregisterCallbacks()
+        protected void UnregisterCallbacks()
         {
             foreach (var (button, callback) in CallbacksCache) button.UnregisterCallback(callback);
         }

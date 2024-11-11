@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using Game.Scripts.UI.Base;
+using Game.Scripts.UI.Gameplay;
 using UnityEngine;
 
 namespace Game.Scripts.UI
@@ -18,13 +19,16 @@ namespace Game.Scripts.UI
         [SerializeField] private UIViewBase win;
         [SerializeField] private PopUpView popUp;
 
+        [SerializeField] private GameplayUIView gameplayUIView;
+        
         private readonly Dictionary<StateType, UIViewBase> _views = new();
         private CancellationTokenSource _cts;
 
         private void Awake()
         {
             InitializeView(StateType.Menu, menu);
-            InitializeView(StateType.Game, game);
+            // InitializeView(StateType.Game, game);
+            InitializeView(StateType.Game, gameplayUIView);
             InitializeView(StateType.Pause, pause);
             InitializeView(StateType.GameOver, gameOver);
             InitializeView(StateType.Settings, settings);
