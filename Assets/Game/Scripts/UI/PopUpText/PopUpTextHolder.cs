@@ -1,6 +1,6 @@
 ﻿using System;
 using DG.Tweening;
-using Game.Scripts.Framework.Managers.Camera;
+using Game.Scripts.Framework.Managers.Cam;
 using TMPro;
 using UnityEngine;
 using VContainer;
@@ -28,7 +28,10 @@ namespace Game.Scripts.UI.PopUpText
         {
             if (_cameraManager == null) throw new NullReferenceException("CameraManager is null.");
 
-            SetRotationToFace(_cameraManager.MainCamera);
+            var cam = _cameraManager.GetMainCamera();
+            var mainCamera = cam != null ? cam : throw new NullReferenceException("MainCamera is null.");
+
+            SetRotationToFace(mainCamera);
             if (popUpText == null) throw new NullReferenceException($"PopUpText is null. {popUpText.GetType()}");
         }
 

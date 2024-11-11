@@ -28,6 +28,8 @@ namespace Game.Scripts
 
         public async void Initialize()
         {
+#if UNITY_EDITOR
+
             Debug.LogWarning("= = = = = = = ");
 
             for (int i = 0; i < SceneManager.sceneCount; i++)
@@ -39,6 +41,7 @@ namespace Game.Scripts
             SceneManager.UnloadScene(scene);
 
             Debug.LogWarning("= = = = = = = ");
+#endif
 
 
             if (_loader == null) throw new NullReferenceException("Loader is null.");

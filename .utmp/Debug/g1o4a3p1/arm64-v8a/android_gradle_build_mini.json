@@ -1,0 +1,28 @@
+{
+  "buildFiles": [
+    "C:\\Users\\jrd\\_unity_jrd_projects\\Rogue-like Test Game\\Library\\PramData\\AndroidApplicationController\\Cache\\com.DefaultCompany.RoguelikeTA\\gradle-project\\unityLibrary\\src\\main\\cpp\\CMakeLists.txt",
+    "C:\\Users\\jrd\\_unity_jrd_projects\\Rogue-like Test Game\\Library\\PramData\\AndroidApplicationController\\Cache\\com.DefaultCompany.RoguelikeTA\\gradle-project\\unityLibrary\\src\\main\\cpp\\FramePacing\\CMakeLists.txt"
+  ],
+  "cleanCommandsComponents": [
+    [
+      "C:\\Program Files\\Unity\\Hub\\Editor\\6000.0.23f1\\Editor\\Data\\PlaybackEngines\\AndroidPlayer\\SDK\\cmake\\3.22.1\\bin\\ninja.exe",
+      "-C",
+      "C:\\Users\\jrd\\_unity_jrd_projects\\Rogue-like Test Game\\.utmp\\Debug\\g1o4a3p1\\arm64-v8a",
+      "clean"
+    ]
+  ],
+  "buildTargetsCommandComponents": [
+    "C:\\Program Files\\Unity\\Hub\\Editor\\6000.0.23f1\\Editor\\Data\\PlaybackEngines\\AndroidPlayer\\SDK\\cmake\\3.22.1\\bin\\ninja.exe",
+    "-C",
+    "C:\\Users\\jrd\\_unity_jrd_projects\\Rogue-like Test Game\\.utmp\\Debug\\g1o4a3p1\\arm64-v8a",
+    "{LIST_OF_TARGETS_TO_BUILD}"
+  ],
+  "libraries": {
+    "swappywrapper::@7e25bd1f32ce224db4e9": {
+      "artifactName": "swappywrapper",
+      "abi": "arm64-v8a",
+      "output": "C:\\Users\\jrd\\_unity_jrd_projects\\Rogue-like Test Game\\Library\\PramData\\AndroidApplicationController\\Cache\\com.DefaultCompany.RoguelikeTA\\gradle-project\\unityLibrary\\build\\intermediates\\cxx\\Debug\\g1o4a3p1\\obj\\arm64-v8a\\libswappywrapper.so",
+      "runtimeFiles": []
+    }
+  }
+}

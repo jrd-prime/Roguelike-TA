@@ -15,7 +15,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1976467315288693666
 Transform:
@@ -50,8 +50,6 @@ MonoBehaviour:
   autoRun: 1
   autoInjectGameObjects: []
   mainSettings: {fileID: 11400000, guid: 4cb43ff2357a5b848884fcf4ae7fa367, type: 2}
-  cameraManager: {fileID: 767417471666786608, guid: 744f40524cbb33348bf6fb242ed82b82,
-    type: 3}
   eventSystem: {fileID: 1821850690637664398}
 --- !u!1001 &2914048384746644707
 PrefabInstance:

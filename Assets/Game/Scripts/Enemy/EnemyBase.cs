@@ -1,6 +1,7 @@
 ﻿using System;
 using Game.Scripts.Dto;
 using Game.Scripts.Framework.Animations;
+using Game.Scripts.Framework.Managers.Cam;
 using Game.Scripts.Framework.Managers.Enemy;
 using Game.Scripts.UI.PopUpText;
 using UnityEngine;
@@ -20,6 +21,7 @@ namespace Game.Scripts.Enemy
         protected Vector3 RbPosition = Vector3.zero;
         protected EnemyAnimator EnemyAnimator;
         protected IEnemiesManager EnemiesManager;
+        protected ICameraManager CameraManager;
         protected Rigidbody Rb;
         protected float CurrentHealth;
         protected bool IsDead;
@@ -27,10 +29,12 @@ namespace Game.Scripts.Enemy
         private bool _isInitialized;
 
         [Inject]
-        private void Construct(IEnemiesManager enemiesManager, PopUpTextManager popUpTextManager)
+        private void Construct(IEnemiesManager enemiesManager, PopUpTextManager popUpTextManager,
+            ICameraManager cameraManager)
         {
             EnemiesManager = enemiesManager;
             PopUpTextManager = popUpTextManager;
+            CameraManager = cameraManager;
         }
 
 
@@ -38,7 +42,11 @@ namespace Game.Scripts.Enemy
         {
             if (!_isInitialized) throw new Exception("Enemy is not initialized!");
             if (EnemiesManager == null) throw new NullReferenceException("EnemiesManager is null");
+            if (CameraManager == null) throw new NullReferenceException("CameraManager is null");
+            if (PopUpTextManager == null) throw new NullReferenceException("PopUpTextManager is null");
             if (enemyHUD == null) throw new NullReferenceException("HUDController is null. Add to " + this);
+
+            enemyHUD.Initialize(CameraManager);
 
             Rb = gameObject.GetComponent<Rigidbody>();
         }
