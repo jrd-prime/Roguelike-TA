@@ -51,7 +51,7 @@ Material:
     - _Health: 0.597
     - _IsBlinking: 0
     - _IsOneColor: 1
-    - _MainValue: 1
+    - _MainValue: 0.97
     - _OneColor: 0
     - _OnlyOneColor: 0
     - _QueueControl: 0
