@@ -1,7 +1,7 @@
 {
   "buildFiles": [
-    "C:\\Users\\jrd\\_unity_jrd_projects\\Rogue-like Test Game\\Library\\PramData\\AndroidApplicationController\\Cache\\com.DefaultCompany.RoguelikeTA\\gradle-project\\unityLibrary\\src\\main\\cpp\\CMakeLists.txt",
-    "C:\\Users\\jrd\\_unity_jrd_projects\\Rogue-like Test Game\\Library\\PramData\\AndroidApplicationController\\Cache\\com.DefaultCompany.RoguelikeTA\\gradle-project\\unityLibrary\\src\\main\\cpp\\FramePacing\\CMakeLists.txt"
+    "C:\\Users\\jrd\\_unity_jrd_projects\\Rogue-like Test Game\\Library\\Bee\\Android\\Prj\\IL2CPP\\Gradle\\unityLibrary\\src\\main\\cpp\\CMakeLists.txt",
+    "C:\\Users\\jrd\\_unity_jrd_projects\\Rogue-like Test Game\\Library\\Bee\\Android\\Prj\\IL2CPP\\Gradle\\unityLibrary\\src\\main\\cpp\\FramePacing\\CMakeLists.txt"
   ],
   "cleanCommandsComponents": [
     [
@@ -22,7 +22,7 @@
       "toolchain": "toolchain",
       "abi": "arm64-v8a",
       "artifactName": "swappywrapper",
-      "output": "C:\\Users\\jrd\\_unity_jrd_projects\\Rogue-like Test Game\\Library\\PramData\\AndroidApplicationController\\Cache\\com.DefaultCompany.RoguelikeTA\\gradle-project\\unityLibrary\\build\\intermediates\\cxx\\Debug\\g1o4a3p1\\obj\\arm64-v8a\\libswappywrapper.so",
+      "output": "C:\\Users\\jrd\\_unity_jrd_projects\\Rogue-like Test Game\\Library\\Bee\\Android\\Prj\\IL2CPP\\Gradle\\unityLibrary\\build\\intermediates\\cxx\\Debug\\g1o4a3p1\\obj\\arm64-v8a\\libswappywrapper.so",
       "runtimeFiles": []
     }
   },

@@ -1,4 +1,4 @@
-# Install script for directory: C:/Users/jrd/_unity_jrd_projects/Rogue-like Test Game/Library/PramData/AndroidApplicationController/Cache/com.DefaultCompany.RoguelikeTA/gradle-project/unityLibrary/src/main/cpp/FramePacing
+# Install script for directory: C:/Users/jrd/_unity_jrd_projects/Rogue-like Test Game/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/src/main/cpp/FramePacing
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

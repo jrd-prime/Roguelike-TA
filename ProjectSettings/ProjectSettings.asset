@@ -170,6 +170,7 @@ PlayerSettings:
   androidMinAspectRatio: 1
   applicationIdentifier:
     Android: com.DefaultCompany.RoguelikeTA
+    Standalone: com.DefaultCompany.Roguelike-TA
   buildNumber:
     Standalone: 0
     VisionOS: 0
