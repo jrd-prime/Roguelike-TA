@@ -87,9 +87,9 @@ Material:
     - _ZWrite: 0
     - _ZWriteControl: 0
     m_Colors:
-    - _DeepColor: {r: 0.08290317, g: 0.254717, b: 0.21988162, a: 0.8509804}
+    - _DeepColor: {r: 0.07333844, g: 0.22699997, b: 0.19556919, a: 0.9411765}
     - _FoamColor: {r: 1, g: 1, b: 1, a: 0.8862745}
     - _FoamScale: {r: 11, g: 11, b: 0, a: 0}
-    - _SurfaceColor: {r: 0.048460316, g: 0.29998162, b: 0.31132078, a: 0.39607844}
+    - _SurfaceColor: {r: 0.09189212, g: 0.53579587, b: 0.5566038, a: 0.6156863}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

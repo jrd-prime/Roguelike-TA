@@ -29,17 +29,14 @@ namespace Game.Scripts
         public async void Initialize()
         {
 #if UNITY_EDITOR
-
+            // TODO REMOVE
             Debug.LogWarning("= = = = = = = ");
-
             for (int i = 0; i < SceneManager.sceneCount; i++)
             {
                 Debug.LogWarning(SceneManager.GetSceneAt(i).name);
             }
-
             var scene = SceneManager.GetSceneAt(1);
             SceneManager.UnloadScene(scene);
-
             Debug.LogWarning("= = = = = = = ");
 #endif
 
