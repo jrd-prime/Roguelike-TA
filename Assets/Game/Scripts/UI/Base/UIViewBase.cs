@@ -48,5 +48,13 @@ namespace Game.Scripts.UI.Base
         {
             UnregisterCallbacks();
         }
+
+        public abstract TemplateContainer GetView();
+
+        public void Unregister()
+        {
+            Debug.LogWarning("unregister view callback " + name);
+            UnregisterCallbacks();
+        }
     }
 }

@@ -142,7 +142,9 @@ namespace Game.Scripts.UI.Menus.GamePlay
             _healthBar
                 .experimental
                 .animation
-                .Size(new Vector2(_pxPerPointHp * health, _currentHpBarWidth), 500).Start();
+                .Size(new Vector2(_pxPerPointHp * health, _currentHpBarWidth), 500)
+                .KeepAlive()
+                .Start();
             _currentHpBarWidth = _pxPerPointHp * health;
         }
 
@@ -154,7 +156,9 @@ namespace Game.Scripts.UI.Menus.GamePlay
             _expBar
                 .experimental
                 .animation
-                .Size(new Vector2(_pxPerPointExp * exp, _currentExpBarWidth), 500).Start();
+                .Size(new Vector2(_pxPerPointExp * exp, _currentExpBarWidth), 500)
+                .KeepAlive()
+                .Start();
             _currentExpBarWidth = _pxPerPointExp * exp;
         }
 

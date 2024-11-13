@@ -1,5 +1,6 @@
 ﻿using Game.Scripts.UI.Base;
 using R3;
+using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace Game.Scripts.UI.Menus.MainMenu
@@ -16,6 +17,8 @@ namespace Game.Scripts.UI.Menus.MainMenu
 
         protected override void InitElements()
         {
+            
+            Debug.LogWarning("init elements " + name);
             _startButton = RootVisualElement.Q<Button>(UIConst.StartButtonIDName);
             _settingsButton = RootVisualElement.Q<Button>(UIConst.SettingsButtonIDName);
             _exitButton = RootVisualElement.Q<Button>(UIConst.ExitButtonIDName);
@@ -28,9 +31,9 @@ namespace Game.Scripts.UI.Menus.MainMenu
         protected override void InitCallbacksCache()
         {
 
-            CallbacksCache.TryAdd(_startButton, _ => ViewModel.StartButtonClicked.OnNext(Unit.Default));
-            CallbacksCache.TryAdd(_settingsButton, _ => ViewModel.SettingsButtonClicked.OnNext(Unit.Default));
-            CallbacksCache.TryAdd(_exitButton, _ => ViewModel.ExitButtonClicked.OnNext(Unit.Default));
+            CallbacksCache.Add(_startButton, _ => ViewModel.StartButtonClicked.OnNext(Unit.Default));
+            CallbacksCache.Add(_settingsButton, _ => ViewModel.SettingsButtonClicked.OnNext(Unit.Default));
+            CallbacksCache.Add(_exitButton, _ => ViewModel.ExitButtonClicked.OnNext(Unit.Default));
         }
     }
 }

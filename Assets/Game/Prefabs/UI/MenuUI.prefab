@@ -65,3 +65,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cff45b0740174018afa4ec0b95b63b69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ViewVisualTreeAsset: {fileID: 9197481963319205126, guid: c605b2ec6eecc2d40a3a0e22ac972cfd,
+    type: 3}

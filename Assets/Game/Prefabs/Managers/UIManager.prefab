@@ -44,6 +44,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4095af2a12d42b8a92a79f599059456, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  toolkitViews:
+  - viewForState: 0
+    view: {fileID: 0}
+  canvasViews:
+  - viewForState: 1
+    canvas: {fileID: 0}
   menu: {fileID: 0}
   game: {fileID: 0}
   pause: {fileID: 0}

@@ -20,7 +20,6 @@ namespace Game.Scripts.Framework.Scopes
         [SerializeField] private UIViewBase gameOver;
         [SerializeField] private UIViewBase settings;
         [SerializeField] private UIViewBase win;
-        [SerializeField] private UIViewBase gameplayUIView;
 
         protected override void Configure(IContainerBuilder builder)
         {
@@ -50,7 +49,6 @@ namespace Game.Scripts.Framework.Scopes
             builder.RegisterComponent(gameOver).As<GameOverUIToolkitView>();
             builder.RegisterComponent(settings).As<SettingsUIToolkitView>();
             builder.RegisterComponent(win).As<WinUIToolkitView>();
-            builder.RegisterComponent(gameplayUIView).As<GameplayUIView>();
         }
     }
 }
