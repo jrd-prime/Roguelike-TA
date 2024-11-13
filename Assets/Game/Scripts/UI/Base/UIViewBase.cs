@@ -10,6 +10,7 @@ namespace Game.Scripts.UI.Base
 {
     public abstract class UIViewBase : MonoBehaviour, IUIView, IDisposable
     {
+        [SerializeField] public int SortOrder;
         protected readonly Dictionary<Button, EventCallback<ClickEvent>> CallbacksCache = new();
         protected readonly CompositeDisposable Disposables = new();
 

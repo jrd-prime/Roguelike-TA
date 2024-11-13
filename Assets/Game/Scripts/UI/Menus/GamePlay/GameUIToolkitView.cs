@@ -1,4 +1,5 @@
-﻿using Game.Scripts.UI.Base;
+﻿using Game.Scripts.Framework.Helpers;
+using Game.Scripts.UI.Base;
 using R3;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -7,6 +8,11 @@ namespace Game.Scripts.UI.Menus.GamePlay
 {
     public class GameUIToolkitView : UIToolkitViewCustom<GameUIViewModel>
     {
+        // Movement
+        private VisualElement _movementRoot;
+        private VisualElement _ring;
+
+
         // Buttons
         private Button _menuButton;
 
@@ -45,6 +51,15 @@ namespace Game.Scripts.UI.Menus.GamePlay
 
         protected override void InitElements()
         {
+            var safeZoneOffset = ScreenHelper.GetSafeZoneOffset(800f, 360f);
+            Screen.SetResolution(800, 360, true);
+            RootVisualElement.style.marginLeft = safeZoneOffset.x >= 16 ? safeZoneOffset.x : 16;
+            RootVisualElement.style.marginTop = safeZoneOffset.y;
+
+
+            _movementRoot = RootVisualElement.Q<VisualElement>(UIConst.MovementRootIDName);
+            _ring = RootVisualElement.Q<VisualElement>(UIConst.FullScreenRingIDName);
+
             _menuButton = RootVisualElement.Q<Button>(UIConst.MenuButtonIDName);
             _healthBarBg = RootVisualElement.Q<VisualElement>(UIConst.HealthBarContainerIDName);
             _healthBarLabel = _healthBarBg.Q<Label>(UIConst.HealthBarLabelIDName);
@@ -56,6 +71,8 @@ namespace Game.Scripts.UI.Menus.GamePlay
             _expBar = _expBarBg.Q<VisualElement>(UIConst.ExpBarMoveIDName);
             _lvlLabel = RootVisualElement.Q<Label>(UIConst.LvlLabelIDName);
 
+            CheckOnNull(_movementRoot, UIConst.MovementRootIDName, name);
+            CheckOnNull(_ring, UIConst.FullScreenRingIDName, name);
 
             CheckOnNull(_menuButton, UIConst.MenuButtonIDName, name);
             CheckOnNull(_healthBarBg, UIConst.HealthBarContainerIDName, name);
@@ -94,6 +111,17 @@ namespace Game.Scripts.UI.Menus.GamePlay
         {
             _healthBar.RegisterCallback<GeometryChangedEvent>(_ => SetHpBarWidth(_healthBar.resolvedStyle.width));
             _expBar.RegisterCallback<GeometryChangedEvent>(_ => SetExpBarWidth(_expBar.resolvedStyle.width));
+
+
+            _movementRoot.RegisterCallback<PointerDownEvent>(OnPointerDown);
+            _movementRoot.RegisterCallback<PointerMoveEvent>(OnPointerMove);
+            _movementRoot.RegisterCallback<PointerUpEvent>(OnPointerUp);
+            _movementRoot.RegisterCallback<PointerOutEvent>(OnPointerCancel);
+
+            // Movement
+            ViewModel.IsTouchPositionVisible.Subscribe(IsTouchPositionVisible).AddTo(Disposables);
+            ViewModel.RingPosition.Subscribe(SetRingPosition).AddTo(Disposables);
+
 
             // Health
             ViewModel.PlayerInitialHealth
@@ -168,5 +196,20 @@ namespace Game.Scripts.UI.Menus.GamePlay
         {
             CallbacksCache.Add(_menuButton, _ => ViewModel.MenuButtonClicked.OnNext(Unit.Default));
         }
+
+        private void SetRingPosition(Vector2 position)
+        {
+            _ring.style.left = position.x;
+            _ring.style.top = position.y;
+        }
+
+        private void IsTouchPositionVisible(bool value) =>
+            _ring.style.display = value ? DisplayStyle.Flex : DisplayStyle.None;
+
+
+        private void OnPointerCancel(PointerOutEvent evt) => ViewModel.OnOutEvent(evt);
+        private void OnPointerDown(PointerDownEvent evt) => ViewModel.OnDownEvent(evt);
+        private void OnPointerMove(PointerMoveEvent evt) => ViewModel.OnMoveEvent(evt);
+        private void OnPointerUp(PointerUpEvent evt) => ViewModel.OnUpEvent(evt);
     }
 }

@@ -53,14 +53,7 @@ namespace Game.Scripts.UI
         public void ShowView(StateType menuForStateType)
         {
             var toolkitView = _views[menuForStateType];
-
-            Debug.LogWarning("toolkitView = " + toolkitView.name);
-
-            var a = toolkitView.GetView();
-
-            Debug.LogWarning("a = " + a);
-
-            toolkitViewer.ShowView(a);
+            toolkitViewer.ShowView(toolkitView.GetView(), toolkitView.SortOrder);
         }
 
         public void HideView(StateType menuForStateType)
@@ -68,8 +61,7 @@ namespace Game.Scripts.UI
             var toolkitView = _views[menuForStateType];
             toolkitView.Unregister();
         }
-
-
+        
         public async void ShowPopUpAsync(string text, int duration = 3000)
         {
             if (_cts != null)
