@@ -15,7 +15,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &7747361789273979459
 Transform:
@@ -44,3 +44,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1607ccdd8bcd4228b09326ed14319e1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  charWeaponSettings: {fileID: 0}
+  characterWeapon: {fileID: 0}
+  projectileAssetReference:
+    m_AssetGUID: 
+    m_SubObjectName: 
+    m_SubObjectGUID: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0

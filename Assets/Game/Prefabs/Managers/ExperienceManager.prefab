@@ -15,7 +15,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &4536526779969059602
 Transform:
@@ -44,4 +44,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6167feef2bd7499ba16422e48d0d5fa3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  experienceToLevelUp: 100
+  baseExpToLevelUp: 100
+  multiplierPerLevel: 1.1

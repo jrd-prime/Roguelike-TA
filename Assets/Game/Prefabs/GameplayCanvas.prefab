@@ -18,7 +18,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!224 &7199266379901191260
 RectTransform:
@@ -125,6 +125,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7199266379901191260}
     m_Modifications:
+    - target: {fileID: 3023272451412450119, guid: 7a3562b12c5b8b744bda32dfa31807a8,
+        type: 3}
+      propertyPath: m_RaycastTarget
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6136112063970075965, guid: 7a3562b12c5b8b744bda32dfa31807a8,
         type: 3}
       propertyPath: m_Material

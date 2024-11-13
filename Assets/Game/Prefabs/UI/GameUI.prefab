@@ -16,7 +16,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &3601024876187921818
 Transform:
@@ -50,6 +50,9 @@ MonoBehaviour:
   sourceAsset: {fileID: 9197481963319205126, guid: 472a9bb49862ea6499beff3af5ee0197,
     type: 3}
   m_SortingOrder: 100
+  m_WorldSpaceSizeMode: 1
+  m_WorldSpaceWidth: 1920
+  m_WorldSpaceHeight: 1080
 --- !u!114 &2013101801020882422
 MonoBehaviour:
   m_ObjectHideFlags: 0

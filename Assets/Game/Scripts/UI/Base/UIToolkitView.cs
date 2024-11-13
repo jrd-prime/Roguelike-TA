@@ -26,11 +26,13 @@ namespace Game.Scripts.UI.Base
         {
             RegisterCallbacks();
             RootVisualElement.style.display = DisplayStyle.Flex;
+            // gameObject.SetActive(true);
         }
 
         public override void Hide()
         {
             RootVisualElement.style.display = DisplayStyle.None;
+            // gameObject.SetActive(false);
             UnregisterCallbacks();
         }
     }

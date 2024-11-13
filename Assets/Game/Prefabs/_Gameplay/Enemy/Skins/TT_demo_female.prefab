@@ -76,7 +76,7 @@ SkinnedMeshRenderer:
   m_DynamicOccludee: 1
   m_StaticShadowCaster: 0
   m_MotionVectors: 1
-  m_LightProbeUsage: 1
+  m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 3
   m_RayTraceProcedural: 0
@@ -108,9 +108,9 @@ SkinnedMeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   serializedVersion: 2
-  m_Quality: 0
+  m_Quality: 1
   m_UpdateWhenOffscreen: 0
-  m_SkinnedMotionVectors: 1
+  m_SkinnedMotionVectors: 0
   m_Mesh: {fileID: 4300362, guid: 3cefbbfe8c81fbb4283daa116169ef21, type: 3}
   m_Bones:
   - {fileID: 6252356961376966597}
@@ -131,8 +131,8 @@ SkinnedMeshRenderer:
   m_BlendShapeWeights: []
   m_RootBone: {fileID: 6252356961376966597}
   m_AABB:
-    m_Center: {x: -0.07525203, y: 0.03755282, z: 0.00000008940697}
-    m_Extent: {x: 0.5246242, y: 0.24903317, z: 0.7595513}
+    m_Center: {x: -0.42078912, y: 0.03755282, z: 0.00000011920929}
+    m_Extent: {x: 0.8701613, y: 0.24903317, z: 0.7595513}
   m_DirtyAABB: 0
 --- !u!1 &6252356961377387803
 GameObject:
@@ -424,9 +424,9 @@ Animator:
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 3cefbbfe8c81fbb4283daa116169ef21, type: 3}
   m_Controller: {fileID: 9100000, guid: 6c7085afc3bd5e14fad8af974cee5fb1, type: 2}
-  m_CullingMode: 1
+  m_CullingMode: 2
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_AnimatePhysics: 0
