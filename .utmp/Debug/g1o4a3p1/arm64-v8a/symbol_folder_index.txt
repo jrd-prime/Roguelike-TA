@@ -1,0 +1,1 @@
+C:\Users\jrd\_unity_jrd_projects\Rogue-like Test Game\Library\PramData\AndroidApplicationController\Cache\com.DefaultCompany.RoguelikeTA\gradle-project\unityLibrary\build\intermediates\cxx\Debug\g1o4a3p1\obj\arm64-v8a

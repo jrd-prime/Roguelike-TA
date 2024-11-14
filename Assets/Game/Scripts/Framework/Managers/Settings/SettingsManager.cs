@@ -29,6 +29,7 @@ namespace Game.Scripts.Framework.Managers.Settings
             CheckAndAddToCache(_mainSettings.enemyManager);
             CheckAndAddToCache(_mainSettings.weapon);
             CheckAndAddToCache(_mainSettings.movementControl);
+            CheckAndAddToCache(_mainSettings.gameSettings);
         }
 
         private void CheckAndAddToCache<T>(T settings) where T : SettingsBase
@@ -38,6 +39,6 @@ namespace Game.Scripts.Framework.Managers.Settings
                 Debug.Log($"Error. When adding to cache {typeof(T)}");
         }
 
-        public T GetConfig<T>() where T : ScriptableObject => ConfigsCache[typeof(T)] as T;
+        public T GetConfig<T>() where T : SettingsBase => ConfigsCache[typeof(T)] as T;
     }
 }

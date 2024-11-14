@@ -20,6 +20,7 @@ namespace Game.Scripts.Framework.Configuration.SO
         public EnemiesMainSettings enemies;
         public WeaponSettings weapon;
         public MovementControlSettings movementControl;
+        public GameSettings gameSettings;
 
         private void OnValidate()
         {
@@ -28,6 +29,7 @@ namespace Game.Scripts.Framework.Configuration.SO
             Assert.IsNotNull(enemies, "Main Configurations: Enemy config is null!");
             Assert.IsNotNull(weapon, "Main Configurations: Weapon config is null!");
             Assert.IsNotNull(movementControl, "Main Configurations: Movement Control config is null!");
+            Assert.IsNotNull(gameSettings, "Main Configurations: Game Settings config is null!");
         }
     }
 }

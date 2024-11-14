@@ -6,7 +6,7 @@ namespace Game.Scripts.Framework.GameStateMachine.State
     {
         public void Enter()
         {
-            if (GameManager.isGameStarted.CurrentValue) GameManager.GameOver();
+            if (GameManager.IsGameStarted.CurrentValue) GameManager.GameOver();
 
             UIManager.ShowView(StateType.Menu);
         }

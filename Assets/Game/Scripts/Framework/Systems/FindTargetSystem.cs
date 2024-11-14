@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Game.Scripts.Enemy;
+using UnityEngine;
 
 namespace Game.Scripts.Framework.Systems
 {

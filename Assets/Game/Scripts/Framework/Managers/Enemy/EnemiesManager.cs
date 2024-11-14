@@ -1,10 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Cysharp.Threading.Tasks;
+using DG.Tweening;
 using Game.Scripts.Dto;
 using Game.Scripts.Enemy;
 using Game.Scripts.Framework.Configuration.SO.Enemy;
+using Game.Scripts.Framework.Constants;
 using Game.Scripts.Framework.GameStateMachine;
 using Game.Scripts.Framework.Helpers;
 using Game.Scripts.Framework.Managers.Experience;
@@ -18,6 +19,7 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Assertions;
 using VContainer;
+using Animator = UnityEngine.Animator;
 
 namespace Game.Scripts.Framework.Managers.Enemy
 {
@@ -27,7 +29,7 @@ namespace Game.Scripts.Framework.Managers.Enemy
         public ReactiveProperty<int> KillToWin { get; } = new();
         public ReactiveProperty<int> EnemiesCount { get; } = new(0);
 
-        [SerializeField] private int enemyPoolSize = 10;
+        [SerializeField] private int enemyPoolSize = 30;
         private bool _isStarted;
 
         private ISettingsManager _settingsManager;
@@ -84,17 +86,7 @@ namespace Game.Scripts.Framework.Managers.Enemy
             // find animator after skin is added
             var animator = enemy.GetComponentInChildren<Animator>();
 
-            var settingsDto = new EnemySettingsDto
-            {
-                ID = Guid.NewGuid().ToString(),
-                Animator = animator,
-                Target = _followTargetModel,
-                Speed = enemySettings.speed,
-                AttackDelayInSec = enemySettings.attackDelayInSec,
-                Damage = enemySettings.damage,
-                Health = enemySettings.health,
-                Experience = enemySettings.baseExperiencePoints
-            };
+            var settingsDto = new EnemySettingsDto(animator, _followTargetModel, enemySettings);
 
             enemy.Initialize(settingsDto);
 
@@ -110,15 +102,12 @@ namespace Game.Scripts.Framework.Managers.Enemy
 
         private void RemoveEnemy(string enemyId)
         {
-            if (!_enemiesCache.ContainsKey(enemyId)) return;
-
-            var enemy = _enemiesCache[enemyId];
+            if (!_enemiesCache.TryGetValue(enemyId, out var enemy)) return;
 
             enemy.gameObject.SetActive(false);
             _enemiesCache.Remove(enemyId);
             enemy.ResetEnemy();
             _enemyPool.Return(enemy);
-
             UpdateEnemiesCount();
         }
 
@@ -130,13 +119,31 @@ namespace Game.Scripts.Framework.Managers.Enemy
             _enemiesCache.Clear();
         }
 
-        public void EnemyDied(string enemyID)
+        public async void OnEnemyDiedAsync(string enemyID)
         {
             if (!_enemiesCache.TryGetValue(enemyID, out EnemyHolder enemy)) return;
 
             AddKill();
             CheckWin();
-            _experienceManager.AddExperience(enemy.Settings.Experience);
+            _experienceManager.AddExperience(enemy.SettingsDto.Experience);
+
+            enemy.enemyHUD.Hide();
+            // remove from possible targets when searching for the nearest enemy
+            enemy.tag = TagsConst.DeadEnemyTag;
+
+            var enemyPosition = enemy.transform.position;
+            var disappearPosition = new Vector3(enemyPosition.x, enemyPosition.y - 2, enemyPosition.z);
+            var disappearDuration = enemy.SettingsDto.DisappearanceDuration;
+
+            // wait for death animation end
+            await UniTask.Delay(AnimConst.DeathAnimationLengthMs);
+            enemy.transform
+                .DOMove(disappearPosition, disappearDuration)
+                .SetEase(Ease.InOutQuad);
+
+            // wait for enemy disappear
+            await UniTask.Delay((int)(enemy.SettingsDto.DisappearanceDuration * 1000));
+            enemy.tag = TagsConst.EnemyTag;
 
             RemoveEnemy(enemyID);
         }
@@ -150,6 +157,7 @@ namespace Game.Scripts.Framework.Managers.Enemy
 
         private void AddKill() => Kills.Value += 1;
 
+        // TODO fix enemies spawn
         public async void StartSpawnEnemiesAsync(int killToWin, int minOnMap, int maxOnMap, int spawnDelay)
         {
             if (_isStarted) return;
@@ -184,13 +192,18 @@ namespace Game.Scripts.Framework.Managers.Enemy
                 if (!_isStarted) break;
                 await UniTask.Delay(spawnDelay);
             }
+
+            // var il = 0;
+            // while (_isStarted && il < 1)
+            // {
+            //     SpawnRandomEnemyAsync();
+            //     il++;
+            // }
         }
 
         public void StopSpawn()
         {
-            Debug.LogWarning("Stop spawn enemies " + _isStarted);
             if (!_isStarted) return;
-
             _isStarted = false;
             DespawnAllEnemies();
         }

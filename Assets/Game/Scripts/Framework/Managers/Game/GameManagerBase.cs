@@ -1,22 +1,19 @@
-﻿using Game.Scripts.Framework.Managers.Enemy;
+﻿using System;
+using Game.Scripts.Framework.Configuration.SO;
+using Game.Scripts.Framework.Helpers;
+using Game.Scripts.Framework.Managers.Enemy;
 using Game.Scripts.Framework.Managers.Experience;
+using Game.Scripts.Framework.Managers.Settings;
 using Game.Scripts.Player.Interfaces;
 using Game.Scripts.UI;
 using R3;
 using UnityEngine;
-using UnityEngine.Assertions;
 using VContainer;
 
 namespace Game.Scripts.Framework.Managers.Game
 {
     public class GameManagerBase : MonoBehaviour
     {
-        //TODO load from settings
-        [SerializeField] protected int spawnDelay = 500;
-        [SerializeField] protected int minEnemiesOnMap = 5;
-        [SerializeField] protected int maxEnemiesOnMap = 10;
-        [SerializeField] protected int killsToWin = 100;
-
         public ReactiveProperty<int> PlayerInitialHealth { get; } = new();
         public ReadOnlyReactiveProperty<int> PlayerHealth => PlayerModel.Health;
         public ReadOnlyReactiveProperty<int> KillCount => EnemiesManager.Kills;
@@ -25,30 +22,40 @@ namespace Game.Scripts.Framework.Managers.Game
         public ReadOnlyReactiveProperty<int> Level => ExperienceManager.Level;
         public ReadOnlyReactiveProperty<int> Experience => ExperienceManager.Experience;
         public ReadOnlyReactiveProperty<int> ExperienceToNextLevel => ExperienceManager.ExperienceToNextLevel;
+        public ReactiveProperty<bool> IsGameStarted { get; } = new();
 
-        public ReactiveProperty<bool> isGameStarted { get; } = new();
-        protected IObjectResolver Resolver;
         protected IEnemiesManager EnemiesManager;
         protected IPlayerModel PlayerModel;
         protected UIManager UIManager;
         protected IExperienceManager ExperienceManager;
         protected bool IsGamePaused;
+        protected int SpawnDelay;
+        protected int MinEnemiesOnMap;
+        protected int MaxEnemiesOnMap;
+        protected int KillsToWin;
+
+        private IObjectResolver _resolver;
+        private ISettingsManager _settingsManager;
 
         [Inject]
-        private void Construct(IObjectResolver resolver)
-        {
-            Resolver = resolver;
-            EnemiesManager = Resolver.Resolve<IEnemiesManager>();
-            PlayerModel = Resolver.Resolve<IPlayerModel>();
-            UIManager = Resolver.Resolve<UIManager>();
-            ExperienceManager = Resolver.Resolve<IExperienceManager>();
-        }
+        private void Construct(IObjectResolver resolver) => _resolver = resolver;
+
 
         protected void Awake()
         {
-            Assert.IsNotNull(PlayerModel, $"PlayerModel is null. {this}");
-            Assert.IsNotNull(EnemiesManager, $"EnemiesManager is null. {this}");
-            Assert.IsNotNull(UIManager, $"UIManager is null. {this}");
+            EnemiesManager = ResolverHelp.ResolveAndCheck<IEnemiesManager>(_resolver);
+            PlayerModel = ResolverHelp.ResolveAndCheck<IPlayerModel>(_resolver);
+            UIManager = ResolverHelp.ResolveAndCheck<UIManager>(_resolver);
+            ExperienceManager = ResolverHelp.ResolveAndCheck<IExperienceManager>(_resolver);
+            _settingsManager = ResolverHelp.ResolveAndCheck<ISettingsManager>(_resolver);
+
+            var gameSettings = _settingsManager.GetConfig<GameSettings>();
+            if (gameSettings == null) throw new NullReferenceException($"Game settings is null. {this}");
+
+            SpawnDelay = gameSettings.spawnDelay;
+            MinEnemiesOnMap = gameSettings.minEnemiesOnMap;
+            MaxEnemiesOnMap = gameSettings.maxEnemiesOnMap;
+            KillsToWin = gameSettings.killsToWin;
 
             PlayerInitialHealth.Value = PlayerModel.CharSettings.health;
         }

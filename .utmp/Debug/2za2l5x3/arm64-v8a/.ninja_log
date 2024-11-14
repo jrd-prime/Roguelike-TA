@@ -1,0 +1,12 @@
+# ninja log v5
+11	213	7532678084646585	FramePacing/CMakeFiles/swappywrapper.dir/UnitySwappyWrapper.cpp.o	29378b08bffc37fd
+215	444	7532678086890351	C:/Users/jrd/_unity_jrd_projects/Rogue-like Test Game/Library/PramData/AndroidApplicationController/Cache/com.DefaultCompany.RoguelikeTestGame/gradle-project/unityLibrary/build/intermediates/cxx/Debug/2za2l5x3/obj/arm64-v8a/libswappywrapper.so	d1edb239beccf4f0
+16	1167	7532678094082819	GameActivity/CMakeFiles/game.dir/UGAConfiguration.cpp.o	b5e267e1eee9b69d
+35	1170	7532678094082819	GameActivity/CMakeFiles/game.dir/UGAInputKeyEvent.cpp.o	65df033fd57623c1
+48	1177	7532678094198917	GameActivity/CMakeFiles/game.dir/UGAEntry.cpp.o	10d4016023ca7eee
+0	1185	7532678094309907	GameActivity/CMakeFiles/game.dir/UGAInputMotionEvent.cpp.o	1cf8e405cd1362d7
+6	1212	7532678094579845	GameActivity/CMakeFiles/game.dir/UGASoftKeyboard.cpp.o	88c0baf4833f1f14
+22	1244	7532678094919300	GameActivity/CMakeFiles/game.dir/UGADebug.cpp.o	85fef33857cf64a5
+41	1328	7532678095767182	GameActivity/CMakeFiles/game.dir/UGAInput.cpp.o	1188e151b05299b6
+29	1372	7532678096119096	GameActivity/CMakeFiles/game.dir/UGAApplication.cpp.o	757fb7975e973ddf
+1372	1528	7532678097765490	C:/Users/jrd/_unity_jrd_projects/Rogue-like Test Game/Library/PramData/AndroidApplicationController/Cache/com.DefaultCompany.RoguelikeTestGame/gradle-project/unityLibrary/build/intermediates/cxx/Debug/2za2l5x3/obj/arm64-v8a/libgame.so	86eca21172115c1

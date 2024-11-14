@@ -15,7 +15,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &392471960240628009
 Transform:
@@ -50,9 +50,13 @@ MonoBehaviour:
   autoInjectGameObjects:
   - {fileID: 7922457812623207056, guid: 7409edbaf9919f840824347fde040a6b, type: 3}
   - {fileID: 919132149155446097, guid: d523bb9c8436de84d957c5858c426f9e, type: 3}
+  gameManager: {fileID: 0}
+  cameraManager: {fileID: 0}
   uiManager: {fileID: 7070687434955276528, guid: 0179ecfa7f3be934989ce33f11542170,
     type: 3}
   spawnPointsManager: {fileID: 2375269258176985185, guid: 6325245e20d508c4d8f03e88953ba703,
     type: 3}
-  enemyPrefab: {fileID: 2708799565583394941, guid: 9e4ddece5cc70224f86cccf9dac75aa7,
-    type: 3}
+  enemiesManager: {fileID: 0}
+  weaponManager: {fileID: 0}
+  experienceManager: {fileID: 0}
+  popUpTextManager: {fileID: 0}

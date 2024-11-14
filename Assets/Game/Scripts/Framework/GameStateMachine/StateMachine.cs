@@ -42,7 +42,7 @@ namespace Game.Scripts.Framework.GameStateMachine
             ChangeState(_states[StateType.Menu]);
             _currentState = _states[StateType.Menu];
 
-            _gameManager.isGameStarted
+            _gameManager.IsGameStarted
                 .Subscribe(value => isGameStarted = value).AddTo(_disposables);
 
             _playerModel.Health

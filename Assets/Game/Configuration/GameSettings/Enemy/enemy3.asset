@@ -16,10 +16,14 @@ MonoBehaviour:
   enemySkinPrefab:
     m_AssetGUID: 2db03e7c8a8135146b280e5da7e0289c
     m_SubObjectName: 
+    m_SubObjectGUID: 
     m_SubObjectType: 
     m_EditorAssetChanged: 0
   health: 9
-  damage: 11
-  attackDelayInSec: 3
-  speed: 1
+  damage: 1
+  attackDelayInSec: 2
+  speed: 1.5
   baseExperiencePoints: 11
+  disappearanceDuration: 1.5
+  attackDistance: 1
+  rotationSpeed: 10

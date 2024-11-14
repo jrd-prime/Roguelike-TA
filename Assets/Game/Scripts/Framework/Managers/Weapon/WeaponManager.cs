@@ -21,30 +21,30 @@ namespace Game.Scripts.Framework.Managers.Weapon
 
         private IAssetProvider _assetProvider;
         private IObjectResolver _resolver;
-        private CustomPool<Projectile> _projectilePool;
+        private CustomPool<ProjectileHolder> _projectilePool;
 
         [Inject]
         private void Construct(IObjectResolver resolver) => _resolver = resolver;
 
         public void Initialize()
         {
-            _assetProvider = Resolver.ResolveAndCheck<IAssetProvider>(_resolver);
+            _assetProvider = ResolverHelp.ResolveAndCheck<IAssetProvider>(_resolver);
             Assert.IsNotNull(charWeaponSettings, "charWeaponSettings is null");
             Assert.IsNotNull(projectileAssetReference, "projectileAssetReference is null");
             Assert.IsNotNull(characterWeapon, "charWeapon is null");
         }
 
-        private async UniTask<Projectile> GetProjectile()
+        private async UniTask<ProjectileHolder> GetProjectile()
         {
             var projectileObj = await _assetProvider.InstantiateAsync(projectileAssetReference);
             projectileObj.SetActive(false);
-            return projectileObj.GetComponent<Projectile>();
+            return projectileObj.GetComponent<ProjectileHolder>();
         }
 
         public async UniTask<WeaponBase> GetCharacterWeapon()
         {
             var projectile = await GetProjectile();
-            _projectilePool = new CustomPool<Projectile>(projectile, 100, null, _resolver);
+            _projectilePool = new CustomPool<ProjectileHolder>(projectile, 10, null, _resolver);
             characterWeapon.InitializeWeapon(charWeaponSettings, _projectilePool);
 
             return characterWeapon;

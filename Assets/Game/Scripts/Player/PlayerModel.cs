@@ -46,10 +46,10 @@ namespace Game.Scripts.Player
 
         public async void Initialize()
         {
-            _movementControlModel = Resolver.ResolveAndCheck<IMovementControlModel>(_container);
-            _cameraFollowSystem = Resolver.ResolveAndCheck<CameraFollowSystem>(_container);
-            _weaponManager = Resolver.ResolveAndCheck<WeaponManager>(_container);
-            var settingsManager = Resolver.ResolveAndCheck<ISettingsManager>(_container);
+            _movementControlModel = ResolverHelp.ResolveAndCheck<IMovementControlModel>(_container);
+            _cameraFollowSystem = ResolverHelp.ResolveAndCheck<CameraFollowSystem>(_container);
+            _weaponManager = ResolverHelp.ResolveAndCheck<WeaponManager>(_container);
+            var settingsManager = ResolverHelp.ResolveAndCheck<ISettingsManager>(_container);
             CharSettings = settingsManager.GetConfig<CharacterSettings>();
 
             _cameraFollowSystem.SetTarget(this);

@@ -1,15 +1,18 @@
 ﻿using Game.Scripts.Framework.GameStateMachine;
 using Game.Scripts.Framework.GameStateMachine.State;
+using Game.Scripts.Framework.Managers.Cam;
 using Game.Scripts.Framework.Managers.Enemy;
 using Game.Scripts.Framework.Managers.Experience;
 using Game.Scripts.Framework.Managers.Game;
 using Game.Scripts.Framework.Managers.SpawnPoints;
 using Game.Scripts.Framework.Managers.Weapon;
+using Game.Scripts.Framework.Systems;
 using Game.Scripts.Player;
 using Game.Scripts.Player.Interfaces;
 using Game.Scripts.UI;
 using Game.Scripts.UI.MovementControl;
 using Game.Scripts.UI.MovementControl.FullScreen;
+using Game.Scripts.UI.PopUpText;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
@@ -19,11 +22,13 @@ namespace Game.Scripts.Framework.Scopes
     public class GameContext : LifetimeScope
     {
         [SerializeField] private GameManager gameManager;
+        [SerializeField] private CameraManager cameraManager;
         [SerializeField] private UIManager uiManager;
         [SerializeField] private SpawnPointsManager spawnPointsManager;
         [SerializeField] private EnemiesManager enemiesManager;
         [SerializeField] private WeaponManager weaponManager;
         [SerializeField] private ExperienceManager experienceManager;
+        [SerializeField] private PopUpTextManager popUpTextManager;
 
         protected override void Configure(IContainerBuilder builder)
         {
@@ -31,21 +36,27 @@ namespace Game.Scripts.Framework.Scopes
 
 
             builder.RegisterComponent(gameManager).AsSelf().AsImplementedInterfaces();
+            builder.RegisterComponent(cameraManager).As<ICameraManager>().As<IInitializable>();
             builder.RegisterComponent(weaponManager).AsSelf().AsImplementedInterfaces();
             builder.RegisterComponent(uiManager).AsSelf().AsImplementedInterfaces();
             builder.RegisterComponent(spawnPointsManager).AsSelf().AsImplementedInterfaces();
             builder.RegisterComponent(enemiesManager).As<IEnemiesManager>();
             builder.RegisterComponent(experienceManager).As<IExperienceManager>();
+            builder.RegisterComponent(popUpTextManager).AsSelf().AsImplementedInterfaces();
+
 
             // Movement
             // Joystick
             // builder.Register<JoystickModel>(Lifetime.Singleton).As<IJoystickModel>();
             // builder.Register<JoystickViewModel>(Lifetime.Singleton).As<IJoystickViewModel>();
             // FullScreen
-            builder.Register<FullScreenMovementModel>(Lifetime.Singleton).As<IFullScreenMovementModel>().As<IMovementControlModel>();
+            builder.Register<FullScreenMovementModel>(Lifetime.Singleton).As<IFullScreenMovementModel>()
+                .As<IMovementControlModel>();
             builder.Register<FullScreenMovementViewModel>(Lifetime.Singleton).As<IFullScreenMovementViewModel>()
                 .As<IMovementControlViewModel>();
 
+            // Systems
+            builder.Register<CameraFollowSystem>(Lifetime.Singleton).AsSelf();
 
             // Character
             builder.Register<PlayerViewModel>(Lifetime.Singleton).AsImplementedInterfaces();

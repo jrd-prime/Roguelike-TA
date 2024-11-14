@@ -16,7 +16,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1352774378858467077
 Transform:
@@ -49,7 +49,10 @@ MonoBehaviour:
   m_ParentUI: {fileID: 0}
   sourceAsset: {fileID: 9197481963319205126, guid: c605b2ec6eecc2d40a3a0e22ac972cfd,
     type: 3}
-  m_SortingOrder: 100
+  m_SortingOrder: 111
+  m_WorldSpaceSizeMode: 1
+  m_WorldSpaceWidth: 1920
+  m_WorldSpaceHeight: 1080
 --- !u!114 &6435680518057279133
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -62,3 +65,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cff45b0740174018afa4ec0b95b63b69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ViewVisualTreeAsset: {fileID: 9197481963319205126, guid: c605b2ec6eecc2d40a3a0e22ac972cfd,
+    type: 3}

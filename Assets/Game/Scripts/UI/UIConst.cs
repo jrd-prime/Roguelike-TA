@@ -15,6 +15,7 @@
         // Movement Control
         public const string JoystickHandle = "joystick-handle";
         public const string JoystickRing = "joystick-ring";
+        public const string MovementRootIDName = "movement-zone";
         public const string FullScreenRingIDName = "ring";
 
         // Game UI
