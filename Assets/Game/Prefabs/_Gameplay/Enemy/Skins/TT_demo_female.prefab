@@ -41,7 +41,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6252356961376964985}
   - component: {fileID: 6252356961363788127}
-  m_Layer: 0
+  m_Layer: 29
   m_Name: f_body_18_black_dress
   m_TagString: Untagged
   m_Icon: {fileID: 0}
