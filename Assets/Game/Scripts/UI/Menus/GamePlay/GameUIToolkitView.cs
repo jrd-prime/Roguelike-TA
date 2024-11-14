@@ -52,7 +52,6 @@ namespace Game.Scripts.UI.Menus.GamePlay
         protected override void InitElements()
         {
             var safeZoneOffset = ScreenHelper.GetSafeZoneOffset(800f, 360f);
-            Screen.SetResolution(800, 360, true);
             RootVisualElement.style.marginLeft = safeZoneOffset.x >= 16 ? safeZoneOffset.x : 16;
             RootVisualElement.style.marginTop = safeZoneOffset.y;
 

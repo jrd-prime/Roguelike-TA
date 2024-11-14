@@ -35,7 +35,7 @@
 				}
 			],
 			"type" : "UNINITIALIZED",
-			"value" : "android-29"
+			"value" : "android-23"
 		},
 		{
 			"name" : "ANDROID_STL",
@@ -127,7 +127,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "c:/Users/jrd/_unity_jrd_projects/Rogue-like Test Game/.utmp/Debug/g1o4a3p1/arm64-v8a"
+			"value" : "c:/Users/jrd/_unity_jrd_projects/Rogue-like Test Game/.utmp/Debug/2za2l5x3/arm64-v8a"
 		},
 		{
 			"name" : "CMAKE_CACHE_MAJOR_VERSION",
@@ -499,7 +499,7 @@
 				}
 			],
 			"type" : "STRING",
-			"value" : "-Wl,--build-id=sha1 -Wl,--fatal-warnings -Qunused-arguments -Wl,--no-undefined  -Wl,--gc-sections"
+			"value" : "-Wl,--build-id=sha1 -Wl,--no-rosegment -Wl,--fatal-warnings -Qunused-arguments -Wl,--no-undefined  -Wl,--gc-sections"
 		},
 		{
 			"name" : "CMAKE_EXE_LINKER_FLAGS_DEBUG",
@@ -599,7 +599,7 @@
 				}
 			],
 			"type" : "UNINITIALIZED",
-			"value" : "C:\\Users\\jrd\\_unity_jrd_projects\\Rogue-like Test Game\\.utmp\\Debug\\g1o4a3p1\\prefab\\arm64-v8a\\prefab"
+			"value" : "C:\\Users\\jrd\\_unity_jrd_projects\\Rogue-like Test Game\\.utmp\\Debug\\2za2l5x3\\prefab\\arm64-v8a\\prefab"
 		},
 		{
 			"name" : "CMAKE_GENERATOR",
@@ -695,7 +695,7 @@
 				}
 			],
 			"type" : "UNINITIALIZED",
-			"value" : "C:\\Users\\jrd\\_unity_jrd_projects\\Rogue-like Test Game\\Library\\Bee\\Android\\Prj\\IL2CPP\\Gradle\\unityLibrary\\build\\intermediates\\cxx\\Debug\\g1o4a3p1\\obj\\arm64-v8a"
+			"value" : "C:\\Users\\jrd\\_unity_jrd_projects\\Rogue-like Test Game\\Library\\Bee\\Android\\Prj\\IL2CPP\\Gradle\\unityLibrary\\build\\intermediates\\cxx\\Debug\\2za2l5x3\\obj\\arm64-v8a"
 		},
 		{
 			"name" : "CMAKE_LINKER",
@@ -739,7 +739,7 @@
 				}
 			],
 			"type" : "STRING",
-			"value" : "-Wl,--build-id=sha1 -Wl,--fatal-warnings -Qunused-arguments -Wl,--no-undefined"
+			"value" : "-Wl,--build-id=sha1 -Wl,--no-rosegment -Wl,--fatal-warnings -Qunused-arguments -Wl,--no-undefined"
 		},
 		{
 			"name" : "CMAKE_MODULE_LINKER_FLAGS_DEBUG",
@@ -831,7 +831,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "2"
+			"value" : "3"
 		},
 		{
 			"name" : "CMAKE_OBJCOPY",
@@ -967,7 +967,7 @@
 				}
 			],
 			"type" : "UNINITIALIZED",
-			"value" : "C:\\Users\\jrd\\_unity_jrd_projects\\Rogue-like Test Game\\Library\\Bee\\Android\\Prj\\IL2CPP\\Gradle\\unityLibrary\\build\\intermediates\\cxx\\Debug\\g1o4a3p1\\obj\\arm64-v8a"
+			"value" : "C:\\Users\\jrd\\_unity_jrd_projects\\Rogue-like Test Game\\Library\\Bee\\Android\\Prj\\IL2CPP\\Gradle\\unityLibrary\\build\\intermediates\\cxx\\Debug\\2za2l5x3\\obj\\arm64-v8a"
 		},
 		{
 			"name" : "CMAKE_SHARED_LINKER_FLAGS",
@@ -983,7 +983,7 @@
 				}
 			],
 			"type" : "STRING",
-			"value" : "-Wl,--build-id=sha1 -Wl,--fatal-warnings -Qunused-arguments -Wl,--no-undefined"
+			"value" : "-Wl,--build-id=sha1 -Wl,--no-rosegment -Wl,--fatal-warnings -Qunused-arguments -Wl,--no-undefined"
 		},
 		{
 			"name" : "CMAKE_SHARED_LINKER_FLAGS_DEBUG",
@@ -1199,7 +1199,7 @@
 				}
 			],
 			"type" : "UNINITIALIZED",
-			"value" : "29"
+			"value" : "23"
 		},
 		{
 			"name" : "CMAKE_TOOLCHAIN_FILE",
@@ -1239,7 +1239,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "C:/Users/jrd/_unity_jrd_projects/Rogue-like Test Game/.utmp/Debug/g1o4a3p1/arm64-v8a"
+			"value" : "C:/Users/jrd/_unity_jrd_projects/Rogue-like Test Game/.utmp/Debug/2za2l5x3/arm64-v8a"
 		},
 		{
 			"name" : "Unity_IS_TOP_LEVEL",
@@ -1266,6 +1266,66 @@
 			"value" : "C:/Users/jrd/_unity_jrd_projects/Rogue-like Test Game/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/src/main/cpp"
 		},
 		{
+			"name" : "game-activity_DIR",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "The directory containing a CMake configuration file for game-activity."
+				}
+			],
+			"type" : "PATH",
+			"value" : "C:/Users/jrd/_unity_jrd_projects/Rogue-like Test Game/.utmp/Debug/2za2l5x3/prefab/arm64-v8a/prefab/lib/aarch64-linux-android/cmake/game-activity"
+		},
+		{
+			"name" : "game_BINARY_DIR",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "Value Computed by CMake"
+				}
+			],
+			"type" : "STATIC",
+			"value" : "C:/Users/jrd/_unity_jrd_projects/Rogue-like Test Game/.utmp/Debug/2za2l5x3/arm64-v8a/GameActivity"
+		},
+		{
+			"name" : "game_IS_TOP_LEVEL",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "Value Computed by CMake"
+				}
+			],
+			"type" : "STATIC",
+			"value" : "OFF"
+		},
+		{
+			"name" : "game_LIB_DEPENDS",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "Dependencies for the target"
+				}
+			],
+			"type" : "STATIC",
+			"value" : "general;android;general;game-activity::game-activity_static;general;log;"
+		},
+		{
+			"name" : "game_SOURCE_DIR",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "Value Computed by CMake"
+				}
+			],
+			"type" : "STATIC",
+			"value" : "C:/Users/jrd/_unity_jrd_projects/Rogue-like Test Game/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/src/main/cpp/GameActivity"
+		},
+		{
 			"name" : "games-frame-pacing_DIR",
 			"properties" : 
 			[
@@ -1275,7 +1335,7 @@
 				}
 			],
 			"type" : "PATH",
-			"value" : "C:/Users/jrd/_unity_jrd_projects/Rogue-like Test Game/.utmp/Debug/g1o4a3p1/prefab/arm64-v8a/prefab/lib/aarch64-linux-android/cmake/games-frame-pacing"
+			"value" : "C:/Users/jrd/_unity_jrd_projects/Rogue-like Test Game/.utmp/Debug/2za2l5x3/prefab/arm64-v8a/prefab/lib/aarch64-linux-android/cmake/games-frame-pacing"
 		},
 		{
 			"name" : "swappywrapper_BINARY_DIR",
@@ -1287,7 +1347,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "C:/Users/jrd/_unity_jrd_projects/Rogue-like Test Game/.utmp/Debug/g1o4a3p1/arm64-v8a/FramePacing"
+			"value" : "C:/Users/jrd/_unity_jrd_projects/Rogue-like Test Game/.utmp/Debug/2za2l5x3/arm64-v8a/FramePacing"
 		},
 		{
 			"name" : "swappywrapper_IS_TOP_LEVEL",

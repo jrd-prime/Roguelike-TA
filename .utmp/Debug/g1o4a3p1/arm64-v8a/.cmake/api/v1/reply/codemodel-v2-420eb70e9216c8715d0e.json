@@ -66,7 +66,7 @@
 				{
 					"directoryIndex" : 1,
 					"id" : "swappywrapper::@7e25bd1f32ce224db4e9",
-					"jsonFile" : "target-swappywrapper-Debug-177797f3925fd8b4dfb7.json",
+					"jsonFile" : "target-swappywrapper-Debug-7f25670a2fce98660371.json",
 					"name" : "swappywrapper",
 					"projectIndex" : 1
 				}
@@ -77,7 +77,7 @@
 	"paths" : 
 	{
 		"build" : "C:/Users/jrd/_unity_jrd_projects/Rogue-like Test Game/.utmp/Debug/g1o4a3p1/arm64-v8a",
-		"source" : "C:/Users/jrd/_unity_jrd_projects/Rogue-like Test Game/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/src/main/cpp"
+		"source" : "C:/Users/jrd/_unity_jrd_projects/Rogue-like Test Game/Library/PramData/AndroidApplicationController/Cache/com.DefaultCompany.RoguelikeTA/gradle-project/unityLibrary/src/main/cpp"
 	},
 	"version" : 
 	{

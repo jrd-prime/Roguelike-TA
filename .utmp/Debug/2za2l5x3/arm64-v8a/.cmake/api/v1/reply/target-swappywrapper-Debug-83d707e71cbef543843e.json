@@ -2,7 +2,7 @@
 	"artifacts" : 
 	[
 		{
-			"path" : "C:/Users/jrd/_unity_jrd_projects/Rogue-like Test Game/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/Debug/g1o4a3p1/obj/arm64-v8a/libswappywrapper.so"
+			"path" : "C:/Users/jrd/_unity_jrd_projects/Rogue-like Test Game/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/Debug/2za2l5x3/obj/arm64-v8a/libswappywrapper.so"
 		}
 	],
 	"backtrace" : 1,
@@ -98,7 +98,7 @@
 		"commandFragments" : 
 		[
 			{
-				"fragment" : "-Wl,--build-id=sha1 -Wl,--fatal-warnings -Qunused-arguments -Wl,--no-undefined -Wl,--wrap=__android_log_print",
+				"fragment" : "-Wl,--build-id=sha1 -Wl,--no-rosegment -Wl,--fatal-warnings -Qunused-arguments -Wl,--no-undefined -Wl,--wrap=__android_log_print",
 				"role" : "flags"
 			},
 			{
@@ -108,7 +108,7 @@
 			},
 			{
 				"backtrace" : 2,
-				"fragment" : "C:\\Users\\jrd\\.gradle\\caches\\transforms-3\\268849a49ea9eb2bba6f4e0ac95bfd63\\transformed\\jetified-games-frame-pacing-1.10.0\\prefab\\modules\\swappy_static\\libs\\android.arm64-v8a_API29_NDK23_cpp_shared_Release\\libswappy.a",
+				"fragment" : "C:\\Users\\jrd\\.gradle\\caches\\transforms-3\\268849a49ea9eb2bba6f4e0ac95bfd63\\transformed\\jetified-games-frame-pacing-1.10.0\\prefab\\modules\\swappy_static\\libs\\android.arm64-v8a_API23_NDK23_cpp_shared_Release\\libswappy.a",
 				"role" : "libraries"
 			},
 			{

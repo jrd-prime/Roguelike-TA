@@ -29,7 +29,8 @@ namespace Game.Scripts.Framework.Scopes
             // Services
             builder.Register<SettingsManager>(Lifetime.Singleton).AsImplementedInterfaces();
 
-            builder.Register(typeof(AssetProvider), Lifetime.Singleton).As<IAssetProvider>();
+            // builder.Register(typeof(AssetProvider), Lifetime.Singleton).As<IAssetProvider>();
+            builder.Register<AssetProvider>(Lifetime.Singleton).As<IAssetProvider>();
         }
         
         private static T Check<T>(T component) where T : class
