@@ -38,7 +38,7 @@ namespace Game.Scripts.Player
         private WeaponManager _weaponManager;
         private WeaponBase _weapon;
         private IObjectResolver _container;
-        private readonly CompositeDisposable _disposables = new(); 
+        private readonly CompositeDisposable _disposables = new();
 
         [Inject]
         private void Construct(IObjectResolver container) => _container = container;
@@ -84,7 +84,6 @@ namespace Game.Scripts.Player
 
         public void TakeDamage(int damage)
         {
-            Debug.LogWarning("  take damage: " + damage);
             if (damage > 0) SetHealth(Health.Value - damage);
         }
 

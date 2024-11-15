@@ -10,5 +10,7 @@ namespace Game.Scripts.Framework.Animations
         {
             Animator = animator;
         }
+
+        public void SetAnimatorSpeed(float value) => Animator.speed = value;
     }
 }

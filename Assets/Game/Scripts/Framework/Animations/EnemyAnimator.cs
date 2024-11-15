@@ -32,5 +32,6 @@ namespace Game.Scripts.Framework.Animations
             Animator.Play(AnimConst.Death, 0, 0f);
             Animator.SetTrigger(AnimConst.Death);
         }
+
     }
 }

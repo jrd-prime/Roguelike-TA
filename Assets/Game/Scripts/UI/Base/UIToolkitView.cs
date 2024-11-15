@@ -12,18 +12,10 @@ namespace Game.Scripts.UI.Base
 
         public void Awake()
         {
-            Debug.LogWarning("awake view " + name);
-
             if (ViewVisualTreeAsset == null) throw new NullReferenceException("ViewVisualTreeAsset is null.");
             _templateContainer = ViewVisualTreeAsset.Instantiate();
 
             RootVisualElement = _templateContainer;
-
-            var document = gameObject.GetComponent<UIDocument>();
-
-            // RootVisualElement = document.visualTreeAsset != null
-            //     ? document.rootVisualElement
-            //     : throw new NullReferenceException("VisualTreeAsset is not set to " + name + " prefab!");
 
             InitElements();
             Init();

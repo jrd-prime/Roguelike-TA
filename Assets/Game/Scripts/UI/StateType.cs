@@ -3,7 +3,7 @@
     public enum StateType
     {
         Menu,
-        Game,
+        Gameplay,
         Pause,
         GameOver,
         Settings,

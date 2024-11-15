@@ -1,8 +1,13 @@
-﻿using Game.Scripts.Framework.Helpers;
+﻿using System;
+using DG.Tweening;
+using DG.Tweening.Core;
+using DG.Tweening.Plugins.Options;
+using Game.Scripts.Framework.Helpers;
 using Game.Scripts.UI.Base;
 using R3;
 using UnityEngine;
 using UnityEngine.UIElements;
+using UnityEngine.UIElements.Experimental;
 
 namespace Game.Scripts.UI.Menus.GamePlay
 {
@@ -48,6 +53,7 @@ namespace Game.Scripts.UI.Menus.GamePlay
         private int _killCount = 0;
         private int _killToWin = 0;
         private int currentLevel = 1;
+        private TweenerCore<float, float, FloatOptions> a;
 
         protected override void InitElements()
         {
@@ -109,13 +115,16 @@ namespace Game.Scripts.UI.Menus.GamePlay
         protected override void Init()
         {
             _healthBar.RegisterCallback<GeometryChangedEvent>(_ => SetHpBarWidth(_healthBar.resolvedStyle.width));
-            _expBar.RegisterCallback<GeometryChangedEvent>(_ => SetExpBarWidth(_expBar.resolvedStyle.width));
+            _expBar.RegisterCallback<GeometryChangedEvent>(_ => SetExpBarWidth(_expBar.resolvedStyle.maxWidth.value));
 
 
             _movementRoot.RegisterCallback<PointerDownEvent>(OnPointerDown);
             _movementRoot.RegisterCallback<PointerMoveEvent>(OnPointerMove);
             _movementRoot.RegisterCallback<PointerUpEvent>(OnPointerUp);
             _movementRoot.RegisterCallback<PointerOutEvent>(OnPointerCancel);
+
+            ViewModel.IsGameStarted.Where(x => !x).Subscribe(_ => ResetUI()).AddTo(Disposables);
+
 
             // Movement
             ViewModel.IsTouchPositionVisible.Subscribe(IsTouchPositionVisible).AddTo(Disposables);
@@ -162,32 +171,125 @@ namespace Game.Scripts.UI.Menus.GamePlay
             currentLevel = level;
         }
 
+        private void ResetUI()
+        {
+            Debug.LogWarning("RESET GAMEPLAY UI");
+        }
+
+        // private void UpdateHealthBar(int health)
+        // {
+        //     _healthBarLabel.text = health + " / " + _playerInitialHealth;
+        //
+        //     if (!isFullHpWidthSet) return;
+        //
+        //     Debug.LogWarning("hp anim GO to " + _pxPerPointHp * health + " from " + _currentHpBarWidth);
+        //
+        //     _healthBar
+        //         .experimental
+        //         .animation
+        //         .Size(new Vector2(_pxPerPointHp * health, _currentHpBarWidth), 500)
+        //         .KeepAlive()
+        //         .Start();
+        //
+        //
+        //     _currentHpBarWidth = _pxPerPointHp * health;
+        // }
+        private void ResetHealthBar()
+        {
+            a.Kill();
+            _currentHpBarWidth = _fullHpWidth;
+            _healthBar.style.width = new StyleLength(_fullHpWidth);
+            _healthBarLabel.text = $"{_playerInitialHealth} / {_playerInitialHealth}";
+        }
+
+        private void ResetGameplayUI()
+        {
+            ResetHealthBar();
+            ResetExperienceBar();
+        }
+
         private void UpdateHealthBar(int health)
         {
-            _healthBarLabel.text = health + " / " + _playerInitialHealth;
+            if (health <= 0)
+            {
+                ResetGameplayUI();
+                return;
+            }
+
+            _healthBarLabel.text = $"{health} / {_playerInitialHealth}";
+
             if (!isFullHpWidthSet) return;
-            _healthBar
-                .experimental
-                .animation
-                .Size(new Vector2(_pxPerPointHp * health, _currentHpBarWidth), 500)
-                .KeepAlive()
-                .Start();
-            _currentHpBarWidth = _pxPerPointHp * health;
+
+            var targetWidth = _pxPerPointHp * health;
+
+            if (Math.Abs(targetWidth - _currentHpBarWidth) < 0.001f) return;
+
+            a.Kill();
+            a = DOTween.To(
+                () => _currentHpBarWidth,
+                x =>
+                {
+                    _currentHpBarWidth = x;
+                    _healthBar.style.width = x;
+                },
+                targetWidth,
+                0.5f
+            );
+        }
+
+        private void ResetExperienceBar()
+        {
+            // Остановка текущей анимации
+            a.Kill();
+
+            // Сброс ширины полосы опыта и текста
+            _currentExpBarWidth = 0f;
+            _expBar.style.width = new StyleLength(0f);
+            _expBarLabel.text = $"{0} / {_expToNextLevel}";
         }
 
         private void UpdateExperienceBar(int exp)
         {
-            _expBarLabel.text = exp + " / " + _expToNextLevel;
+            if (exp < 0) exp = 0; // предотвращаем отрицательное значение
+
+            _expBarLabel.text = $"{exp} / {_expToNextLevel}";
+
             if (!isFullExpWidthSet) return;
-            _pxPerPointExp = _fullExpWidth / _expToNextLevel;
-            _expBar
-                .experimental
-                .animation
-                .Size(new Vector2(_pxPerPointExp * exp, _currentExpBarWidth), 500)
-                .KeepAlive()
-                .Start();
-            _currentExpBarWidth = _pxPerPointExp * exp;
+
+            var targetWidth = _pxPerPointExp * exp;
+
+            // Если ширина не изменилась, анимацию не запускаем
+            if (Math.Abs(targetWidth - _currentExpBarWidth) < 0.001f) return;
+
+            // Остановка текущей анимации
+            a.Kill();
+
+            // Запуск анимации ширины
+            a = DOTween.To(
+                () => _currentExpBarWidth,
+                x =>
+                {
+                    _currentExpBarWidth = x;
+                    _expBar.style.width = x;
+                },
+                targetWidth,
+                0.5f // длительность анимации
+            );
         }
+
+        // private void UpdateExperienceBar(int exp)
+        // {
+        //     _expBarLabel.text = exp + " / " + _expToNextLevel;
+        //     if (!isFullExpWidthSet) return;
+        //     _pxPerPointExp = _fullExpWidth / _expToNextLevel;
+        //     _expBar
+        //         .experimental
+        //         .animation
+        //         .Size(new Vector2(_pxPerPointExp * exp, _currentExpBarWidth), 500)
+        //         .KeepAlive()
+        //         .Start();
+        //     _currentExpBarWidth = _pxPerPointExp * exp;
+        // }
 
         private void UpdateKillCountLabel() => _killCountLabel.text = _killCount + " / " + _killToWin;
 

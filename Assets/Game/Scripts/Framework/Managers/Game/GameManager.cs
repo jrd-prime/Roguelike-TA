@@ -23,6 +23,7 @@ namespace Game.Scripts.Framework.Managers.Game
             IsGameStarted.Value = true;
             PlayerModel.ResetPlayer();
             ExperienceManager.ResetExperience();
+            PlayerInitialHealth.ForceNotify();
 
             EnemiesManager.StartSpawnEnemiesAsync(KillsToWin, MinEnemiesOnMap, MaxEnemiesOnMap, SpawnDelay);
         }

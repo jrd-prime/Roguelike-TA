@@ -6,13 +6,13 @@ namespace Game.Scripts
     public class FPSDisplay : MonoBehaviour
     {
         public TMP_Text fpsText;
-        private float deltaTime;
+        private float _deltaTime;
 
-        void Update()
+        private void Update()
         {
-            deltaTime += (Time.deltaTime - deltaTime) * 0.1f;
-            float fps = 1.0f / deltaTime;
-            fpsText.text = $"FPS: {fps:0.}";
+            _deltaTime += (Time.deltaTime - _deltaTime) * 0.1f;
+            var fps = 1.0f / _deltaTime;
+            fpsText.text = $"{fps:0.}";
         }
     }
 }

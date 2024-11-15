@@ -22,6 +22,7 @@ namespace Game.Scripts.UI.Menus.GamePlay
         /////////
         public ReadOnlyReactiveProperty<bool> IsTouchPositionVisible => Model.IsTouchPositionVisible;
         public ReadOnlyReactiveProperty<Vector2> RingPosition => Model.RingPosition;
+        public ReadOnlyReactiveProperty<bool> IsGameStarted => Model.IsGameStarted;
 
 
         public void OnDownEvent(PointerDownEvent evt) => Model.OnDownEvent(evt);

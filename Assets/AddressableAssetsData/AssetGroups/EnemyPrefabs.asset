@@ -15,23 +15,18 @@ MonoBehaviour:
   m_GroupName: EnemyPrefabs
   m_GUID: 3267c1a05feb05f4ca168a81fb6ac2c0
   m_SerializeEntries:
-  - m_GUID: 2db03e7c8a8135146b280e5da7e0289c
-    m_Address: TT_demo_female
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 47a3741b253f088469eedd6d403dd89a
-    m_Address: TT_demo_police
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 6fb37f825ee63264b9c2600bf1a52006
-    m_Address: TT_demo_male_A
+  - m_GUID: 1df7bbb7a02e20c4d90048caa77518d1
+    m_Address: SkeletonCommon
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a5cc41333b1036c48a529463468d1a91
-    m_Address: Skeleton
+    m_Address: SkeletonLegendary
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e87cd9334648bbc44a34dbb8e244eddb
+    m_Address: SkeletonRare
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

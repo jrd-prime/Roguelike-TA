@@ -19,7 +19,7 @@ namespace Game.Scripts.UI.Menus.Win
         public void StartButtonClicked()
         {
             // TODO : sound manager on/off music
-            StateMachine.ChangeStateTo(StateType.Game);
+            StateMachine.ChangeStateTo(StateType.Gameplay);
         }
 
 // TODO DRY menuUI

@@ -11,7 +11,7 @@ namespace Game.Scripts.UI.Menus.GameOver
 
         public void NewGameButtonClicked()
         {
-            StateMachine.ChangeStateTo(StateType.Game);
+            StateMachine.ChangeStateTo(StateType.Gameplay);
         }
 
         public void SettingsButtonClicked()

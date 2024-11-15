@@ -10,12 +10,13 @@ namespace Game.Scripts.Framework.Configuration.SO.Enemy
         order = 100)]
     public class EnemySettings : ScriptableObject
     {
-        public string enemyName = "Not Set";
         public AssetReferenceGameObject enemySkinPrefab;
 
-        public int health = 100;
-        public int damage = 10;
-        [Range(0.1f, 10)] public float attackDelayInSec = 3;
+        public EnemySpawnChance spawnChance = EnemySpawnChance.Common;
+
+        public int Health = 100;
+        public int Damage = 10;
+        public float AttackDelayInSec = 3;
         public float speed = 5f;
         public int baseExperiencePoints = 10;
         public float disappearanceDuration = 1.5f;
