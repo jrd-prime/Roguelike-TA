@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnDelay: 500
   minEnemiesOnMap: 5
-  maxEnemiesOnMap: 30
-  killsToWin: 999
+  maxEnemiesOnMap: 10
+  killsToWin: 100

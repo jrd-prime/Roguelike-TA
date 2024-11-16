@@ -3,7 +3,6 @@
     <type fullname="Game.Scripts.Enemy.EnemySkin" preserve="all" />
     <type fullname="Game.Scripts.FPSDisplay" preserve="all" />
     <type fullname="Game.Scripts.Framework.Configuration.SO.Weapon.WeaponSettings" preserve="all" />
-    <type fullname="Game.Scripts.Framework.Managers.Altars.AltarManager" preserve="all" />
     <type fullname="Game.Scripts.Framework.Managers.Cam.CameraManager" preserve="all" />
     <type fullname="Game.Scripts.Framework.Managers.Enemy.EnemiesManager" preserve="all" />
     <type fullname="Game.Scripts.Framework.Managers.Experience.ExperienceManager" preserve="all" />
@@ -81,7 +80,6 @@
     <type fullname="UnityEngine.RuntimeAnimatorController" preserve="all" />
   </assembly>
   <assembly fullname="UnityEngine.AudioModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-    <type fullname="UnityEngine.AudioClip" preserve="all" />
     <type fullname="UnityEngine.AudioListener" preserve="all" />
     <type fullname="UnityEngine.AudioSource" preserve="all" />
   </assembly>

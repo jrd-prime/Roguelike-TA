@@ -7,5 +7,6 @@
             <ui:Button text="SETTINGS" parse-escape-sequences="true" display-tooltip-when-elided="true" name="settings-btn" class="menu-btn" />
             <ui:Button text="EXIT" parse-escape-sequences="true" display-tooltip-when-elided="true" name="exit-btn" class="menu-btn" />
         </ui:VisualElement>
+        <ui:Label text="https://github.com/jrd-prime" class="hello" />
     </ui:VisualElement>
 </ui:UXML>

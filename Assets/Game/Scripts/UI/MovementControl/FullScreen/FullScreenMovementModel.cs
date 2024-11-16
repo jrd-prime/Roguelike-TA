@@ -15,7 +15,7 @@ namespace Game.Scripts.UI.MovementControl.FullScreen
         public ReactiveProperty<Vector2> RingPosition { get; } = new(Vector2.zero);
 
         private bool _isTouchActive;
-        private float _offsetForFullSpeed = 100f;
+        private float _offsetForFullSpeed = 50f;
         private Vector3 _moveInput;
         private Vector3 _startTouchPosition;
         private ISettingsManager _settingsManager;

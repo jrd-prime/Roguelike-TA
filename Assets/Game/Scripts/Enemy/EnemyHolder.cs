@@ -71,7 +71,7 @@ namespace Game.Scripts.Enemy
 
             OnAttack();
 
-            StartCoroutine(AttackAnimationDelay());
+            if (isActiveAndEnabled) StartCoroutine(AttackAnimationDelay());
         }
 
         private IEnumerator AttackAnimationDelay()

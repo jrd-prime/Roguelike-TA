@@ -18,7 +18,7 @@ namespace Game.Scripts.UI.Menus.MainMenu
 
         public void StartButtonClicked()
         {
-            StateMachine.ChangeStateTo(StateType.Game);
+            StateMachine.ChangeStateTo(StateType.Gameplay);
         }
 
         public void SettingsButtonClicked()

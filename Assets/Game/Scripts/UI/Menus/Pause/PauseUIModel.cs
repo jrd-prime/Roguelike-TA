@@ -7,7 +7,7 @@ namespace Game.Scripts.UI.Menus.Pause
     {
         public void ContinueButtonClicked()
         {
-            StateMachine.ChangeStateTo(StateType.Game);
+            StateMachine.ChangeStateTo(StateType.Gameplay);
         }
 
         public void SettingsButtonClicked()

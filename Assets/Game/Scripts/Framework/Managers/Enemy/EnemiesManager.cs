@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
@@ -20,6 +21,7 @@ using UnityEngine.AddressableAssets;
 using UnityEngine.Assertions;
 using VContainer;
 using Animator = UnityEngine.Animator;
+using Random = Unity.Mathematics.Random;
 
 namespace Game.Scripts.Framework.Managers.Enemy
 {
@@ -65,6 +67,7 @@ namespace Game.Scripts.Framework.Managers.Enemy
                 new CustomPool<EnemyHolder>(_enemyManagerSettings.enemyHolderPrefab, enemyPoolSize, transform,
                     _container, true);
         }
+
 
         private async void SpawnRandomEnemyAsync()
         {
@@ -192,13 +195,6 @@ namespace Game.Scripts.Framework.Managers.Enemy
                 if (!_isStarted) break;
                 await UniTask.Delay(spawnDelay);
             }
-
-            // var il = 0;
-            // while (_isStarted && il < 1)
-            // {
-            //     SpawnRandomEnemyAsync();
-            //     il++;
-            // }
         }
 
         public void StopSpawn()

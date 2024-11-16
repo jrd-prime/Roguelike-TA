@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55eba5370fb94e0ca0958fd2ae6ca4fd, type: 3}
   m_Name: CharacterConfiguration
   m_EditorClassIdentifier: 
-  moveSpeed: 6
+  moveSpeed: 7
   rotationSpeed: 180
   health: 100
   weapon: {fileID: 11400000, guid: 29cdf7964ab6ebd43b1efd1047f2940c, type: 2}

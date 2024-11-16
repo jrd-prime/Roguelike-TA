@@ -19,7 +19,7 @@ namespace Game.Scripts.UI
             if (_container == null) throw new NullReferenceException("Container is null.");
         }
 
-        public void ShowView(TemplateContainer view, int sortingOrder)
+        public void ShowView(TemplateContainer view)
         {
             view.style.position = Position.Absolute;
             view.style.left = 0;

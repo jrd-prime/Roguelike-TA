@@ -27,7 +27,7 @@ namespace Game.Scripts.Framework.GameStateMachine
             _states.Add(StateType.Menu, container.Resolve<MenuState>());
             _states.Add(StateType.GameOver, container.Resolve<GameOverState>());
             _states.Add(StateType.Pause, container.Resolve<PauseState>());
-            _states.Add(StateType.Game, container.Resolve<GamePlayState>());
+            _states.Add(StateType.Gameplay, container.Resolve<GamePlayState>());
             _states.Add(StateType.Settings, container.Resolve<SettingsState>());
             _states.Add(StateType.Win, container.Resolve<WinState>());
 
@@ -56,7 +56,6 @@ namespace Game.Scripts.Framework.GameStateMachine
 
         public void ChangeStateTo(StateType stateType)
         {
-            Debug.Log($"- StateMachine - / Change state to: {stateType} / Current state: {_currentState.GetType().Name}");
             if (!_states.TryGetValue(stateType, out IGameState state))
                 throw new KeyNotFoundException($"State: {stateType} not found!");
 
