@@ -24,7 +24,6 @@ namespace Game.Scripts.UI.Menus.GamePlay
 
         public ReactiveProperty<bool> IsTouchPositionVisible => _movementModel.IsTouchPositionVisible;
         public ReactiveProperty<Vector2> RingPosition => _movementModel.RingPosition;
-        public ReadOnlyReactiveProperty<bool> IsGameStarted => GameManager.IsGameStarted;
 
         private IFullScreenMovementModel _movementModel;
 

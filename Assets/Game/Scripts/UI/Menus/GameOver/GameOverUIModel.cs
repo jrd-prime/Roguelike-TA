@@ -21,7 +21,7 @@ namespace Game.Scripts.UI.Menus.GameOver
 
         public void MenuButtonClicked()
         {
-            StateMachine.ChangeStateTo(StateType.Pause);
+            StateMachine.ChangeStateTo(StateType.Menu);
         }
     }
 
